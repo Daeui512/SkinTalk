@@ -1,6 +1,8 @@
 package web.spring.skintalk.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -57,6 +59,12 @@ public class ProductDAOImple implements ProductDAO{
 		return sqlSession.selectOne(NAMESPACE + ".select_TotalNums");
 	}
 	
+	@Override
+	public int getTotalNumsByKeyword(String keyword) {
+		logger.info("getTotalNumsByKeyword() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_TotalNums_by_keyword", keyword);
+	}
+	
 	// 상세 조회
 	@Override
 	public ProductVO select(int productNo) {
@@ -70,5 +78,18 @@ public class ProductDAOImple implements ProductDAO{
 		keyword = keyword + "%";
 		return sqlSession.selectList(NAMESPACE + ".select_by_keyword", keyword);
 	}
+	
+	@Override
+	public List<ProductVO> selectAllByKeyword(String keyword, PageCriteria criteria){
+		logger.info("selectAllByKeyword() 호출 : keyword = " + keyword);
+		keyword = "%" + keyword + "%";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("keyword", keyword);
+		map.put("start", criteria.getStart());
+		map.put("end", criteria.getEnd());
+		return sqlSession.selectList(NAMESPACE + ".select_all_by_keyword" , map);
+	}
+		
+	
 
 }

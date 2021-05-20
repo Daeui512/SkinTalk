@@ -12,7 +12,9 @@ public interface ProductDAO {
 	int update(ProductVO vo);
 	int delete(int productNo);
 	int getTotalNums();
+	int getTotalNumsByKeyword(String keyword);
 	// 상세 조회
 	ProductVO select(int productNo);
 	List<String> selectByKeyword(String keyword);
+	List<ProductVO> selectAllByKeyword(String keyword, PageCriteria criteria);
 }
