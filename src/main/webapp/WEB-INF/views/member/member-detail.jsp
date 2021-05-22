@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,33 @@
 <title>마이페이지</title>
 </head>
 <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../main/index">SkinTalk</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <!-- Search-->
+                <div class="card-body">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="Search" />
+                        <span class="inpug-group-append"><button class="btn btn-secondary" type="button">Go!</button></span>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                       <c:if test="${empty sessionScope.userId }">
+                          <li class="nav-item"><a class="nav-link" href="../member/login">로그인</a></li>
+                        </c:if>
+                        <c:if test="${not empty sessionScope.userId }">
+                          <li class="nav-item"><a class="nav-link" href="../member/member-detail">마이페이지</a></li>
+                          <li class="nav-item"><a class="nav-link" href="../member/logout">로그아웃</a></li>
+                        </c:if>
+                        <li class="nav-item"><a class="nav-link" href="../cart/cartList">장바구니</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../board/list">고객센터</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 <div>
 	<h2>회원 가입 정보</h2>
 	<p>아이디 : ${vo.userId}</p>
@@ -38,8 +66,8 @@
 </div>
 <div>
 	<a href="../main/index"><input type="button" value="메인페이지"></a>
-	<a href="/update"><input type="button" value="정보 수정"></a>
-	<a href="/delete"><input type="button" value="회원 탈퇴"></a>
+	<a href="../member/update"><input type="button" value="정보 수정"></a>
+	<a href="../member/delete"><input type="button" value="회원 탈퇴"></a>
 </div>	
 
 	<!-- MemberController -> updatePost() 에서 보낸 데이터 저장 -->

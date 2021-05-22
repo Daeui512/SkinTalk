@@ -53,30 +53,32 @@
     </nav>
     
     
-      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" style="position: absolute; left: 50%; transform: translateX(-50%);">
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" style="position: absolute; left: 50%; transform: translateX(-50%); padding-top: 115px">
         <div class="panel panel-success">
           <div class="panel-heading">
             <div class="panel-title">환영합니다!</div>
           </div>
           <div class="panel-body">
             <form id="login-form" action = "login" method = "post">
-              <div>
+              <div style="padding-bottom: 20px">
                 <input type="text" class="form-control" name="userId" placeholder="Username" autofocus required>
               </div>
-              <div>
+              <div style="padding-bottom: 20px">
                 <input type="password" class="form-control" name="password" placeholder="Password" required>
               </div>
-              <div>
+              <div style="padding-bottom: 20px">
                 <button type="submit" class="form-control btn btn-primary">로그인</button>
               </div>
             </form>
-           <div>
+           <div style="padding-bottom: 20px">
              <a href="/skintalk/member/register">
               <button type="button" class="form-control btn btn-primary">회원가입</button>
              </a>
            </div>
-           <div>
+           <div style="padding-bottom: 20px">
             <a href="find_id_form"><button type="button" id="findIdBtn" class="form-control btn btn-primary">아이디찾기</button></a>
+           </div>
+           <div style="padding-bottom: 20px">
             <a href="find_password_form"><button type="button" id="findPasswordBtn" class="form-control btn btn-primary">비밀번호찾기</button></a>
            </div>
           </div>

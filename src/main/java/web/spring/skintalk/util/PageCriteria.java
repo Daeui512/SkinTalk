@@ -6,7 +6,7 @@ public class PageCriteria {
 	
 	public PageCriteria() {
 		this.page = 1;
-		this.numsPerPage = 5;
+		this.numsPerPage = 12;
 	}
 	
 	public PageCriteria(int page, int numsPerPage) {
@@ -36,6 +36,11 @@ public class PageCriteria {
 	
 	public int getEnd() {
 		return this.page * this.numsPerPage;
+	}
+
+	@Override
+	public String toString() {
+		return "PageCriteria [page=" + page + ", numsPerPage=" + numsPerPage + "]";
 	}
 	
 	

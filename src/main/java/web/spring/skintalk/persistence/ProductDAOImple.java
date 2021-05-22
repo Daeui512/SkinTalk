@@ -62,7 +62,14 @@ public class ProductDAOImple implements ProductDAO{
 	@Override
 	public int getTotalNumsByKeyword(String keyword) {
 		logger.info("getTotalNumsByKeyword() 호출");
+		keyword = "%" + keyword + "%";
 		return sqlSession.selectOne(NAMESPACE + ".select_TotalNums_by_keyword", keyword);
+	}
+	
+	@Override
+	public int getTotalNumsByTypical(int productType) {
+		logger.info("getTotalNumsByTypical() 호출 : productType = " + productType);
+		return sqlSession.selectOne(NAMESPACE + ".select_TotalNums_by_typical", productType);
 	}
 	
 	// 상세 조회
@@ -89,7 +96,17 @@ public class ProductDAOImple implements ProductDAO{
 		map.put("end", criteria.getEnd());
 		return sqlSession.selectList(NAMESPACE + ".select_all_by_keyword" , map);
 	}
-		
+
+	@Override
+	public List<ProductVO> selectByTypical(PageCriteria criteria, int productType) {
+		logger.info("selectByTypical() 호출 : productType = " + productType);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("productType", productType);
+		map.put("start", criteria.getStart());
+		map.put("end", criteria.getEnd());
+		return sqlSession.selectList(NAMESPACE + ".select_by_typical", map);
+	}
+
 	
 
 }

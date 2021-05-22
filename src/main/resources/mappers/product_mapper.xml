@@ -29,7 +29,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 	
 	<select id="select_TotalNums_by_keyword" resultType="Integer">
-		select count(*) total_cnt from ${product} where ${productName} like #{keyword}
+		select count(*) total_cnt from ${product} 
+		where ${productName} like #{keyword}
+	</select>
+	
+	<select id="select_TotalNums_by_typical" resultType="Integer">
+		select count(*) total_cnt from ${product}
+		where ${productType} = #{productType}
 	</select>
 	
 	<select id="select_by_productNo" resultType="ProductVO">
@@ -50,7 +56,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		where rn between #{start} and #{end}
 	</select>
 	
-	
-	
+	<select id="select_by_typical" resultType="ProductVO">
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good} from (
+			select rownum as rn, a.* from (
+				select * from ${product} where ${productType} = #{productType} order by ${productNo})a
+			)b 
+		where rn between #{start} and #{end}
+	</select>
 	
 </mapper>

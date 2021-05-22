@@ -35,7 +35,7 @@
                 <form action="../main/product" method="get">
                   <div class="card-body">
                       <div class="input-group">
-                          <input name="keyword" class="form-control" type="text" placeholder="Search" />
+                          <input name="keyword" class="form-control" type="text" placeholder="Search" autocomplete="off"/>
                           <span class="inpug-group-append"><button class="btn btn-secondary" type="submit">Go!</button></span>
                           <span class="search_output"></span>
                       </div>
@@ -110,21 +110,21 @@
                         <div class="card h-100">
                             <h4 class="card-header">스킨케어</h4>
                             <div class="card-body"><p class="card-text">스킨케어 카테고리</p></div>
-                            <div class="card-footer"><a class="btn btn-primary" href="product">더 보기</a></div>
+                            <div class="card-footer"><a class="btn btn-primary" href="product?type=1">더 보기</a></div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-4 mb-lg-0">
                         <div class="card h-100">
                             <h4 class="card-header">메이크업</h4>
                             <div class="card-body"><p class="card-text">메이크업 카테고리</p></div>
-                            <div class="card-footer"><a class="btn btn-primary" href="#!">더 보기</a></div>
+                            <div class="card-footer"><a class="btn btn-primary" href="product?type=2">더 보기</a></div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="card h-100">
                             <h4 class="card-header">바디케어</h4>
                             <div class="card-body"><p class="card-text">바디케어 카테고리</p></div>
-                            <div class="card-footer"><a class="btn btn-primary" href="#!">더 보기</a></div>
+                            <div class="card-footer"><a class="btn btn-primary" href="product?type=3">더 보기</a></div>
                         </div>
                     </div>
                 </div>
@@ -180,14 +180,6 @@
         				'keyword' : keyword
         			},
         			success : (result)=>{
-//         				list = '<div class="atcmp_container"><ul class="keyword_list">';
-
-//         				for (var i = 0; i < result.length; i++) {
-//         					list += '<li class="item">'
-//         						+ '<a href="#" class="kwd">'
-//         						+ '<span>' + result[i] + '</span></a></li></ul></div>';
-// 						}
-//         				$('.search_output').html(list);
 						list_1 ='';
 						list_1 += '<div class="collapse navbar-collapse" id="navbarResponsive">'
 				            + '<ul class="navbar-nav ml-auto">'
@@ -199,7 +191,11 @@
 	                		+ '</li>'
 		            		+ '</ul>'
 		        			+ '</div>';
-		        		$('.search_output').html(list_1);
+		        		if (keyword.length < 1) {
+							$('.search_output').html('');
+						}else{
+    		        		$('.search_output').html(list_1);
+						}
         			}// end of success
         		});// end of ajax
         	});// end of search(form-cotrol.keyup)

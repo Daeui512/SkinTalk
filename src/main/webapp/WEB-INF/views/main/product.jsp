@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,23 +66,17 @@
 
   <!-- Page Content -->
   <div class="container">
-
     <div class="row">
-
       <div class="col-lg-3">
-
         <h1 class="my-4">SkinTalk</h1>
         <div class="list-group">
-          <a href="#" class="list-group-item">스킨케어</a>
-          <a href="#" class="list-group-item">메이크업</a>
-          <a href="#" class="list-group-item">바디케어</a>
+          <a href="product?type=1" class="list-group-item">스킨케어</a>
+          <a href="product?type=2" class="list-group-item">메이크업</a>
+          <a href="product?type=3" class="list-group-item">바디케어</a>
         </div>
-
       </div>
       <!-- /.col-lg-3 -->
-
       <div class="col-lg-9">
-
         <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -120,7 +115,10 @@
                 <h4 class="card-title">
                   <a href="../product/product_detail?productNo=${productList.productNo }">${productList.productName }</a>
                 </h4>
-                <h5>${productList.price }</h5>
+                <h5>
+                  <fmt:formatNumber value="${productList.price}" pattern="#,###,###원" />
+                </h5>
+                
                 <p class="card-text">${productList.point }</p>
               </div>
               <div class="card-footer">
@@ -145,60 +143,49 @@
   <!-- Pagination-->
   <ul class="pagination justify-content-center">
   
-  
       <c:if test="${pageMaker.hasPrev }">
         <li class="page-item">
             <c:if test="${not empty keyword }">
-              <a class="page-link" href="product?page=${pageMaker.startPageNo - 1 }&keyword=${keyword }" aria-label="Previous">
+              <a class="page-link" href="product?page=${pageMaker.startPageNo - 1 }&keyword=${keyword }&type=${param.type}" aria-label="Previous">
                   <span aria-hidden="true">«</span>
                   <span class="sr-only">Previous</span>
               </a>
             </c:if>
-            
             <c:if test="${empty keyword }">
-              <a class="page-link" href="product?page=${pageMaker.startPageNo - 1 }" aria-label="Previous">
+              <a class="page-link" href="product?page=${pageMaker.startPageNo - 1 }&type=${param.type}" aria-label="Previous">
                   <span aria-hidden="true">«</span>
                   <span class="sr-only">Previous</span>
               </a>
             </c:if>
-            
         </li>
       </c:if>
       
-      <c:if test="${not empty keyword }">
+      <c:if test="${not empty param.keyword }">
         <c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
-          <li class="page-item"><a class="page-link" href="product?page=${num }&keyword=${keyword }">${num }</a></li>
+          <li class="page-item"><a class="page-link" href="product?page=${num }&keyword=${param.keyword }&type=${param.type}">${num }</a></li>
         </c:forEach>
       </c:if>
-      <c:if test="${empty keyword}">
+      <c:if test="${empty param.keyword }">
         <c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
-          <li class="page-item"><a class="page-link" href="product?page=${num }">${num }</a></li>
+          <li class="page-item"><a class="page-link" href="product?page=${num }&type=${param.type}">${num }</a></li>
         </c:forEach>
       </c:if>
-      
-      
-      
-      
       
       <c:if test="${pageMaker.hasNext }">
-      
         <li class="page-item">
-        
             <c:if test="${not empty keyword }">
-              <a class="page-link" href="product?page=${pageMaker.endPageNo + 1 }&keyword=${keyword }" aria-label="Next">
+              <a class="page-link" href="product?page=${pageMaker.endPageNo + 1 }&keyword=${keyword }&type=${param.type}" aria-label="Next">
                   <span aria-hidden="true">»</span>
                   <span class="sr-only">Next</span>
               </a>
             </c:if>
             
             <c:if test="${empty keyword }">
-              <a class="page-link" href="product?page=${pageMaker.endPageNo + 1 }" aria-label="Previous">
+              <a class="page-link" href="product?page=${pageMaker.endPageNo + 1 }&type=${param.type}" aria-label="Previous">
                   <span aria-hidden="true">»</span>
                   <span class="sr-only">Previous</span>
               </a>
             </c:if>
-            
-            
         </li>
       </c:if>
       

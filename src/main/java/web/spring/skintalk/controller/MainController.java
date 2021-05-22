@@ -40,10 +40,11 @@ public class MainController {
 	}// end of index
 	
 	@GetMapping("/product")			// 상품목록 페이지 호출
-	public void product(Model model, String keyword, Integer page, Integer perPage) {
+	public void product(Model model, String keyword, Integer page, Integer perPage, Integer type) {
 		logger.info("product()호출");
-		PageCriteria criteria = new PageCriteria(1, 12);
+		PageCriteria criteria = new PageCriteria();
 		PageMaker maker = new PageMaker();
+		List<ProductVO> list = null;
 		
 		if (page != null) {
 			criteria.setPage(page);
@@ -52,19 +53,32 @@ public class MainController {
 			criteria.setNumsPerPage(perPage);
 		}
 		
-		List<ProductVO> list = null;
+		logger.info("type = " + type);
 		
 		if (keyword == null) {
-			list = productService.read(criteria);
-			maker.setTotalCount(productService.getTotalNumsOfRecords());
+			if(type == null) {
+				list = productService.read(criteria);
+				maker.setTotalCount(productService.getTotalNumsOfRecords());
+			}else {
+				list = productService.readByTypical(criteria, type);
+				maker.setTotalCount(productService.getTotalNumsByTypical(type));
+			}
 		}else {
+			keyword = keyword.replaceAll(" ", "");						// keyword에 포함된 모든 공백 제거
+			keyword = keyword.replaceAll("(^\\p{Z}+|\\p{Z}+$)", "");	// keyword의 앞/뒤에 포함된 비정상적인 공백 제거
+
 			list = productService.readAllKeyword(keyword,criteria);
+			for (ProductVO vo : list) {
+				logger.info("vo = " + vo.toString());
+			}
 			maker.setTotalCount(productService.getTotalNumsByKeyword(keyword));
+			logger.info("키워드에 의한 총 상품 개수 : " + productService.getTotalNumsByKeyword(keyword));
+			logger.info("총 상품 개수 : " + maker.getTotalCount());
 		}
 		
 		maker.setCriteria(criteria);
 		maker.setPageData();
-		
+
 		model.addAttribute("productList", list);
 		model.addAttribute("pageMaker", maker);
 	}// end of product
@@ -76,8 +90,6 @@ public class MainController {
 		List<String> list = productService.readKeyword(keyword);
 		
 		return list;
-		
 	}
-	
         
 }

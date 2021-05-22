@@ -59,6 +59,12 @@ public class ProductServiceImple implements ProductService{
 		logger.info("getTotalNumsByKeyword() 호출");
 		return dao.getTotalNumsByKeyword(keyword);
 	}
+
+	@Override
+	public int getTotalNumsByTypical(int productType) {
+		logger.info("getTotalNumsByTypical() 호출");
+		return dao.getTotalNumsByTypical(productType);
+	}
 	
 	@Override
 	public ProductVO read(int productNo) {
@@ -77,6 +83,13 @@ public class ProductServiceImple implements ProductService{
 		logger.info("readAllKeyword 호출 : keyword = " + keyword + " criteria = " + criteria.toString());
 		return dao.selectAllByKeyword(keyword, criteria);
 	}
+
+	@Override
+	public List<ProductVO> readByTypical(PageCriteria criteria, int productType) {
+		logger.info("readByTypical() 호출 : productType = " + productType);
+		return dao.selectByTypical(criteria, productType);
+	}
+
 
 
 }

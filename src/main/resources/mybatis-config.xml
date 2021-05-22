@@ -50,6 +50,7 @@
 		<property name="point" value="point"/>
 		<property name="grade" value="grade"/>
 		<property name="good" value="good"/>
+		<property name="productType" value="product_type"/>
 		
 		<!-- 장바구니 -->
 		<property name="cart" value="cart"/>
