@@ -39,6 +39,7 @@ public class ProductController {
 	public void productGet(Model model, Integer productNo, HttpSession session) {
 		logger.info("productGet() 호출 : " + productNo);
 		ProductVO vo = productService.read(productNo);
+		productService.viewCount(productNo);	// 조회수 
 		logger.info("vo : " + vo.toString());
 		model.addAttribute("vo", vo);
 		

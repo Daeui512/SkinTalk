@@ -65,26 +65,35 @@
 	<p>주소 : ${vo.address}</p>
 </div>
 <div>
-	<a href="../main/index"><input type="button" value="메인페이지"></a>
-	<a href="../member/update"><input type="button" value="정보 수정"></a>
-	<a href="../member/delete"><input type="button" value="회원 탈퇴"></a>
-</div>	
+  <a href="../main/index"><input type="button" value="메인페이지"></a>
+  <a href="../member/update"><input type="button" value="정보 수정"></a>
+  <button id="btn_delete">회원 탈퇴</button>
+</div>  
 
-	<!-- MemberController -> updatePost() 에서 보낸 데이터 저장 -->
-	<input id=updateAlert type="hidden" value="${update_result }">
-	
-	<script type="text/javascript">
-		$(document).ready(function(){
-			confirmUpdateResult(); // confirmUpdateResult()호출
-			function confirmUpdateResult() {
-				var result = $('#updateAlert').val();
-				if (result == 'success') { // success 받아올 시 alert
-					alert('정보가 수정되었습니다.');
-				} else if(result == 'fail') { // fail 받아올 시 alert
-					alert('정보 수정 실패하였습니다.');
-				}
-			} // end of confirmupdateResult()
-		});
-	</script>
+  <!-- MemberController -> updatePost() 에서 보낸 데이터 저장 -->
+  <input id=updateAlert type="hidden" value="${update_result }">
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+      confirmUpdateResult(); // confirmUpdateResult()호출
+      function confirmUpdateResult() {
+        var result = $('#updateAlert').val();
+        if (result == 'success') { // success 받아올 시 alert
+          alert('정보가 수정되었습니다.');
+        } else if(result == 'fail') { // fail 받아올 시 alert
+          alert('정보 수정 실패하였습니다.');
+        }
+      } // end of confirmupdateResult()
+      
+      $('#btn_delete').click(function(){
+        var deleteMsg = confirm("회원탈퇴를 하시겠습니까?");
+        if (deleteMsg == true) {
+          location.replace("/skintalk/member/delete");
+        }
+      }); // end of btn_delete
+    });
+  </script>
 </body>
 </html>
+
+

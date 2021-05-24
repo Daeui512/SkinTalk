@@ -106,7 +106,12 @@ public class ProductDAOImple implements ProductDAO{
 		map.put("end", criteria.getEnd());
 		return sqlSession.selectList(NAMESPACE + ".select_by_typical", map);
 	}
-
+	
+	@Override
+	public int viewCount(int productNo) {
+		logger.info("viewCount() 호출 : " + productNo);
+		return sqlSession.update(NAMESPACE + ".viewCountUpdate", productNo);
+	}
 	
 
 }

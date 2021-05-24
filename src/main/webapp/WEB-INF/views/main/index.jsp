@@ -69,24 +69,18 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="https://via.placeholder.com/1900x600" alt="..." />
+                        <img class="d-block w-100" src="https://blog.kakaocdn.net/dn/caDM2D/btqHTZMeRfR/8tUOKUiXyGoe7BLfImHTR1/img.png" alt="..." style="width : 1900px; height : 600px;"/>
                         <div class="carousel-caption d-none d-md-block">
-                            <h3>First Slide</h3>
-                            <p>This is a description for the first slide.</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="https://via.placeholder.com/1900x600" alt="..." />
+                        <img class="d-block w-100" src="https://joahye.com/wp-content/uploads/2020/11/Thermus-01-2000x952-min-1024x487.jpg" alt="..." style="width : 1900px; height : 600px;" />
                         <div class="carousel-caption d-none d-md-block">
-                            <h3>Second Slide</h3>
-                            <p>This is a description for the second slide.</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="https://via.placeholder.com/1900x600" alt="..." />
+                        <img class="d-block w-100" src="https://i.pinimg.com/originals/25/e3/b6/25e3b6b929a0b18e02860f05b18e59d0.jpg" alt="..." style="width : 1900px; height : 600px;"/>
                         <div class="carousel-caption d-none d-md-block">
-                            <h3>Third Slide</h3>
-                            <p>This is a description for the third slide.</p>
                         </div>
                     </div>
                 </div>
@@ -138,7 +132,7 @@
                 <h2 class="mb-4">상품추천정보</h2>
                 <div class="row">
                 
-                    <c:forEach var="productList" items="${productList }" end="5">
+                    <c:forEach var="productList" items="${productList }">
                         <div class="col-lg-4 col-sm-6 mb-4">
                             <div class="card h-100">
                                 <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..." /></a>

@@ -33,7 +33,11 @@ public class MainController {
 	public void index(Model model) {
 		logger.info("index()호출 ");
 		
-		List<ProductVO> list = productService.read();
+		PageCriteria criteria = new PageCriteria(1, 12);
+		List<ProductVO> list = productService.read(criteria);
+		for (ProductVO vo : list) {
+			logger.info("vo = " + vo.toString());
+		}
 		model.addAttribute("productList", list);
 		
 		

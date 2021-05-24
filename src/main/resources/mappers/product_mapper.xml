@@ -6,9 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 
 	<insert id ="insert"></insert>
 	<delete id="delete"></delete>
-
+	
 	<update id="viewCountUpdate">
-		update ${product} set ${viewCount} = ${viewCount} + #{count} 
+		update ${product} set ${viewCount} = ${viewCount} + 1 
 		where ${productNo} = #{productNo}
 	</update>
 	

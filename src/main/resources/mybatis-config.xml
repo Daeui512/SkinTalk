@@ -51,6 +51,7 @@
 		<property name="grade" value="grade"/>
 		<property name="good" value="good"/>
 		<property name="productType" value="product_type"/>
+		<property name="viewCount" value="view_count"/>
 		
 		<!-- 장바구니 -->
 		<property name="cart" value="cart"/>
@@ -69,6 +70,12 @@
 		<property name="reviewGender" value="review_gender"/>
 		<property name="reviewSkinType" value="review_skin_type"/>
 		<property name="reviewCdate" value="review_cdate"/>
+		
+		<!-- 좋아요 -->
+		<property name="productLike" value="product_like"/>
+		<property name="likeNo" value="like_no"/>
+		<property name="userId" value="userid"/>
+		<property name="productNo" value="product_no"/>
 	</properties>
 	
 	<!-- Underscore 명명법을 Camel 명명법으로 매핑 -->

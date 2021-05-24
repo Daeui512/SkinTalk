@@ -89,7 +89,12 @@ public class ProductServiceImple implements ProductService{
 		logger.info("readByTypical() 호출 : productType = " + productType);
 		return dao.selectByTypical(criteria, productType);
 	}
-
+	
+	@Override
+	public int viewCount(int productNo) {
+		logger.info("viewCount() 호출 : " + productNo);
+		return dao.viewCount(productNo);
+	}
 
 
 }

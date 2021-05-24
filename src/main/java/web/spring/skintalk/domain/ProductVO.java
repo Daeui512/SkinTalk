@@ -9,13 +9,14 @@ public class ProductVO {
 	private float grade;				
 	private int good;
 	private int productType;
+	private int viewCount;
 	
 	public ProductVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProductVO(int productNo, String productName, int price, String point, float grade, int good,
-			int productType) {
+	public ProductVO(int productNo, String productName, int price, String point, float grade, int good, int productType,
+			int viewCount) {
 		super();
 		this.productNo = productNo;
 		this.productName = productName;
@@ -24,6 +25,7 @@ public class ProductVO {
 		this.grade = grade;
 		this.good = good;
 		this.productType = productType;
+		this.viewCount = viewCount;
 	}
 
 	public int getProductNo() {
@@ -82,10 +84,19 @@ public class ProductVO {
 		this.productType = productType;
 	}
 
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductVO [productNo=" + productNo + ", productName=" + productName + ", price=" + price + ", point="
-				+ point + ", grade=" + grade + ", good=" + good + ", productType=" + productType + "]";
+				+ point + ", grade=" + grade + ", good=" + good + ", productType=" + productType + ", viewCount="
+				+ viewCount + "]";
 	}
 	
 	

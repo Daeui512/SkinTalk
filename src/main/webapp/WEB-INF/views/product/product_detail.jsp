@@ -61,10 +61,12 @@
                         by
                         <a href="../main/index">SkinTalk</a>
                     </small>
+                    
                 </h1>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../main/index">Home</a></li>
-                    <li class="breadcrumb-item active">Blog Home 2</li>
+                    <li class="breadcrumb-item active">product</li>
+                    
                 </ol>
                 <div class="row">
                     <!-- Post Content Column-->
@@ -79,6 +81,15 @@
                             <p>가격 : ${vo.price }원</p>
                             <p>효과 : ${vo.point }</p>
                             평점 : <span class="grade_output"></span>
+                            <small >조회수 : ${vo.viewCount }</small>
+                            
+                            <!-- 좋다 좋아yo  -->
+                            <div id="like">
+                              <input type="hidden" id="productNo" value="${vo.productNo }">
+                              <input type="hidden" id="userId" value="${userId }">
+                              <button type="button" id="like_button" style="border: hidden; background-color: #ffffff"><img id="imgsrc" src="../resources/img/h2.png" width="20"/></button>
+                            </div>
+                            
                               <input type="hidden" id="review_grade" value="${vo.grade }">
                             <footer class="blockquote-footer">
                                 <cite title="Source Title">${vo.productName }</cite>
@@ -184,7 +195,6 @@
                    var reviewAge = $('#reviewAge').val(); // 사용자 나이
                    var reviewGender = $('#reviewGender').val(); // 사용자 성별
                    var reviewSkinType = $('#reviewSkinType').val(); // 사용자 성별
-                   console.log('reviewGrade : ' + reviewGrade);
                    var obj = {
                          'reviewPno' : reviewPno,
                          'reviewContent' : reviewContent,
@@ -194,9 +204,7 @@
                          'reviewGender' : reviewGender,
                          'reviewSkinType' : reviewSkinType
                    };
-                   console.log(obj);
                    var JSONObj = JSON.stringify(obj);
-                   console.log('JSONObj : ' + JSONObj)
                    
                    // $.ajax로 송신
                    $.ajax({
@@ -208,8 +216,6 @@
                       },
                       data : JSONObj,
                       success : function(result, status){
-                         console.log('result : ' + result);
-                         console.log('status : ' + status);
                          if(result == 1) {
                             alert('상품평 입력 성공');
                             getAllReviews();
@@ -230,20 +236,15 @@
                    $.getJSON(
                          url,
                          function(jsonData){
-                            console.log(jsonData);
                             
                             var reviewNickName = $('#review_nickName').val();
                             var list = ''; // JSON 데이터를 표현할 변수
-							console.log(reviewNickName);
                             $(jsonData).each(function(){
                                 // this : 컬렉션에서 각 데이터를 꺼내서 저장
-                                    console.log(this);
                                     var reviewCdate = new Date(this.reviewCdate);
                                     
                                     var disabled = 'disabled';
         							var readonly = 'readonly';
-        								console.log('reviewNickName' + reviewNickName);
-        								console.log('this.reviewNickName' + this.reviewNickName);
         								
         								if (reviewNickName == this.reviewNickName) {
 											disabled = '';
@@ -278,16 +279,13 @@
                 
              // 수정 버튼을 클릭하면 선택된 상품평 수정
         		$('#reviews').on('click', '.review_item .btn_update', function() {
-        			console.log(this);
         			
         			// 선택된 상품평 reviewNo, reviewSingleContent, reviewContent 값을 저장
         			var reviewNo = $(this).prevAll('#reviewNo').val();
         	        var reviewSingleContent = $('#reviewSingleContent' + reviewNo).val(); // 상품평 내용
                     var reviewNickName = $('#reviewNickName').val(); // 사용자 아이디
-        			console.log("선택된 상품평 번호 : " + reviewNo + ", 상품평 내용 : " + reviewSingleContent
-        					+ ", 사용자 닉네임 : " + reviewNickName);
-        			
-        			// ajax 요청
+
+                    // ajax 요청
         			$.ajax({
         				type : 'put',
         				url : '../reviews/' + reviewNo,
@@ -312,11 +310,9 @@
         		// 삭제 버튼을 클릭하면 선택된 상품평 삭제
         		$('#reviews').on('click', '.review_item .btn_delete',
         				function(){
-        			console.log(this);
         			
         			// 선택된 상품평 reviewNo
         			var reviewNo = $(this).prevAll('#reviewNo').val();
-        			console.log("선택된 상품평 번호 : " + reviewNo);
         			
         			// ajax 요청
         			$.ajax({
@@ -337,9 +333,45 @@
         				} // end of callback()
         			}); // end of ajax()
         		}); // end btn_delete()
-                
         	}); // end of document
         </script>
+        
+        <script type="text/javascript">
+          // 좋아요
+          $(document).ready(function(){
+             
+            var userId = $("#userId").val();
+            var productNo = $('#productNo').val();
+            
+            $("body").on("click", "#like_button", function(event){
+            var like_obj = {
+                'productNo' : productNo,
+                'userId' : userId
+            };
+            
+            var JSON_like = JSON.stringify(like_obj);
+            
+            $.ajax({
+              type : 'POST',
+              url : '../main/product/list/like/insert',
+              headers : {
+                          'Content-Type' : 'application/json',
+                          'X-HTTP-Method-Override' : 'POST'
+                       },
+                       data : JSON_like,
+                       success : function (result, status) {
+                               if (result == 1) {
+                                $("#imgsrc").attr("src", "../resources/img/h1.png");
+                               } else {
+                                $("#imgsrc").attr("src", "../resources/img/h2.png");
+                               }
+                       } // end success()
+            		});// end ajax
+             	}); // end body.click()
+          	}); //end document
+        
+       
+      </script>
         
     </body>
 </html>

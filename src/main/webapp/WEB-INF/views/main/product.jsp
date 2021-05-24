@@ -85,13 +85,13 @@
           </ol>
           <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
+              <img class="d-block img-fluid" src="https://blog.kakaocdn.net/dn/caDM2D/btqHTZMeRfR/8tUOKUiXyGoe7BLfImHTR1/img.png" alt="First slide" style="width : 900px; height : 350px;">
             </div>
             <div class="carousel-item">
-              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
+              <img class="d-block img-fluid" src="https://joahye.com/wp-content/uploads/2020/11/Thermus-01-2000x952-min-1024x487.jpg" alt="Second slide" style="width : 900px; height : 350px;">
             </div>
             <div class="carousel-item">
-              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
+              <img class="d-block img-fluid" src="https://i.pinimg.com/originals/25/e3/b6/25e3b6b929a0b18e02860f05b18e59d0.jpg" alt="Third slide" style="width : 900px; height : 350px;">
             </div>
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -122,7 +122,7 @@
                 <p class="card-text">${productList.point }</p>
               </div>
               <div class="card-footer">
-              
+                
                 <small class="text-muted">
                 &#9733; &#9733; &#9733; &#9733; &#9734;
                 </small>

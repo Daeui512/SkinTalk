@@ -71,7 +71,8 @@ public class MemberController {
 		if (vo != null) { // 로그인 성공 시
 			logger.info("로그인 성공");
 			HttpSession session = request.getSession();
-			session.setAttribute("userId", userId);
+			session.setAttribute("userId", vo.getUserId());
+			logger.info("userId : " + userId);
 			response.sendRedirect("/skintalk/main/index");
 		} else { // 로그인 실패 시
 			logger.info("로그인 실패");
@@ -95,8 +96,8 @@ public class MemberController {
 	@GetMapping("/member-detail")
 	public void memberDetailGet(MemberVO vo, String userId, HttpSession session, Model model) {
 		
-		logger.info("memberDetail() 호출 userId : " + userId);
 		userId = (String)session.getAttribute("userId");
+		logger.info("memberDetail() 호출 userId : " + userId);
 		vo = memberService.read(userId);
 		
 		model.addAttribute("vo", vo);
@@ -107,14 +108,15 @@ public class MemberController {
 	// updateGet()
 	@GetMapping("/update")
 	public void updateGet(MemberVO vo, HttpServletRequest request, HttpSession session, Model model) {
-		logger.info("updateGet() 호출");
 		String userId = (String)session.getAttribute("userId");
+		logger.info("updateGet() 호출 userId : " + userId);
 		vo = memberService.read(userId);
 		
 		// vo 객체 model에 추가
 		model.addAttribute("vo", vo);
-	}
+	} // end of updateGet()
 	
+	// updatePost()
 	@PostMapping("/update")
 	public String updatePost(MemberVO vo, HttpServletResponse response, 
 			RedirectAttributes reAttr) throws IOException {
@@ -133,8 +135,9 @@ public class MemberController {
 			reAttr.addFlashAttribute("update_result", "fail");
 			return "redirect:/member/member-detail";
 		}
-	}
+	} // end of updatePost
 	
+	// deleteGet()
 	@GetMapping("/delete")
 	public String deleteGet(HttpServletResponse response, HttpSession session, 
 			RedirectAttributes reAttr) throws IOException {
@@ -144,49 +147,53 @@ public class MemberController {
 		
 		if (result == 1) { // delete 성공시 alert띄우기 (안됨)
 			logger.info("회원탈퇴 성공");
-			// main/main으로 delete_result 키보내기
+			// main/index으로 delete_result 키보내기
 			reAttr.addFlashAttribute("delete_result", "success");
 			//userId 세션 지우기
 			session.removeAttribute("userId");
-			return "redirect:/main/main";
+			return "redirect:/main/index";
 		} else { // delete 실패시 alert띄우기 (안됨)
 			logger.info("회원탈퇴 실패");
-			// main/main으로 delete_result 키보내기
+			// main/index으로 delete_result 키보내기
 			reAttr.addFlashAttribute("delete_result", "fail");
-			return "redirect:/main/main";
+			return "redirect:/main/index";
 		}
-	}
+	} // end of deleteGet()
 	
+	// userIdChkPost()
 	@PostMapping("/userid_check")
 	@ResponseBody
 	public int userIdChkPost(String userId) {
 		logger.info("userIdChkPost() : " + userId);
 		int result = memberService.userIdChk(userId);
 		return result;
-	}
+	} // end of userIdChkPost()
 	
+	// emailChkPost()
 	@PostMapping("/email_check")
 	@ResponseBody
 	public int emailChkPost(String email) {
 		logger.info("emailChkPost() : " + email);
 		int result = memberService.emailChk(email);
 		return result;
-	}
+	} // end of emailChkPost()
 	
+	// phoneChkPost()
 	@PostMapping("/phone_check")
 	@ResponseBody
 	public int phoneChkPost(String phone) {
 		logger.info("phoneChkPost() : " + phone);
 		int result = memberService.phoneChk(phone);
 		return result;
-	}
+	} // end of phoneChkPost()
 	
-	// findUserIdFormGet()
+	// findIdFormGet()
 	@GetMapping("/find_id_form")
 	public void findUserIdFormGet(String email, String phone, Model model) throws Exception{
 		logger.info("findIdFormGet() 호출");
-	} // end of findUserIdFormGet()
+	} // end of findIdFormGet()
 	
+	// findIdPost()
 	@PostMapping("/find_id")
 	public String findUserIdPost(String email, String phone, 
 			Model model) throws Exception{
@@ -203,13 +210,15 @@ public class MemberController {
 		}
 		
 		return "/member/find_id";
-	} // end of findUserIdFormPost()
+	} // end of findIdFormPost()
 	
+	// findPasswordFormGet()
 	@GetMapping("/find_password_form")
 	public void findPasswordFormGet(MemberVO vo) {
 		logger.info("findPasswordFormGet() 호출");
 	} // end of findPasswordFormGet()
 	
+	//findPasswordPost
 	@PostMapping("/find_password")
 	@ResponseBody
 	public String findPasswordPost(String userId, String email, MemberVO vo) {
@@ -246,9 +255,8 @@ public class MemberController {
 				findUserPassword_result = "success";
 				return findUserPassword_result;
 			}
+			
 	} // end of findPasswordFormPost()
-	
-	
 	
 } // end of class
 
