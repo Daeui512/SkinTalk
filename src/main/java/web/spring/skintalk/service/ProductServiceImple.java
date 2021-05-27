@@ -96,5 +96,11 @@ public class ProductServiceImple implements ProductService{
 		return dao.viewCount(productNo);
 	}
 
+	@Override
+	public List<ProductVO> readByRank(PageCriteria criteria) {
+		logger.info("readByRank() 호출 : " );
+		return dao.selectByRank(criteria);
+	}
+
 
 }

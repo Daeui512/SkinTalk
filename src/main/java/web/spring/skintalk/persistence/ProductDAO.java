@@ -19,5 +19,6 @@ public interface ProductDAO {
 	List<ProductVO> selectAllByKeyword(String keyword, PageCriteria criteria);	// 검색 후 상품목록 보기/ 페이징
 	List<ProductVO> selectByTypical(PageCriteria criteria, int productType);	// 카테고리별(타입별) 상품 출력/ 페이징
 	int viewCount(int productNo);
+	List<ProductVO> selectByRank(PageCriteria criteria);
 
 }

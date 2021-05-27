@@ -1,6 +1,9 @@
 package web.spring.skintalk.controller;
 
+import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
-import kr.co.shineware.nlp.komoran.core.Komoran;
-import kr.co.shineware.nlp.komoran.model.KomoranResult;
-import kr.co.shineware.nlp.komoran.model.Token;
+import web.spring.skintalk.domain.MemberVO;
 import web.spring.skintalk.domain.ProductVO;
+import web.spring.skintalk.service.MemberService;
 import web.spring.skintalk.service.ProductService;
 import web.spring.skintalk.util.PageCriteria;
 import web.spring.skintalk.util.PageMaker;
@@ -28,16 +29,52 @@ public class MainController {
     @Autowired
 	private ProductService productService;
     
+    @Autowired
+    private MemberService memberService;
+    
 	
 	@GetMapping("/index")			 // 쇼핑몰 홈페이지 호출
-	public void index(Model model) {
+	public void index(Model model, HttpSession session) {
 		logger.info("index()호출 ");
+		String userId = (String) session.getAttribute("userId");
+		logger.info("userId " + userId);
+		
+		MemberVO member = memberService.read(userId);
+		logger.info("member_info = " + member.toString());
+		
+		String[] skin_types = member.getSkinType().split(",");
+		for (int i = 0; i < skin_types.length; i++) {
+			logger.info("skin_type = " + skin_types[i]);
+		}
+		
+		String[] skin_troubles = member.getSkinTrouble().split(",");
+		for (int i = 0; i < skin_troubles.length; i++) {
+			logger.info("skin_troubles = " + skin_troubles[i]);
+		}
+		
+		
 		
 		PageCriteria criteria = new PageCriteria(1, 12);
 		List<ProductVO> list = productService.read(criteria);
 		for (ProductVO vo : list) {
+			String[] points = vo.getPoint().split(",");
+			for (int i = 0; i < points.length; i++) {
+			}
+			
+			
+			
 			logger.info("vo = " + vo.toString());
+			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		model.addAttribute("productList", list);
 		
 		
@@ -95,5 +132,20 @@ public class MainController {
 		
 		return list;
 	}
+	
+	@GetMapping("/rank")
+	public void rank(Model model) {
+		logger.info("상품 랭킹 기능 호출");
+		PageCriteria criteria = new PageCriteria(1, 12);
+		PageMaker maker = new PageMaker();
+		List<ProductVO> list = productService.readByRank(criteria);
+		maker.setTotalCount(productService.getTotalNumsOfRecords());
+		maker.setCriteria(criteria);
+		maker.setPageData();
+		
+		model.addAttribute("productList", list);
+		model.addAttribute("pageMaker", maker);
+	}
+	
         
 }

@@ -18,6 +18,7 @@ public interface ProductService {
 	public abstract List<String> readKeyword(String keyword);
 	public abstract List<ProductVO> readAllKeyword(String keyword, PageCriteria criteria);
 	public abstract List<ProductVO> readByTypical(PageCriteria criteria, int productType);
-	int viewCount(int productNo);
+	public abstract int viewCount(int productNo);
+	public abstract List<ProductVO> readByRank(PageCriteria criteria);
 
 }

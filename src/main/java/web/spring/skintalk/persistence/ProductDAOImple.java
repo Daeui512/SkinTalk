@@ -112,6 +112,12 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("viewCount() 호출 : " + productNo);
 		return sqlSession.update(NAMESPACE + ".viewCountUpdate", productNo);
 	}
+
+	@Override
+	public List<ProductVO> selectByRank(PageCriteria criteria) {
+		logger.info("selectByRank() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_by_rank", criteria);
+	}
 	
 
 }

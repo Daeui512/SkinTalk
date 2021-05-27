@@ -220,11 +220,7 @@
                             alert('상품평 입력 성공');
                             getAllReviews();
                             $('#reviewContent').val('');
-                            $('#reviewNickName').val('');
                             $('#reviewGrade').val('');
-                            $('#reviewAge').val('');
-                            $('#reviewGender').val('');
-                            $('#reviewSkinType').val('');
                          }
                       } //end success
                    }); // end ajax()

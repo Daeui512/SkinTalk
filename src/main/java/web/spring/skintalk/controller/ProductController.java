@@ -52,8 +52,6 @@ public class ProductController {
 		List<ReviewVO> rVo = reviewService.read(productNo);
 		logger.info("rVo : " + rVo.toString());
 		
-		
-		
 	} // end productGet()
 	
 }

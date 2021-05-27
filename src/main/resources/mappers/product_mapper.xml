@@ -64,4 +64,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		where rn between #{start} and #{end}
 	</select>
 	
+	<select id="select_by_rank" resultType="ProductVO">
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${productType}, b.${viewCount}, (${grade}+${good}+${viewCount}) as rank from (
+			select rownum as rn, a.* from (
+				select * from ${product} order by ${grade} + ${good} + ${viewCount} desc)a
+			)b
+		where rn between #{start} and #{end}
+	</select>
+	
+	
 </mapper>

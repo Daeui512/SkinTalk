@@ -108,7 +108,7 @@
 
         <div class="row">
         
-          <c:forEach var="productList" items="${productList }" >
+          <c:forEach var="productList" items="${productList }"  >
           
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
