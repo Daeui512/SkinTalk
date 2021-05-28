@@ -147,7 +147,7 @@
                     <div class="col-md-4">
                         
                         <!-- Categories Widget-->
-                        <div class="card mb-4">
+                        <div class="card mb-4" style="size: 289.984*800.000">
                             <h5 class="card-header">Categories</h5>
                             <div class="card-body">
                                 <div class="row">
@@ -186,8 +186,8 @@
         	$(document).ready(function(){
         		var reviewPno = $('#reviewPno').val();  // 상품 번호 값
         		getAllReviews();
-        		
-                // 상품평 입력 기능
+
+        		// 상품평 입력 기능
                 $('#btn_add').click(function(){
                    var reviewContent = $('#reviewContent').val(); // 상품평 내용
                    var reviewNickName = $('#reviewNickName').val(); // 사용자 아이디
@@ -230,50 +230,76 @@
                 function getAllReviews(){
                    var url =  '../reviews/all/' + reviewPno;
                    $.getJSON(
-                         url,
-                         function(jsonData){
+                          url,
+                          function(jsonData){
                             
-                            var reviewNickName = $('#review_nickName').val();
-                            var list = ''; // JSON 데이터를 표현할 변수
-                            $(jsonData).each(function(){
-                                // this : 컬렉션에서 각 데이터를 꺼내서 저장
-                                    var reviewCdate = new Date(this.reviewCdate);
-                                    
-                                    var disabled = 'disabled';
-        							var readonly = 'readonly';
-        								
-        								if (reviewNickName == this.reviewNickName) {
-											disabled = '';
-											readonly = '';
-										}
-        							
-                                        list += '<div class="review_item">'
-                                          + '<pre>'
-                                          + '<input type="hidden" id="reviewNo" value="' + this.reviewNo + '" />'
-                                          + '<input type="hidden" id="reviewNickName" value="' + this.reviewNickName + '" />'
-                                          + '<input type="hidden" id="reviewGrade" value="' + this.reviewGrade + '" />'
-                                          + '<input type="hidden" id="reviewAge" value="' + this.reviewAge + '" />'
-                                          + '<input type="hidden" id="reviewGender" value="' + this.reviewGender + '" />'
-                                          + '<input type="hidden" id="reviewSkinType" value="' + this.reviewSkinType + '" />'
-										  + '<img class="d-flex mr-3 rounded-circle" src="https://via.placeholder.com/50x50" alt="..." />'
-										  + '<h5 class="mt-0">닉네임: '+ this.reviewNickName + '&nbsp;&nbsp;' + '평점: ' + this.reviewGrade + '&nbsp;&nbsp;' + '나이: ' + this.reviewAge + '&nbsp;&nbsp;' + '성별: ' + this.reviewGender + '&nbsp;&nbsp;' + '피부타입: ' + this.reviewSkinType  +'</h5>'
-										  + '<input type="text" id="reviewSingleContent' + this.reviewNo + '" value="' + this.reviewContent + '" '+ readonly +'/>'
-                                          + '&nbsp;&nbsp;'
-                                          + reviewCdate
-                                          + '&nbsp;&nbsp;'
-                                          + '<button class="btn_update" type="button" '+ disabled +'>수정</button>'
-                                          + '<button class="btn_delete" type="button" '+ disabled +'>삭제</button>'
-                                          + "</pre>"
-                                          + "</div>";
-                            }); // end each()
-                            $('#reviews').html(list);
-                            var reviewGrade = $('#review_grade').val();
-                            $('.grade_output').html('<p>' + reviewGrade + '</p>');
-                         } // end callback()
-                         ); // end getJSON()
+                          var reviewNickName = $('#review_nickName').val();
+                          var list = ''; // JSON 데이터를 표현할 변수
+                          $(jsonData).each(function(){
+                              // this : 컬렉션에서 각 데이터를 꺼내서 저장
+                              var reviewCdate = new Date(this.reviewCdate);
+                                  
+                              var disabled = 'disabled';
+      						  var readonly = 'readonly';
+      								
+							  if (reviewNickName == this.reviewNickName) {
+							  	disabled = '';
+							  	readonly = '';
+  							  }
+      							
+                              list += '<div class="review_item">'
+                                   + '<pre>'
+                                   + '<input type="hidden" id="reviewNo" value="' + this.reviewNo + '" />'
+                                   + '<input type="hidden" id="reviewNickName" value="' + this.reviewNickName + '" />'
+                                   + '<input type="hidden" id="reviewGrade" value="' + this.reviewGrade + '" />'
+                                   + '<input type="hidden" id="reviewAge" value="' + this.reviewAge + '" />'
+                                   + '<input type="hidden" id="reviewGender" value="' + this.reviewGender + '" />'
+                                   + '<input type="hidden" id="reviewSkinType" value="' + this.reviewSkinType + '" />'
+							       + '<img class="d-flex mr-3 rounded-circle" src="https://via.placeholder.com/50x50" alt="..." />'
+							       + '<h5 class="mt-0">닉네임: '+ this.reviewNickName + '&nbsp;&nbsp;' + '평점: ' + this.reviewGrade + '&nbsp;&nbsp;' + '나이: ' + this.reviewAge + '&nbsp;&nbsp;' + '성별: ' + this.reviewGender + '&nbsp;&nbsp;' + '피부타입: ' + this.reviewSkinType  +'</h5>'
+					      		   + '<input type="text" id="reviewSingleContent' + this.reviewNo + '" value="' + this.reviewContent + '" '+ readonly +'/>'
+                                   + '&nbsp;&nbsp;'
+                                   + reviewCdate
+                                   + '&nbsp;&nbsp;'
+                                   + '<button class="btn_update" type="button" '+ disabled +'>수정</button>'
+                                   + '<button class="btn_delete" type="button" '+ disabled +'>삭제</button>'
+                                   + '<button class="reply_insert" type="button"' + disabled + '>답글</button>'
+                                   + '<div class="reply_answer"></div>'
+                                   + "</pre>"
+                                   + "</div>";
+                                   
+                         var destination = '../rreviews/all/' + this.reviewNo;
+                         
+						 $.getJSON(
+								 destination,
+								 function(jsonData){
+									 var arr = '';
+									 var rReviewCdate = new Date(this.rReviewCdate);
+									 console.log(rReviewCdate);
+									 $(jsonData).each(function(){
+										 console.log(this)
+										 arr += '<pre>'
+	   										 + '<input type="text" id="rReviewContent" value="' + this.rReviewContent + '" readonly style="border:hidden;"/>'
+	                                         + '&nbsp;&nbsp;'
+	                                         + rReviewCdate
+	                                         + '&nbsp;&nbsp;'
+	                                         + '<button class="btn_review_delete" type="button">삭제</button>'
+	                                         + "</pre>";
+									 })// end of each;
+								 $('.reply_answer').html(arr);
+								 }// end of callback
+								 )// end of getJSON
+								 
+                         }); // end each()
+                         
+                         $('#reviews').html(list);
+                         var reviewGrade = $('#review_grade').val();
+                         $('.grade_output').html('<p>' + reviewGrade + '</p>');
+                        } // end callback()
+                    ); // end getJSON()
                 } //end getAllReviews()
                 
-             // 수정 버튼을 클릭하면 선택된 상품평 수정
+             	// 수정 버튼을 클릭하면 선택된 상품평 수정
         		$('#reviews').on('click', '.review_item .btn_update', function() {
         			
         			// 선택된 상품평 reviewNo, reviewSingleContent, reviewContent 값을 저장
@@ -329,6 +355,65 @@
         				} // end of callback()
         			}); // end of ajax()
         		}); // end btn_delete()
+        		
+        		var rReviewRno;
+        		
+        		$('#reviews').on('click', '.review_item .reply_insert', function(){
+        			rReviewRno = $(this).prevAll('#reviewNo').val();
+        			list = '';
+        			list += '<br><textarea id="rReviewContent" class="form-control" rows="3" placeholder="답글 작성."></textarea><br><button id="rReview_btn" class="btn btn-primary" type="button">작성</button>'
+        			$(this).nextAll('.reply_answer').html(list).toggle();
+            		
+        		});// end of reviews.onclick 대댓글 textarea 생성
+        		
+        		$('#reviews').on('click', '.review_item .reply_answer #rReview_btn', function(){
+        			var rReviewContent = $(this).prevAll('#rReviewContent').val();
+        			console.log(rReviewRno + ',' + rReviewContent);
+        			$.ajax({
+        				type : 'POST',
+        				url : '../rreviews',
+        				headers : {
+        					'Content-Type' : 'application/json',
+        					'X-HTTP-Method-Override' : 'POST'
+        				},
+        				data : JSON.stringify({
+        					'rReviewRno' : rReviewRno,
+        					'rReviewContent' : rReviewContent
+        				}),
+        				success : function(result, status){
+        					console.log(result + ',' + status)
+        				}
+        			});// end of ajax
+    			});// end of 작성 클릭
+        		
+        		function getAllRReviews(){
+    				var url = '../rreviews/all/' + rReviewRno;
+        			$.getJSON(
+                            url,
+                            function(jsonData){
+                               var list = ''; // JSON 데이터를 표현할 변수
+                               $(jsonData).each(function(){
+                            	   console.log(this);
+                                    var rReviewCdate = new Date(this.rReviewCdate);
+                                       
+                                    list += '<pre>'
+										 + '<img class="d-flex mr-3 rounded-circle" src="https://via.placeholder.com/50x50" alt="..." />'
+   										 + '<input type="text" id="reviewSingleContent' + this.reviewNo + '" value="' + this.reviewContent + '" '+ readonly +'/>'
+                                         + '&nbsp;&nbsp;'
+                                         + reviewCdate
+                                         + '&nbsp;&nbsp;'
+                                         + '<button class="btn_delete" type="button">삭제</button>'
+                                         + "</pre>";
+                                         
+                               }); // end each()
+                               $('.reply_answer').html(list);
+                            } // end callback()
+                    ); // end getJSON()
+    			}
+        		
+        		
+        		
+        		
         	}); // end of document
         </script>
         

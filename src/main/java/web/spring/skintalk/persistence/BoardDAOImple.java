@@ -19,7 +19,7 @@ import web.spring.skintalk.util.PageCriteria;
 // - <context:component-scan ... />
 public class BoardDAOImple implements BoardDAO{
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoardDAOImple.class);
-	private static final String NAMESPACE = "edu.spring.ex02.BoardMapper";
+	private static final String NAMESPACE = "web.spring.skintalk.BoardMapper";
 	
 	// MyBatis의 SqlSession을 사용하기 위해서 스프링 프레임워크가 생성한 bean을 주입(injection)을 받음
 	@Autowired

@@ -18,17 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import web.spring.skintalk.domain.ReviewVO;
 import web.spring.skintalk.service.ReviewService;
+import web.spring.skintalk.service.RreviewService;
 
 @RestController
 @RequestMapping(value="/reviews")
 public class ReviewRESTController {
-	private static final Logger logger =
-			LoggerFactory.getLogger(ReviewRESTController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ReviewRESTController.class);
 	
 	@Autowired
 	private ReviewService reviewService;
 	
-	// createReviewPost()
 	@PostMapping
 	public ResponseEntity<Integer> createReviewPost(@RequestBody ReviewVO vo){
 		logger.info(vo.toString());
@@ -45,17 +44,15 @@ public class ReviewRESTController {
 			e.printStackTrace();
 			return new ResponseEntity<Integer>(0, HttpStatus.OK);
 		}
-	} // end of createReviewPost()
+	} 
 	
-	// readReviewsGet()
 	@GetMapping("/all/{reviewPno}")
 	public ResponseEntity<List<ReviewVO>> readReviewsGet(
 			@PathVariable("reviewPno") int reviewPno) {
 		List<ReviewVO> list = reviewService.read(reviewPno);
 		return new ResponseEntity<List<ReviewVO>>(list, HttpStatus.OK);
-	} // end of readReviewsGet()
+	}
 	
-	// updateReviewPut()
 	@PutMapping("/{reviewNo}")
 	public ResponseEntity<String> updateReviewPut(
 			@PathVariable("reviewNo") int reviewNo,
@@ -72,9 +69,8 @@ public class ReviewRESTController {
 			entity = new ResponseEntity<String>("fail", HttpStatus.OK);
 		}
 		return entity;
-	} // end of updateReviewPut()
+	} 
 	
-	// deleteReview()
 	@DeleteMapping("/{reviewNo}")
 	public ResponseEntity<String> deleteReview(
 			@PathVariable("reviewNo") int reviewNo,
@@ -89,9 +85,9 @@ public class ReviewRESTController {
 		} catch (Exception e) {
 			return new ResponseEntity<String>("fail", HttpStatus.OK);
 		}
-	} // end of deleteReview()
+	}
 	
-} // end of class
+}
 
 
 

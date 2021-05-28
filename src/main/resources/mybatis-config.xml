@@ -76,6 +76,13 @@
 		<property name="likeNo" value="like_no"/>
 		<property name="userId" value="userid"/>
 		<property name="productNo" value="product_no"/>
+		
+		<!-- 대댓글 -->
+		<property name="rReview" value="r_review"/>
+		<property name="rReviewNo" value="r_review_no"/>
+		<property name="rReviewRno" value="r_review_rno"/>
+		<property name="rReviewContent" value="r_review_content"/>
+		<property name="rReviewCdate" value="r_review_cdate"/>
 	</properties>
 	
 	<!-- Underscore 명명법을 Camel 명명법으로 매핑 -->

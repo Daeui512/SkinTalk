@@ -1,6 +1,5 @@
 package web.spring.skintalk.controller;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -36,45 +35,26 @@ public class MainController {
 	@GetMapping("/index")			 // 쇼핑몰 홈페이지 호출
 	public void index(Model model, HttpSession session) {
 		logger.info("index()호출 ");
-		String userId = (String) session.getAttribute("userId");
-		logger.info("userId " + userId);
-		
-		MemberVO member = memberService.read(userId);
-		logger.info("member_info = " + member.toString());
-		
-		String[] skin_types = member.getSkinType().split(",");
-		for (int i = 0; i < skin_types.length; i++) {
-			logger.info("skin_type = " + skin_types[i]);
-		}
-		
-		String[] skin_troubles = member.getSkinTrouble().split(",");
-		for (int i = 0; i < skin_troubles.length; i++) {
-			logger.info("skin_troubles = " + skin_troubles[i]);
-		}
-		
+//		String userId = (String) session.getAttribute("userId");
+//		logger.info("userId " + userId);
+//		
+//		MemberVO member = memberService.read(userId);
+//		logger.info("member_info = " + member.toString());
+//		
+//		String[] skin_types = member.getSkinType().split(",");
+//		for (int i = 0; i < skin_types.length; i++) {
+//			logger.info("skin_type = " + skin_types[i]);
+//		}
+//		
+//		String[] skin_troubles = member.getSkinTrouble().split(",");
+//		for (int i = 0; i < skin_troubles.length; i++) {
+//			logger.info("skin_troubles = " + skin_troubles[i]);
+//		}
+//		
 		
 		
 		PageCriteria criteria = new PageCriteria(1, 12);
 		List<ProductVO> list = productService.read(criteria);
-		for (ProductVO vo : list) {
-			String[] points = vo.getPoint().split(",");
-			for (int i = 0; i < points.length; i++) {
-			}
-			
-			
-			
-			logger.info("vo = " + vo.toString());
-			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		model.addAttribute("productList", list);
 		
 		
