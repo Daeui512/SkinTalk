@@ -20,24 +20,18 @@ public class ProductLikeServiceImple implements ProductLikeService{
 	public int create(ProductLikeVO vo) {
 		logger.info("create() 호출 : " + vo.toString());
 		return dao.insert(vo);
-	} // end create()
+	}
 
 	@Override
 	public int delete(String userId, int productNo) {
 		logger.info("delete() 호출 : userId " + userId + ", productNo : " + productNo );
 		return dao.delete(userId, productNo);
-	} // end delete()
+	}
 
 	@Override
 	public int productLikeEq(String userId, int productNo) {
 		logger.info("productLikeEq() 호출 : userId " + userId + ", productNo : " + productNo );
 		return dao.productLikeEq(userId, productNo);
 	}
-
-
-
-
-	
-	
 	
 }

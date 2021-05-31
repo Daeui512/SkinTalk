@@ -5,9 +5,9 @@ import java.util.List;
 import web.spring.skintalk.domain.ReplyVO;
 
 public interface ReplyService {
-   int create(ReplyVO vo) throws Exception;
-   List<ReplyVO> read(int replyBno);
-   int update(ReplyVO vo);
-   int delete(int replyNo, int replyBno) throws Exception;
+	public abstract int create(ReplyVO vo) throws Exception;
+	public abstract List<ReplyVO> read(int replyBno);
+	public abstract int update(ReplyVO vo);
+	public abstract int delete(int replyNo, int replyBno) throws Exception;
    
 }

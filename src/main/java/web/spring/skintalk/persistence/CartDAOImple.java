@@ -23,7 +23,7 @@ public class CartDAOImple implements CartDAO{
 	
 	@Override
 	public List<CartVO> cartMoney() {
-		logger.info("cartMoney()");
+		// TODO Auto-generated method stub
 		return null;
 	}
 

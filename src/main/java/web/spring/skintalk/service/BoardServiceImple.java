@@ -11,9 +11,7 @@ import web.spring.skintalk.domain.BoardVO;
 import web.spring.skintalk.persistence.BoardDAO;
 import web.spring.skintalk.util.PageCriteria;
 
-@Service // @Component
-// 스프링 프레임워크에게 서비스 계층(service/business layer)의
-// 컴포넌트임을 알려주는 어노테이션
+@Service
 public class BoardServiceImple implements BoardService{
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoardServiceImple.class);
 	

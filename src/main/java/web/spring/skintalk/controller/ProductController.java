@@ -33,7 +33,6 @@ public class ProductController {
 	@Autowired
 	private ReviewService reviewService;
 	
-	
 	// 상세조회
 	@GetMapping("/product_detail")
 	public void productGet(Model model, Integer productNo, HttpSession session) {

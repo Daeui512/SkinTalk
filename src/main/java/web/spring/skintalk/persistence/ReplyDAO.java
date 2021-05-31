@@ -5,8 +5,8 @@ import java.util.List;
 import web.spring.skintalk.domain.ReplyVO;
 
 public interface ReplyDAO {
-   int insert(ReplyVO vo);
-   List<ReplyVO> select(int replyBno);
-   int update(ReplyVO vo);
-   int delete(int replyNo);
+	public abstract int insert(ReplyVO vo);
+	public abstract List<ReplyVO> select(int replyBno);
+	public abstract int update(ReplyVO vo);
+	public abstract int delete(int replyNo);
 }

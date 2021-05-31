@@ -12,10 +12,9 @@ import web.spring.skintalk.domain.ReviewVO;
 
 @Repository
 public class ReviewDAOImple implements ReviewDAO{
-	private static final Logger logger =
-			LoggerFactory.getLogger(ReviewDAOImple.class);
-	private static final String NAMESPACE = 
-			"web.spring.skintalk.ReviewMapper";
+	private static final Logger logger = LoggerFactory.getLogger(ReviewDAOImple.class);
+	private static final String NAMESPACE = "web.spring.skintalk.ReviewMapper";
+	
 	@Autowired
 	private SqlSession sqlSession;
 	

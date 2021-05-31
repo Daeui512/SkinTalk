@@ -13,8 +13,7 @@ import web.spring.skintalk.domain.ProductLikeVO;
 
 @Repository
 public class ProductLikeDAOImple implements ProductLikeDAO{
-	private static final Logger logger = 
-			LoggerFactory.getLogger(ProductLikeDAOImple.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProductLikeDAOImple.class);
 	private static final String NAMESPACE ="web.spring.skintalk.ProductLikeMapper";
 	
 	@Autowired

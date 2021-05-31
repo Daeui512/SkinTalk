@@ -41,7 +41,6 @@ public class CartServiceImple implements CartService{
 		logger.info("nonMemberListCart : userId : " + nonMemberUserId);;
 		return dao.nonMemberListCart(nonMemberUserId);
 	}
-	
 
 	@Override
 	public int deleteOne(int cartNo) {
@@ -57,8 +56,8 @@ public class CartServiceImple implements CartService{
 
 	@Override
 	public int update(int cartNo) {
-		logger.info("update() 호출 : " + cartNo);
-		return 1;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -88,7 +87,6 @@ public class CartServiceImple implements CartService{
 	@Override
 	public void modifyCart(CartVO vo) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
@@ -103,7 +101,5 @@ public class CartServiceImple implements CartService{
         dao.updateCart(vo);;      
     }
 
-	
-	
 	
 }

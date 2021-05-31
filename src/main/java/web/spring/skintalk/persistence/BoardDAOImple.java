@@ -11,17 +11,11 @@ import org.springframework.stereotype.Repository;
 import web.spring.skintalk.domain.BoardVO;
 import web.spring.skintalk.util.PageCriteria;
 
-@Repository // @Component
-// - 영속 계층(Persistence Layer)의 DB 관련 기능을 담당
-// - Spring Component bean으로 등록함
-// - 스프링 프레임워크가 bean을 생성하기 위해서는
-//   root-context.xml에 bean으로 등록해야함
-// - <context:component-scan ... />
+@Repository
 public class BoardDAOImple implements BoardDAO{
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoardDAOImple.class);
 	private static final String NAMESPACE = "web.spring.skintalk.BoardMapper";
 	
-	// MyBatis의 SqlSession을 사용하기 위해서 스프링 프레임워크가 생성한 bean을 주입(injection)을 받음
 	@Autowired
 	private SqlSession sqlSession;
 	

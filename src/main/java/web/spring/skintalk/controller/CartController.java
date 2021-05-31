@@ -72,9 +72,6 @@ public class CartController {
 		model.addAttribute("cartList", list);
 		model.addAttribute("sumMoney", sumMoney);
 		model.addAttribute("cartCount", cartCount);
-		
-		// 위쪽은 로그인 했을 때 실행되는 코드(session에 아이디값이 있을때)
-		// 세션에 값이 없을때는 사용자가 선택한 정보가 쿠키에 저장되어서 쿠키에 있는 값을 불러와서 장바구니를 구성해야함
 	}
 	
 	

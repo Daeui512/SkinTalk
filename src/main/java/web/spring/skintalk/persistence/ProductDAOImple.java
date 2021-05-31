@@ -21,7 +21,6 @@ public class ProductDAOImple implements ProductDAO{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	
 	@Override
 	public int insert(ProductVO vo) {
 		// TODO Auto-generated method stub
@@ -72,12 +71,11 @@ public class ProductDAOImple implements ProductDAO{
 		return sqlSession.selectOne(NAMESPACE + ".select_TotalNums_by_typical", productType);
 	}
 	
-	// 상세 조회
 	@Override
 	public ProductVO select(int productNo) {
 		logger.info("select_by_productNo() 호출" + productNo);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_productNo", productNo);
-	} // end select()
+	}
 
 	@Override
 	public List<String> selectByKeyword(String keyword) {

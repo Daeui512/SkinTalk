@@ -12,10 +12,9 @@ import web.spring.skintalk.domain.ReplyVO;
 
 @Repository
 public class ReplyDAOImple implements ReplyDAO{
-   private static final Logger logger =
-         LoggerFactory.getLogger(ReplyDAOImple.class);
-   private static final String NAMESPACE = 
-         "web.spring.skintalk.ReplyMapper";
+   private static final Logger logger = LoggerFactory.getLogger(ReplyDAOImple.class);
+   private static final String NAMESPACE = "web.spring.skintalk.ReplyMapper";
+   
    @Autowired
    private SqlSession sqlSession;
    

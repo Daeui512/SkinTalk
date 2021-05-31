@@ -11,10 +11,10 @@ public interface ProductService {
 	public abstract List<ProductVO> read(PageCriteria criteria);
 	public abstract int update(ProductVO vo);
 	public abstract int delete(int productNo);
-	int getTotalNumsOfRecords();
-	int getTotalNumsByKeyword(String keyword);
-	int getTotalNumsByTypical(int productType);
-	ProductVO read(int productNo); // 상세 조회
+	public abstract int getTotalNumsOfRecords();
+	public abstract int getTotalNumsByKeyword(String keyword);
+	public abstract int getTotalNumsByTypical(int productType);
+	public abstract ProductVO read(int productNo); // 상세 조회
 	public abstract List<String> readKeyword(String keyword);
 	public abstract List<ProductVO> readAllKeyword(String keyword, PageCriteria criteria);
 	public abstract List<ProductVO> readByTypical(PageCriteria criteria, int productType);

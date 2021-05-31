@@ -35,7 +35,6 @@ public class ReviewRESTController {
 		
 		try {
 			result = reviewService.create(vo);
-			// 입력 성공하면 전체 평점 product테이블의 grade에 넣기
 			reviewService.updateGrade(vo.getReviewPno());
 			logger.info("vo : " + vo.toString());
 			return new ResponseEntity<Integer>(result, HttpStatus.OK);
@@ -47,56 +46,39 @@ public class ReviewRESTController {
 	} 
 	
 	@GetMapping("/all/{reviewPno}")
-	public ResponseEntity<List<ReviewVO>> readReviewsGet(
-			@PathVariable("reviewPno") int reviewPno) {
+	public ResponseEntity<List<ReviewVO>> readReviewsGet(@PathVariable("reviewPno") int reviewPno) {
 		List<ReviewVO> list = reviewService.read(reviewPno);
 		return new ResponseEntity<List<ReviewVO>>(list, HttpStatus.OK);
 	}
 	
 	@PutMapping("/{reviewNo}")
-	public ResponseEntity<String> updateReviewPut(
-			@PathVariable("reviewNo") int reviewNo,
-			@RequestBody ReviewVO vo) {
+	public ResponseEntity<String> updateReviewPut(@PathVariable("reviewNo") int reviewNo, @RequestBody ReviewVO vo) {
 		vo.setReviewNo(reviewNo);
 		logger.info("reviewPno = " + vo.getReviewPno());
 		logger.info("vo : " + vo.toString());
 		
 		int result = reviewService.update(vo);
 		ResponseEntity<String> entity = null;
-		if (result == 1) { // 상품평 수정 성공하면
+		if (result == 1) {
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
-		} else { // 상품평 수정 실패하면
+		} else {
 			entity = new ResponseEntity<String>("fail", HttpStatus.OK);
 		}
 		return entity;
 	} 
 	
 	@DeleteMapping("/{reviewNo}")
-	public ResponseEntity<String> deleteReview(
-			@PathVariable("reviewNo") int reviewNo,
-			@RequestBody ReviewVO vo) {
+	public ResponseEntity<String> deleteReview(@PathVariable("reviewNo") int reviewNo, @RequestBody ReviewVO vo) {
 		logger.info("reviewPno = " + vo.getReviewPno());
 		
 		try {
 			reviewService.delete(reviewNo, vo.getReviewPno());
-			// 삭제 성공하면 전체 평점 product테이블의 grade에 넣기
 			reviewService.updateGrade(vo.getReviewPno());
 			return new ResponseEntity<String>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("fail", HttpStatus.OK);
 		}
+
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-

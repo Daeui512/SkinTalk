@@ -10,13 +10,14 @@ public class ProductVO {
 	private int good;
 	private int productType;
 	private int viewCount;
+	private String imgSource;
 	
 	public ProductVO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public ProductVO(int productNo, String productName, int price, String point, float grade, int good, int productType,
-			int viewCount) {
+			int viewCount, String imgSource) {
 		super();
 		this.productNo = productNo;
 		this.productName = productName;
@@ -26,6 +27,7 @@ public class ProductVO {
 		this.good = good;
 		this.productType = productType;
 		this.viewCount = viewCount;
+		this.imgSource = imgSource;
 	}
 
 	public int getProductNo() {
@@ -92,11 +94,19 @@ public class ProductVO {
 		this.viewCount = viewCount;
 	}
 
+	public String getImgSource() {
+		return imgSource;
+	}
+
+	public void setImgSource(String imgSource) {
+		this.imgSource = imgSource;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductVO [productNo=" + productNo + ", productName=" + productName + ", price=" + price + ", point="
 				+ point + ", grade=" + grade + ", good=" + good + ", productType=" + productType + ", viewCount="
-				+ viewCount + "]";
+				+ viewCount + ", imgSource=" + imgSource + "]";
 	}
 	
 	

@@ -40,7 +40,7 @@ public class RreviewDAOImple implements RreviewDAO{
 	@Override
 	public int delete(int rReviewNo) {
 		logger.info("delete() 호출 : rReviewNo = " + rReviewNo);
-		return sqlSession.delete(NAMESPACE + "delete", rReviewNo);
+		return sqlSession.delete(NAMESPACE + ".delete", rReviewNo);
 	}
 
 }

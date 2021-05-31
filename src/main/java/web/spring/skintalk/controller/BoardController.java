@@ -30,7 +30,6 @@ public class BoardController {
 		LOGGER.info("list() 호출");
 		LOGGER.info("page = " + page + ", perPage = " + perPage);
 
-		// paging 처리
 		PageCriteria criteria = new PageCriteria();
 		if (page != null) {
 			criteria.setPage(page);
@@ -48,30 +47,27 @@ public class BoardController {
 		maker.setTotalCount(boardService.getTotalNumsOfRecords());
 		maker.setPageData();
 		model.addAttribute("pageMaker", maker);
-	}// end list
+	}
 
 	@GetMapping("/register")
 	public void registerGET() {
 		LOGGER.info("registerGET() 호출");
-	}// end registerGET()
+	}
 
 	@PostMapping("/register")
 	public String registerPOST(BoardVO vo, RedirectAttributes reAttr) {
-		// RedirectAttributes - 재경로 위치에 속성값을 전송하는 객체
 		LOGGER.info("registerPOST() 호출");
 		LOGGER.info(vo.toString());
 		int result = boardService.create(vo);
 		LOGGER.info(result + "행 삽입");
 		if (result == 1) {
-			// "insert_result"의 키이름을 가진 데이터 전송
 			reAttr.addFlashAttribute("insert_result", "success");
-			return "redirect://board/list"; // /board/list경로로 이동 get 방식
+			return "redirect://board/list";
 		} else {
-			// "insert_result"의 키이름을 가진 데이터 전송
 			reAttr.addFlashAttribute("insert_result", "fail");
-			return "redirect://board/list"; // /board/list경로로 이동 get 방식
+			return "redirect://board/list";
 		}
-	}// end registerPOST()
+	}
 	
 	@GetMapping("/detail")
 	public void detali(Model model, Integer boardNo, Integer page) {
@@ -114,4 +110,4 @@ public class BoardController {
 			return "redirect://board/error";
 		}
 	}
-}// end BoardController
+}

@@ -11,8 +11,7 @@ import web.spring.skintalk.persistence.MemberDAO;
 
 @Service
 public class MemberServiceImple implements MemberService {
-	private static final Logger logger =
-			LoggerFactory.getLogger(MemberServiceImple.class);
+	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImple.class);
 	
 	@Autowired
 	private MemberDAO dao;

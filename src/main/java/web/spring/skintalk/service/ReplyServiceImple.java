@@ -12,20 +12,15 @@ import web.spring.skintalk.persistence.ReplyDAO;
 
 @Service
 public class ReplyServiceImple implements ReplyService{
-   private static final Logger logger =
-         LoggerFactory.getLogger(ReplyServiceImple.class);
+   private static final Logger logger = LoggerFactory.getLogger(ReplyServiceImple.class);
    
    @Autowired
    private ReplyDAO replyDao;
-   
 
    @Override
    public int create(ReplyVO vo) throws Exception{
       logger.info("create() 호출");
-      replyDao.insert(vo);
-      logger.info("댓글 입력 성공");
-      
-      return 1;
+      return replyDao.insert(vo);
    }
 
    @Override
@@ -43,9 +38,7 @@ public class ReplyServiceImple implements ReplyService{
    @Override
    public int delete(int replyNo, int replyBno) throws Exception{
       logger.info("delete() 호출");
-      replyDao.delete(replyNo);
-      logger.info("댓글 삭제 성공");
-      return 1;
+      return replyDao.delete(replyNo);
    }
    
 }

@@ -12,8 +12,7 @@ import web.spring.skintalk.persistence.ReviewDAO;
 
 @Service
 public class ReviewServiceImple implements ReviewService {
-	private static final Logger logger =
-			LoggerFactory.getLogger(ReviewServiceImple.class);
+	private static final Logger logger = LoggerFactory.getLogger(ReviewServiceImple.class);
 	
 	@Autowired
 	private ReviewDAO reviewDao;
@@ -21,10 +20,7 @@ public class ReviewServiceImple implements ReviewService {
 	@Override
 	public int create(ReviewVO vo) throws Exception {
 		logger.info("create() 호출");
-		reviewDao.insert(vo);
-		logger.info("상품평 입력 성공");
-		
-		return 1;
+		return reviewDao.insert(vo);
 	}
 
 	@Override
@@ -42,9 +38,7 @@ public class ReviewServiceImple implements ReviewService {
 	@Override
 	public int delete(int reviewNo, int reviewPno) throws Exception {
 		logger.info("delete() 호출");
-		reviewDao.delete(reviewNo);
-		logger.info("상품평 삭제 성공");
-		return 1;
+		return reviewDao.delete(reviewNo);
 	}
 
 	@Override
@@ -52,6 +46,5 @@ public class ReviewServiceImple implements ReviewService {
 		logger.info("updateGrade() 호출 productNo : " + reviewPno);
 		return reviewDao.updateGrade(reviewPno);
 	}
-	
 
-} // end of class
+}

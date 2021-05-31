@@ -22,8 +22,7 @@ import web.spring.skintalk.service.ReplyService;
 @RestController
 @RequestMapping(value="/replies")
 public class ReplyRESTController {
-   private static final Logger logger =
-         LoggerFactory.getLogger(ReplyRESTController.class);
+   private static final Logger logger = LoggerFactory.getLogger(ReplyRESTController.class);
    
    @Autowired
    private ReplyService replyService;
@@ -39,18 +38,16 @@ public class ReplyRESTController {
       } catch (Exception e) {
          return new ResponseEntity<Integer>(0, HttpStatus.OK);
       }
-   } //end createReply()
+   }
    
    @GetMapping("/all/{replyBno}")
    public ResponseEntity<List<ReplyVO>> readReplies(@PathVariable("replyBno") int replyBno){
       List<ReplyVO> list = replyService.read(replyBno);
       return new ResponseEntity<List<ReplyVO>>(list, HttpStatus.OK);
-   } //end readReplies()
+   }
    
    @PutMapping("/{replyNo}")
-   public ResponseEntity<String> updateReply(
-         @PathVariable("replyNo") int replyNo, 
-         @RequestBody ReplyVO vo) {
+   public ResponseEntity<String> updateReply(@PathVariable("replyNo") int replyNo, @RequestBody ReplyVO vo) {
       vo.setReplyNo(replyNo);
       logger.info("replyBno = " + vo.getReplyBno());
       int result = replyService.update(vo);
@@ -61,12 +58,10 @@ public class ReplyRESTController {
          entity = new ResponseEntity<String>("fail", HttpStatus.OK);
       }
       return entity;
-   } //end updateReply()
+   }
    
    @DeleteMapping("/{replyNo}")
-   public ResponseEntity<String> deleteReply(
-         @PathVariable("replyNo") int replyNo,
-         @RequestBody ReplyVO vo ){
+   public ResponseEntity<String> deleteReply(@PathVariable("replyNo") int replyNo, @RequestBody ReplyVO vo ){
       logger.info("replyBno = " + vo.getReplyBno());
       
       try{
@@ -75,5 +70,7 @@ public class ReplyRESTController {
       } catch(Exception e){
          return new ResponseEntity<String>("fail", HttpStatus.OK);
       }
-   } //end deleteReply()
+      
+   }
+   
 }

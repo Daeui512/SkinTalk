@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="web.spring.skintalk.rReviewMapper">
 
 	<insert id="insert">
-		insert into ${rReview}(${rReviewRno}, ${rReviewContent})
-		values (#{rReviewRno}, #{rReviewContent})
+		insert into ${rReview}(${rReviewRno}, ${rReviewContent}, ${userId})
+		values (#{rReviewRno}, #{rReviewContent},#{userId})
 	</insert>
 	
 	<!-- 상품평 보기 -->
@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="update">
 		update ${rReview}
 		set ${rReviewContent} = #{rReviewContent}
-		where ${rReviewNo} = #{rReviewNo}
+		where ${rReviewNo} = #{rReviewNo} and ${userId} = #{userId}
 	</update>
 	
 	<!-- 상품평 삭제 -->

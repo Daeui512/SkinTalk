@@ -7,17 +7,19 @@ public class RreviewVO {
 	private int rReviewRno;
 	private String rReviewContent;
 	private Date rReviewCdate;
+	private String userId;
 	
 	public RreviewVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RreviewVO(int rReviewNo, int rReviewRno, String rReviewContent, Date rReviewCdate) {
+	public RreviewVO(int rReviewNo, int rReviewRno, String rReviewContent, Date rReviewCdate, String userId) {
 		super();
 		this.rReviewNo = rReviewNo;
 		this.rReviewRno = rReviewRno;
 		this.rReviewContent = rReviewContent;
 		this.rReviewCdate = rReviewCdate;
+		this.userId = userId;
 	}
 
 	public int getrReviewNo() {
@@ -52,10 +54,19 @@ public class RreviewVO {
 		this.rReviewCdate = rReviewCdate;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	@Override
 	public String toString() {
 		return "RreviewVO [rReviewNo=" + rReviewNo + ", rReviewRno=" + rReviewRno + ", rReviewContent=" + rReviewContent
-				+ ", rReviewCdate=" + rReviewCdate + "]";
+				+ ", rReviewCdate=" + rReviewCdate + ", userId=" + userId + "]";
 	}
-
+	
+	
 }

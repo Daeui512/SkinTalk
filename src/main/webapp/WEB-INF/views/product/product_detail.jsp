@@ -83,10 +83,9 @@
                             평점 : <span class="grade_output"></span>
                             <small >조회수 : ${vo.viewCount }</small>
                             
-                            <!-- 좋다 좋아yo  -->
                             <div id="like">
                               <input type="hidden" id="productNo" value="${vo.productNo }">
-                              <input type="hidden" id="userId" value="${userId }">
+                              <input type="hidden" id="userId" value="${sessionScope.userId }">
                               <button type="button" id="like_button" style="border: hidden; background-color: #ffffff"><img id="imgsrc" src="../resources/img/h2.png" width="20"/></button>
                             </div>
                             
@@ -189,12 +188,12 @@
 
         		// 상품평 입력 기능
                 $('#btn_add').click(function(){
-                   var reviewContent = $('#reviewContent').val(); // 상품평 내용
-                   var reviewNickName = $('#reviewNickName').val(); // 사용자 아이디
-                   var reviewGrade = $('[name="reviewGrade"]:checked').val(); // 평점
-                   var reviewAge = $('#reviewAge').val(); // 사용자 나이
-                   var reviewGender = $('#reviewGender').val(); // 사용자 성별
-                   var reviewSkinType = $('#reviewSkinType').val(); // 사용자 성별
+                   var reviewContent = $('#reviewContent').val();
+                   var reviewNickName = $('#reviewNickName').val();
+                   var reviewGrade = $('[name="reviewGrade"]:checked').val();
+                   var reviewAge = $('#reviewAge').val();
+                   var reviewGender = $('#reviewGender').val();
+                   var reviewSkinType = $('#reviewSkinType').val();
                    var obj = {
                          'reviewPno' : reviewPno,
                          'reviewContent' : reviewContent,
@@ -238,16 +237,14 @@
                           $(jsonData).each(function(){
                               // this : 컬렉션에서 각 데이터를 꺼내서 저장
                               var reviewCdate = new Date(this.reviewCdate);
-                                  
-                              var disabled = 'disabled';
+                          	  var disabled = 'disabled';
       						  var readonly = 'readonly';
-      								
 							  if (reviewNickName == this.reviewNickName) {
 							  	disabled = '';
 							  	readonly = '';
   							  }
       							
-                              list += '<div class="review_item">'
+                              list += '<div class="review_item' + this.reviewNo + '">'
                                    + '<pre>'
                                    + '<input type="hidden" id="reviewNo" value="' + this.reviewNo + '" />'
                                    + '<input type="hidden" id="reviewNickName" value="' + this.reviewNickName + '" />'
@@ -257,50 +254,60 @@
                                    + '<input type="hidden" id="reviewSkinType" value="' + this.reviewSkinType + '" />'
 							       + '<img class="d-flex mr-3 rounded-circle" src="https://via.placeholder.com/50x50" alt="..." />'
 							       + '<h5 class="mt-0">닉네임: '+ this.reviewNickName + '&nbsp;&nbsp;' + '평점: ' + this.reviewGrade + '&nbsp;&nbsp;' + '나이: ' + this.reviewAge + '&nbsp;&nbsp;' + '성별: ' + this.reviewGender + '&nbsp;&nbsp;' + '피부타입: ' + this.reviewSkinType  +'</h5>'
-					      		   + '<input type="text" id="reviewSingleContent' + this.reviewNo + '" value="' + this.reviewContent + '" '+ readonly +'/>'
+					      		   + '<input type="text" id="reviewSingleContent' + this.reviewNo + '" value="' + this.reviewContent + '" '+ readonly +' style="border:hidden;"/>'
                                    + '&nbsp;&nbsp;'
                                    + reviewCdate
                                    + '&nbsp;&nbsp;'
-                                   + '<button class="btn_update" type="button" '+ disabled +'>수정</button>'
-                                   + '<button class="btn_delete" type="button" '+ disabled +'>삭제</button>'
-                                   + '<button class="reply_insert" type="button"' + disabled + '>답글</button>'
+                                   + '<button class="btn_update" type="button" ' + disabled + '>수정</button>'
+                                   + '<button class="btn_delete" type="button" ' + disabled + '>삭제</button>'
+                                   + '<button class="reply_insert" type="button" ' + disabled + '>답글</button>'
                                    + '<div class="reply_answer"></div>'
+                                   + '<div class="reply_read"</div>'
                                    + "</pre>"
                                    + "</div>";
                                    
-                         var destination = '../rreviews/all/' + this.reviewNo;
-                         
-						 $.getJSON(
-								 destination,
-								 function(jsonData){
-									 var arr = '';
-									 var rReviewCdate = new Date(this.rReviewCdate);
-									 console.log(rReviewCdate);
-									 $(jsonData).each(function(){
-										 console.log(this)
-										 arr += '<pre>'
-	   										 + '<input type="text" id="rReviewContent" value="' + this.rReviewContent + '" readonly style="border:hidden;"/>'
-	                                         + '&nbsp;&nbsp;'
-	                                         + rReviewCdate
-	                                         + '&nbsp;&nbsp;'
-	                                         + '<button class="btn_review_delete" type="button">삭제</button>'
-	                                         + "</pre>";
-									 })// end of each;
-								 $('.reply_answer').html(arr);
-								 }// end of callback
-								 )// end of getJSON
-								 
-                         }); // end each()
-                         
-                         $('#reviews').html(list);
-                         var reviewGrade = $('#review_grade').val();
-                         $('.grade_output').html('<p>' + reviewGrade + '</p>');
-                        } // end callback()
-                    ); // end getJSON()
+                             var destination = '../rreviews/all/' + this.reviewNo;
+                             
+    						 $.getJSON(
+    								 destination,
+    								 function(jsonData){
+    									 
+    									 var arr = '<br>';
+    									 $(jsonData).each(function(){
+    										 var rReviewCdate = new Date(this.rReviewCdate);
+    										 var userId = $('#userId').val();
+    										 
+    										 if (userId == this.userId) {
+    											  	disabled = '';
+    											  	readonly = '';
+    				  							  }
+    										 
+    										 arr += '<pre>'
+    										 	 + '<input type="hidden" id="rReviewNo" value="' + this.rReviewNo + '">'
+    										 	 + '<input type="text" id="rUserId" value="' + this.userId + '" readonly style="border:hidden;"/>'
+    										 	 + '<input type="text" id="rReviewContent" value="' + this.rReviewContent + '" ' + readonly + ' style="border:hidden;"/>'
+    	                                         + '&nbsp;&nbsp;'
+    	                                         + rReviewCdate
+    	                                         + '&nbsp;&nbsp;'
+    	                                         + '<button class="btn_review_update" type="button"' + disabled + '>수정</button>'
+    	                                         + '<button class="btn_review_delete" type="button"' + disabled + '>삭제</button>'
+    	                                         + "</pre>";
+    									 $('#reviews > div.review_item' + this.rReviewRno + ' > pre > div.reply_read').html(arr);
+    									 })// end of each;
+    								 }// end of callback
+    								 )// end of getJSON
+    								 
+                             }); // end each()
+                             $('#reviews').html(list);
+                             var reviewGrade = $('#review_grade').val();
+                             $('.grade_output').html('<p>' + reviewGrade + '</p>');
+                             
+                          } // end callback()
+                      ); // end getJSON()
                 } //end getAllReviews()
                 
              	// 수정 버튼을 클릭하면 선택된 상품평 수정
-        		$('#reviews').on('click', '.review_item .btn_update', function() {
+        		$('#reviews').on('click', 'div[class^=review_item] .btn_update', function() {
         			
         			// 선택된 상품평 reviewNo, reviewSingleContent, reviewContent 값을 저장
         			var reviewNo = $(this).prevAll('#reviewNo').val();
@@ -330,12 +337,9 @@
         		}); // end btn_update()
         		
         		// 삭제 버튼을 클릭하면 선택된 상품평 삭제
-        		$('#reviews').on('click', '.review_item .btn_delete',
-        				function(){
-        			
+        		$('#reviews').on('click', 'div[class^=review_item] .btn_delete', function(){
         			// 선택된 상품평 reviewNo
         			var reviewNo = $(this).prevAll('#reviewNo').val();
-        			
         			// ajax 요청
         			$.ajax({
         				type : 'delete',
@@ -358,17 +362,20 @@
         		
         		var rReviewRno;
         		
-        		$('#reviews').on('click', '.review_item .reply_insert', function(){
+        		$('#reviews').on('click', 'div[class^=review_item] .reply_insert', function(){
         			rReviewRno = $(this).prevAll('#reviewNo').val();
+					var userId = $('#userId').val();
         			list = '';
         			list += '<br><textarea id="rReviewContent" class="form-control" rows="3" placeholder="답글 작성."></textarea><br><button id="rReview_btn" class="btn btn-primary" type="button">작성</button>'
+        				 + '<input type="hidden" id="rReviewUserId" value="' + userId + '">';
+
         			$(this).nextAll('.reply_answer').html(list).toggle();
-            		
         		});// end of reviews.onclick 대댓글 textarea 생성
         		
-        		$('#reviews').on('click', '.review_item .reply_answer #rReview_btn', function(){
+        		$('#reviews').on('click', 'div[class^=review_item] .reply_answer #rReview_btn', function(){
         			var rReviewContent = $(this).prevAll('#rReviewContent').val();
-        			console.log(rReviewRno + ',' + rReviewContent);
+        			var userId = $(this).nextAll('#rReviewUserId').val();
+        			console.log(rReviewRno + ',' + rReviewContent + ',' + userId);
         			$.ajax({
         				type : 'POST',
         				url : '../rreviews',
@@ -377,43 +384,63 @@
         					'X-HTTP-Method-Override' : 'POST'
         				},
         				data : JSON.stringify({
+        					'userId' : userId, 
         					'rReviewRno' : rReviewRno,
         					'rReviewContent' : rReviewContent
         				}),
         				success : function(result, status){
         					console.log(result + ',' + status)
+        					$(this).prevAll('#rReviewContent').html('');
+        					getAllReviews();
         				}
         			});// end of ajax
     			});// end of 작성 클릭
-        		
-        		function getAllRReviews(){
-    				var url = '../rreviews/all/' + rReviewRno;
-        			$.getJSON(
-                            url,
-                            function(jsonData){
-                               var list = ''; // JSON 데이터를 표현할 변수
-                               $(jsonData).each(function(){
-                            	   console.log(this);
-                                    var rReviewCdate = new Date(this.rReviewCdate);
-                                       
-                                    list += '<pre>'
-										 + '<img class="d-flex mr-3 rounded-circle" src="https://via.placeholder.com/50x50" alt="..." />'
-   										 + '<input type="text" id="reviewSingleContent' + this.reviewNo + '" value="' + this.reviewContent + '" '+ readonly +'/>'
-                                         + '&nbsp;&nbsp;'
-                                         + reviewCdate
-                                         + '&nbsp;&nbsp;'
-                                         + '<button class="btn_delete" type="button">삭제</button>'
-                                         + "</pre>";
-                                         
-                               }); // end each()
-                               $('.reply_answer').html(list);
-                            } // end callback()
-                    ); // end getJSON()
-    			}
-        		
-        		
-        		
-        		
+    			
+    			$('#reviews').on('click', 'div[class^=review_item] .reply_read .btn_review_update', function(){
+    				var rReviewNo = $(this).prevAll('#rReviewNo').val();
+    				var rReviewContent = $(this).prevAll('#rReviewContent').val();
+    				var userId= $('#userId').val();
+    				
+    				$.ajax({
+    					type : 'PUT',
+    					url : '../rreviews/' + rReviewNo,
+    					headers :{
+    						'Content-Type' : 'application/json',
+        					'X-HTTP-Method-Override' : 'PUT'
+    					},
+    					data : JSON.stringify({
+    						'rReviewNo' : rReviewNo,
+    						'rReviewContent' : rReviewContent,
+    						'userId' : userId
+    					}),
+    					success : function(result, status){
+    						alert("대댓글 수정 성공");
+    						getAllReviews();
+    					}
+    					
+    				});// end of ajax
+    			})// end of update;
+    			
+    			$('#reviews').on('click', 'div[class^=review_item] .reply_read .btn_review_delete', function(){
+    				var rReviewNo = $(this).prevAll('#rReviewNo').val();
+    				$.ajax({
+    					type : 'DELETE',
+    					url : '../rreviews/' + rReviewNo,
+    					headers :{
+    						'Content-Type' : 'application/json',
+        					'X-HTTP-Method-Override' : 'DELETE'
+    					},
+    					data : JSON.stringify({
+    						'rReviewNo' : rReviewNo
+    					}),
+    					success : function(result, status){
+    						console.log(result + ',' + status);
+    						alert("대댓글 삭제 성공")
+    						getAllReviews();
+    					}
+    					
+    				});// end of ajax
+    			})// end of delete;
         	}); // end of document
         </script>
         
@@ -446,6 +473,7 @@
                                } else {
                                 $("#imgsrc").attr("src", "../resources/img/h2.png");
                                }
+                               
                        } // end success()
             		});// end ajax
              	}); // end body.click()

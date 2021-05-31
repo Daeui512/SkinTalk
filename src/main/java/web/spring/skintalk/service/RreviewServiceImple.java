@@ -12,7 +12,6 @@ import web.spring.skintalk.persistence.RreviewDAO;
 
 @Service
 public class RreviewServiceImple implements RreviewService{
-	
 	private static final Logger logger = LoggerFactory.getLogger(RreviewServiceImple.class);
 	
 	@Autowired
