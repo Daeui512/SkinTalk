@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 <!-- namespace : 주로 dao 클래스의 sqlSession과 연결하기 위한 키로 사용 -->
 <mapper namespace="web.spring.skintalk.ProductMapper">
 
-	<insert id ="insert"></insert>
+	<insert id="insert"></insert>
 	<delete id="delete"></delete>
 	
 	<update id="viewCountUpdate">
@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 	
 	<select id="select_pageCriteria" resultType="ProductVO">
-		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good} from (
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${imgSource} from (
 			select rownum as rn, a.* from (
 				select * from ${product} order by ${productNo})a
 			)b 
@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 	
 	<select id="select_all_by_keyword" resultType="ProductVO">
-		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good} from (
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${imgSource} from (
 			select rownum as rn, a.* from (
 				select * from ${product} where ${productName} like #{keyword})a
 			)b
@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 	
 	<select id="select_by_typical" resultType="ProductVO">
-		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good} from (
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${imgSource} from (
 			select rownum as rn, a.* from (
 				select * from ${product} where ${productType} = #{productType} order by ${productNo})a
 			)b 
@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 	
 	<select id="select_by_rank" resultType="ProductVO">
-		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${productType}, b.${viewCount}, (${grade}+${good}+${viewCount}) as rank from (
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${productType}, b.${viewCount}, b.${imgSource}, (${grade}+${good}+${viewCount}) as rank from (
 			select rownum as rn, a.* from (
 				select * from ${product} order by ${grade} + ${good} + ${viewCount} desc)a
 			)b

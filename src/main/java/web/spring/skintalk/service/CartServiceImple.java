@@ -71,6 +71,18 @@ public class CartServiceImple implements CartService{
 		logger.info("countCart() 호출 : userId = " + userId);
 		return dao.countCart(userId);
 	}
+	
+	@Override
+	public int countCartOne(int cartNo) {
+		logger.info("countCartOne()");
+		return dao.countCartOne(cartNo);
+	}
+	
+	@Override
+	public int updateAllCart(CartVO vo) {
+		logger.info("updateAllCart() 호출");
+		return dao.updateAllCart(vo);
+	}
 
 	@Override
 	public int updateIncreaseCart(CartVO vo) {
@@ -95,11 +107,13 @@ public class CartServiceImple implements CartService{
         return dao.countCart(userId, productNo);
     }
 	
-	// 장바구니 상품 수량 변경
+	// 장바구니 해당 상품이 있을때 장바구니에 다시 입력할시 상품 수량 변경
     @Override
     public void updateCart(CartVO vo) {
         dao.updateCart(vo);;      
     }
+
+	
 
 	
 }

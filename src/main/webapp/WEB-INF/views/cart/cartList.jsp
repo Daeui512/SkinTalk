@@ -103,7 +103,7 @@
                         <button type="button" class="btnDecrease">-</button>
                       </c:otherwise>
                     </c:choose>
-                    <input type="number" id="amount" class="amount" name="amount" style="width: 30px; text-align: right" value="${cartList.amount }">
+                    <input type="text" id="amount" class="amount" name="amount" style="width: 30px; text-align: right" value="${cartList.amount }">
                     <button type="button" class="btnIncrease">+</button>
                 </td>
                 
@@ -134,63 +134,90 @@
     <a href="../main/product"><button type="button" id="btnList">상품목록</button></a>
   
   <script type="text/javascript">
-  $('.cart_item').on('click', '.amount_valuable .btnIncrease', function(){
-    var amount = $(this).prevAll('#cart_amount').val();
-    var cartNo = $(this).prevAll('#cart_cartNo').val();
-    $.ajax({
-        url : '../cart/cartUpdateIncrease',
-        type : 'GET',
-        data : {
-          'amount' : amount,
-          'cartNo' : cartNo
-        },
-        success : function(result){
-          if (result == 'success') {
-          	alert("장바구니의 수량이 변경되었습니다.");
-          	location.reload();
-          }
-        }// end of success
-      });// end of ajax
-    
-  });// end of btnIncrease
-  
-  $('.cart_item').on('click', '.amount_valuable .btnDecrease', function(){
-    var amount = $(this).prevAll('#cart_amount').val();
-    var cartNo = $(this).prevAll('#cart_cartNo').val();
-    $.ajax({
-        url : '../cart/cartUpdateDecrease',
-        type : 'GET',
-        data : {
-          'amount' : amount,
-          'cartNo' : cartNo
-        },
-        success : function(result){
-          if (result == 'success') {
-          	alert("장바구니의 수량이 변경되었습니다.");
-          	location.reload();
-          }
-        }// end of success
-      });// end of ajax
-  });// end of btnIncrease
-  
-  $('.cart_item').on('click', '.delete_btn #btnDelete', function(){
-    var cartNo = $(this).prevAll('#cart_cartNo').val();
-    $.ajax({
-      url : '../cart/cartDeleteOne',
-      type : 'GET',
-      data : {
-        'cartNo' : cartNo
-      },
-      success : function(result){
-        if(result == 'success'){
-          alert('상품이 삭제되었습니다.');
-          location.reload();
-        }
-      }// end of success
-    })//end of ajax
-  });//end of onclick
-  
   $(document).ready(()=>{
+    $('.cart_item').on('click', '.amount_valuable .btnIncrease', function(){
+      console.log(this);
+      var amount = $(this).prevAll('#cart_amount').val();
+      var cartNo = $(this).prevAll('#cart_cartNo').val();
+      var cart_this = this;
+      $.ajax({
+          url : '../cart/cartUpdateIncrease',
+          type : 'GET',
+          data : {
+            'amount' : amount,
+            'cartNo' : cartNo
+          },
+          success : function(result){
+  			console.log(result);
+  			if(result > 0){
+  				$(cart_this).prevAll('#amount').val(result+'');
+  				alert('장바구니 수량이 변경 되었습니다.');
+  			}
+  		}// end of success
+        });// end of ajax
+    });// end of btnIncrease
+    
+    $('.cart_item').on('click', '.amount_valuable .btnDecrease', function(){
+      console.log(this);
+      var amount = $(this).prevAll('#cart_amount').val();
+      var cartNo = $(this).prevAll('#cart_cartNo').val();
+      var cart_this = this;
+      $.ajax({
+          url : '../cart/cartUpdateDecrease',
+          type : 'GET',
+          data : {
+            'amount' : amount,
+            'cartNo' : cartNo
+          },
+          success : function(result){
+  			console.log(result);
+  			if(result > 0){
+  				$(cart_this).nextAll('#amount').val(result + '');
+  				alert('장바구니 수량이 변경 되었습니다.');
+  			}
+  		}// end of success
+        });// end of ajax
+    });// end of btnDecrease
+
+    $('.cart_item').on('blur', '#amount', function(){
+    	console.log(this);
+    	var cartNo = $(this).prevAll('#cart_cartNo').val();
+    	var amount = $(this).val();
+    	var cart_this = this;
+    	$.ajax({
+    		url : '../cart/cartUpdate',
+    		type : 'POST',
+    		data : {
+    			'cartNo' : cartNo,
+    			'amount' : amount
+    		},
+    		success : function(result){
+    			console.log(result);
+    			if(result > 0){
+      				alert('장바구니 수량이 변경 되었습니다.');
+      				$(cart_this).val(result+'');
+    			}
+    		}// end of success
+    	});// end of ajax
+    });// end of #amount.blur
+    
+    $('.cart_item').on('click', '.delete_btn #btnDelete', function(){
+      var cartNo = $(this).prevAll('#cart_cartNo').val();
+      $.ajax({
+        url : '../cart/cartDeleteOne',
+        type : 'GET',
+        data : {
+          'cartNo' : cartNo
+        },
+        success : function(result){
+          if(result == 'success'){
+            alert('상품이 삭제되었습니다.');
+            location.reload();
+          }
+        }// end of success
+      })//end of ajax
+    });//end of onclick
+    
     $('#btnDeleteAll').click(()=>{
       var userId = $('#cart_userId').val();
       console.log(userId);
@@ -201,17 +228,14 @@
           'userId' : userId
         },
         success : function(result){
-          console.log(result);
           if(result == 'success'){
-            alert('장바구니 비우기 성공');
+            alert('장바구니가 비었습니다.');
             location.reload();
           }
         }// end of success
       });// end of ajax
     });// end of click()
   });// end of document()
-  
-  
   </script>
  
 </body>

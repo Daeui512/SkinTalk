@@ -52,6 +52,7 @@
 		<property name="good" value="good"/>
 		<property name="productType" value="product_type"/>
 		<property name="viewCount" value="view_count"/>
+		<property name="imgSource" value="img_source"/>
 		
 		<!-- 장바구니 -->
 		<property name="cart" value="cart"/>

@@ -14,6 +14,8 @@ public interface CartService {
 	public abstract int update(int cartNo);
 	public abstract int sumMoney(String userId);
 	public abstract int countCart(String userId);
+	public abstract int countCartOne(int cartNo);
+	public abstract int updateAllCart(CartVO vo);
 	public abstract int updateIncreaseCart(CartVO vo);
 	public abstract int updateDecreaseCart(CartVO vo);
 	public abstract void modifyCart(CartVO vo);

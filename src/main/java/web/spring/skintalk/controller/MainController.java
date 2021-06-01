@@ -1,5 +1,6 @@
 package web.spring.skintalk.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,33 +33,54 @@ public class MainController {
     @Autowired
     private MemberService memberService;
     
-	
+	@Transactional
 	@GetMapping("/index")			 // 쇼핑몰 홈페이지 호출
 	public void index(Model model, HttpSession session) {
 		logger.info("index()호출 ");
-//		String userId = (String) session.getAttribute("userId");
-//		logger.info("userId " + userId);
-//		
-//		MemberVO member = memberService.read(userId);
-//		logger.info("member_info = " + member.toString());
-//		
-//		String[] skin_types = member.getSkinType().split(",");
-//		for (int i = 0; i < skin_types.length; i++) {
-//			logger.info("skin_type = " + skin_types[i]);
-//		}
-//		
-//		String[] skin_troubles = member.getSkinTrouble().split(",");
-//		for (int i = 0; i < skin_troubles.length; i++) {
-//			logger.info("skin_troubles = " + skin_troubles[i]);
-//		}
-//		
+		String userId = (String) session.getAttribute("userId");
+		logger.info("userId " + userId);
 		
-		
-		PageCriteria criteria = new PageCriteria(1, 12);
-		List<ProductVO> list = productService.read(criteria);
-		model.addAttribute("productList", list);
-		
-		
+		if (userId != null) {
+			MemberVO member = memberService.read(userId);
+			logger.info("member_info = " + member.toString());
+			
+			PageCriteria criteria = new PageCriteria(1, 12);
+
+			String skin_type = member.getSkinType();
+			String[] skin_troubles = member.getSkinTrouble().split(",");
+			List<ProductVO> list = productService.read(criteria);
+			
+			if (skin_type.equals("지성")) {
+				logger.info("지성_피부타입");
+			}else if(skin_type.equals("중성")) {
+				logger.info("중성_피부타입");
+			}else if(skin_type.equals("건성")) {
+				logger.info("건성_피부타입");
+			}else if(skin_type.equals("복합성")){
+				logger.info("복합성_피부타입");
+			}else {
+				logger.info("잘못된 피부타입");
+			}
+			
+			for (int i = 0; i < skin_troubles.length; i++) {
+				logger.info("skin_troubles = " + skin_troubles[i]);
+			}
+
+			for (ProductVO vo : list) {
+				logger.info("vo = " + vo.getPoint());
+				String[] points = vo.getPoint().split(",");
+				for (String point : points) {
+					logger.info("point = " + point);
+				}
+			}
+			model.addAttribute("productList", list);
+
+		}else {
+			PageCriteria criteria = new PageCriteria(1, 12);
+			List<ProductVO> list = productService.read(criteria);
+			model.addAttribute("productList", list);
+			
+		}
 	}// end of index
 	
 	@GetMapping("/product")			// 상품목록 페이지 호출
@@ -114,11 +137,20 @@ public class MainController {
 	}
 	
 	@GetMapping("/rank")
-	public void rank(Model model) {
+	public void rank(Model model, Integer page, Integer perPage) {
 		logger.info("상품 랭킹 기능 호출");
-		PageCriteria criteria = new PageCriteria(1, 12);
+		PageCriteria criteria = new PageCriteria();
 		PageMaker maker = new PageMaker();
+		
+		if (page != null) {
+			criteria.setPage(page);
+		}
+		if (perPage != null) {
+			criteria.setNumsPerPage(perPage);
+		}
+		
 		List<ProductVO> list = productService.readByRank(criteria);
+		
 		maker.setTotalCount(productService.getTotalNumsOfRecords());
 		maker.setCriteria(criteria);
 		maker.setPageData();

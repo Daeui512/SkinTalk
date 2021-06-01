@@ -1,6 +1,7 @@
 package web.spring.skintalk.controller;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -112,47 +113,47 @@ public class CartController {
         }
         return "redirect:/cart/cartList";
     }
-
 	
 	@PostMapping("/cartList")
 	public String cartListPost() {		// 장바구니를 확인하고 사용자가 결제를 하기위해서 form 정보를 받아옴
-		
 		return null;
 	}
 	
 	@GetMapping("/cartDeleteOne")
 	@ResponseBody
-	public void cartDeleteOne(int cartNo, HttpServletResponse response) throws IOException {		// 장바구니의 품목 하나 삭제
+	public String cartDeleteOne(int cartNo) throws IOException {		// 장바구니의 품목 하나 삭제
 		logger.info("cartDeleteOne() 호출 : cartNo = " + cartNo);
 		
 		int result = cartService.deleteOne(cartNo);
 		
 		if (result == 1) {
 			logger.info("장바구니 품목 삭제 성공");
-			response.getWriter().append("success");
+			return "success";
 		}else {
 			logger.info("장바구니 품목 삭제 실패");
+			return "fail";
 		}
 	}
 	
 	@GetMapping("/cartDeleteAll")
 	@ResponseBody
-	public void cartDeleteAll(String userId, HttpServletResponse response) throws IOException {
+	public String cartDeleteAll(String userId) throws IOException {
 		logger.info("cartDeleteAll() 호출 : userId = " + userId);
 		
 		int result = cartService.deleteAll(userId);
 		if(result >= 1) {
 			logger.info("장바구니 비우기 성공");
-			response.getWriter().append("success");
+			return "success";
 		}else {
 			logger.info("장바구니 비우기 실패");
+			return "fail";
 		}
 		
 	}
 	
 	@GetMapping("/cartUpdateIncrease")
 	@ResponseBody
-	public void cartUpdateIncrease(int amount, int cartNo, HttpSession session, HttpServletResponse response,HttpServletRequest request) throws IOException {		// 장바구니의 품목 전제 삭제(비우기)
+	public int cartUpdateIncrease(int amount, int cartNo, HttpSession session, HttpServletRequest request) throws IOException {		// 장바구니의 품목 전제 삭제(비우기)
 		logger.info("cartUpdateIncrease() 호출 : amount = " + amount + ", cartNo = " + cartNo);
 		String userId = (String) session.getAttribute("userId");
 		
@@ -175,17 +176,21 @@ public class CartController {
 		
 		CartVO vo = new CartVO(cartNo, userId, null, 0, null, 0, amount, 0);
 		int result = cartService.updateIncreaseCart(vo);
+		
 		if (result == 1) {
 			logger.info("상품 개수 UP 성공");
-			response.getWriter().append("success");
+			int count_by_cartNo = cartService.countCartOne(cartNo);
+			logger.info("count = " + count_by_cartNo);
+			return count_by_cartNo;
 		} else {
 			logger.info("상품 개수 수정 실패");
+			return result;
 		}
 	}
 	
 	@GetMapping("/cartUpdateDecrease")
 	@ResponseBody
-	public void cartUpdateDecrease(int amount, int cartNo, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {		// 장바구니의 품목 전제 삭제(비우기)
+	public int cartUpdateDecrease(int amount, int cartNo, HttpSession session, HttpServletRequest request) throws IOException {		// 장바구니의 품목 전제 삭제(비우기)
 		logger.info("cartUpdateDecrease() 호출 : amount = " + amount + ", cartNo = " + cartNo);
 		String userId = (String) session.getAttribute("userId");
 		
@@ -208,12 +213,49 @@ public class CartController {
 		
 		CartVO vo = new CartVO(cartNo, userId, null, 0, null, 0, amount, 0);
 		int result = cartService.updateDecreaseCart(vo);
+		
 		if (result == 1) {
 			logger.info("상품 개수 DOWN 성공");
-			response.getWriter().append("success");
+			int count_by_cartNo = cartService.countCartOne(cartNo);
+			logger.info("count = " + count_by_cartNo);
+			return count_by_cartNo;
 		} else {
 			logger.info("상품 개수 수정 실패");
+			return result;
 		}
 	}
 	
+	@PostMapping("/cartUpdate")
+	@ResponseBody
+	public int cartUpdate(int cartNo, int amount, HttpSession session,HttpServletRequest request) {
+		logger.info("cartUpdate() 호출");
+		String userId = (String) session.getAttribute("userId");
+		
+		if (userId == null) {
+			Cookie[] cookies = null;
+			String nonMemberUserId = "";
+			cookies = request.getCookies();
+			
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if(cookie.getName().equals("JSESSIONID")) {
+						nonMemberUserId = cookie.getValue();
+					}
+				}
+			}
+			userId = nonMemberUserId;
+		}
+		CartVO vo = new CartVO(cartNo, userId, null, 0, null, 0, amount, 0);
+		int result = cartService.updateAllCart(vo);
+		
+		if (result == 1) {
+			logger.info("장바구니 품목 개수 변경 성공");
+			int count_by_cartNo = cartService.countCartOne(cartNo);
+			logger.info("count = " + count_by_cartNo);
+			return count_by_cartNo;
+		}else {
+			logger.info("장바구니 품목 개수 변경 실패");
+			return result;
+		}
+	}
 }

@@ -54,15 +54,15 @@ li {
                 </div>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="../member/member-detail">마이페이지</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../cart/cartList">장바구니</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../board/list">고객센터</a></li>
                         <c:if test="${empty sessionScope.userId }">
                           <li class="nav-item"><a class="nav-link" href="../member/login">로그인</a></li>
                         </c:if>
                         <c:if test="${not empty sessionScope.userId }">
+                          <li class="nav-item"><a class="nav-link" href="../member/member-detail">마이페이지</a></li>
                           <li class="nav-item"><a class="nav-link" href="../member/logout">로그아웃</a></li>
                         </c:if>
+                        <li class="nav-item"><a class="nav-link" href="../cart/cartList">장바구니</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../board/list">고객센터</a></li>
                     </ul>
                 </div>
             </div>

@@ -71,6 +71,18 @@ public class CartDAOImple implements CartDAO{
 	}
 
 	@Override
+	public int countCartOne(int cartNo) {
+		logger.info("countCartOne()");
+		return sqlSession.selectOne(NAMESPACE + ".countCartOne", cartNo);
+	}
+
+	@Override
+	public int updateAllCart(CartVO vo) {
+		logger.info("updateAllCart() 호출");
+		return sqlSession.update(NAMESPACE + ".cartUpdateAll", vo);
+	}
+
+	@Override
 	public int updateIncreaseCart(CartVO vo) {
 		logger.info("updateCart()");
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -107,5 +119,7 @@ public class CartDAOImple implements CartDAO{
 	    sqlSession.update(NAMESPACE + ".updateExistInCart", vo);
 	}
 
+	
+	
 	
 }

@@ -13,6 +13,8 @@ public interface CartDAO {
 	public abstract int deleteAll(String userId); 					//장바구니 비우기
 	public abstract int sumMoney(String userId); 					//장바구니 금액 합계
 	public abstract int countCart(String userId);				 	//장바구니 상품 갯수
+	public abstract int countCartOne(int cartNo);
+	public abstract int updateAllCart(CartVO vo);					// 한번에 장바구니 갯수 변경
 	public abstract int updateIncreaseCart(CartVO vo); 				//장바구니 품목 한개 UP
 	public abstract int updateDecreaseCart(CartVO vo);				//장바구니 품목 한개 DOWN
 	public abstract int countCart(String userId, int productNo);

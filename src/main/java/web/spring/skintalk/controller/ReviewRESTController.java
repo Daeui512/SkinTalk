@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import web.spring.skintalk.domain.ReviewVO;
 import web.spring.skintalk.service.ReviewService;
-import web.spring.skintalk.service.RreviewService;
 
 @RestController
 @RequestMapping(value="/reviews")
@@ -41,13 +40,16 @@ public class ReviewRESTController {
 		} catch (Exception e) {
 			logger.info("vo : " + vo.toString());
 			e.printStackTrace();
-			return new ResponseEntity<Integer>(0, HttpStatus.OK);
+			return new ResponseEntity<Integer>(0, HttpStatus.FORBIDDEN);
 		}
 	} 
 	
 	@GetMapping("/all/{reviewPno}")
 	public ResponseEntity<List<ReviewVO>> readReviewsGet(@PathVariable("reviewPno") int reviewPno) {
 		List<ReviewVO> list = reviewService.read(reviewPno);
+		for (ReviewVO vo : list) {
+			logger.info("vo = " + vo);
+		}
 		return new ResponseEntity<List<ReviewVO>>(list, HttpStatus.OK);
 	}
 	

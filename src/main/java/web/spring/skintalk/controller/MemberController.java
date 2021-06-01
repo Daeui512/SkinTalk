@@ -61,13 +61,21 @@ public class MemberController {
 	public void loginPost(MemberVO vo, String userId, String password, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		logger.info("loginPost() 호출");
 		vo = memberService.login(userId, password);
+		HttpSession session = request.getSession();
+
+		String destination = (String) session.getAttribute("destination");
 		
 		if (vo != null) {
 			logger.info("로그인 성공");
-			HttpSession session = request.getSession();
 			session.setAttribute("userId", vo.getUserId());
 			logger.info("userId : " + userId);
-			response.sendRedirect("/skintalk/main/index");
+
+			if (destination != null) {
+				response.sendRedirect(destination);
+				session.removeAttribute("destination");
+			}else {
+				response.sendRedirect("/skintalk/main/index");
+			}
 		} else {
 			logger.info("로그인 실패");
 			response.sendRedirect("/skintalk/member/login?loginFail=loginFail");
@@ -78,7 +86,6 @@ public class MemberController {
 	@GetMapping("/logout")
 	public String logoutGet(HttpServletRequest request) {
 		logger.info("logoutGet() 호출");
-		
 		HttpSession session = request.getSession();
 		session.removeAttribute("userId");
 		
@@ -86,13 +93,14 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member-detail")
-	public void memberDetailGet(MemberVO vo, String userId, HttpSession session, Model model) {
+	public void memberDetailGet(MemberVO vo, String userId, HttpSession session, Model model) throws IOException {
 		
 		userId = (String)session.getAttribute("userId");
 		logger.info("memberDetail() 호출 userId : " + userId);
 		vo = memberService.read(userId);
-		
 		model.addAttribute("vo", vo);
+		
+		
 	}
 	
 	@GetMapping("/update")
@@ -123,8 +131,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/delete")
-	public String deleteGet(HttpServletResponse response, HttpSession session, 
-			RedirectAttributes reAttr) throws IOException {
+	public String deleteGet(HttpServletResponse response, HttpSession session, RedirectAttributes reAttr) throws IOException {
 		logger.info("deleteGet() 호출");
 		String userId = (String)session.getAttribute("userId");
 		int result = memberService.delete(userId);
@@ -146,6 +153,7 @@ public class MemberController {
 	public int userIdChkPost(String userId) {
 		logger.info("userIdChkPost() : " + userId);
 		int result = memberService.userIdChk(userId);
+		
 		return result;
 	}
 	
@@ -154,6 +162,7 @@ public class MemberController {
 	public int emailChkPost(String email) {
 		logger.info("emailChkPost() : " + email);
 		int result = memberService.emailChk(email);
+		
 		return result;
 	}
 	
@@ -162,30 +171,36 @@ public class MemberController {
 	public int phoneChkPost(String phone) {
 		logger.info("phoneChkPost() : " + phone);
 		int result = memberService.phoneChk(phone);
+		
 		return result;
 	}
 	
 	@GetMapping("/find_id_form")
-	public void findUserIdFormGet(String email, String phone, Model model) throws Exception{
+	public void findUserIdFormGet(){
 		logger.info("findIdFormGet() 호출");
 	}
 	
-	@PostMapping("/find_id")
-	public String findUserIdPost(String email, String phone, 
-			Model model) throws Exception{
+	@PostMapping("/find_id_form")
+	public String findUserIdPost(String email, String phone, Model model) throws Exception{
 		logger.info("findUserIdFormPost() 호출");
-		model.addAttribute("userId", memberService.findId(email, phone));
+		
 		String userId = memberService.findId(email, phone);
-
-		if (userId == null) {
+		
+		if (userId != null) {
 			logger.info("아이디찾기 성공 userId : " + userId);
-			model.addAttribute("findUserId_result", "fail");
+			model.addAttribute("findUserId_result", "success");
 		} else {
 			logger.info("아이디찾기 실패");
-			model.addAttribute("findUserId_result", "success");
+			model.addAttribute("findUserId_result", "fail");
 		}
 		
+		model.addAttribute("userId", userId);
 		return "/member/find_id";
+	}
+	
+	@GetMapping("find_id")
+	public void findIdGet() {
+		logger.info("아이디 찾기 결과창 출력");
 	}
 	
 	@GetMapping("/find_password_form")
@@ -193,7 +208,7 @@ public class MemberController {
 		logger.info("findPasswordFormGet() 호출");
 	}
 	
-	@PostMapping("/find_password")
+	@PostMapping("/find_password_form")
 	@ResponseBody
 	public String findPasswordPost(String userId, String email, MemberVO vo) {
 		logger.info("findPasswordPost() 호출 : userId = " + userId + " email = " + email);

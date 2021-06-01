@@ -72,7 +72,7 @@
                     <!-- Post Content Column-->
                     <div class="col-lg-8">
                         <!-- Preview Image-->
-                        <img class="img-fluid rounded" src="https://via.placeholder.com/900x300" alt="..." />
+                        <img class="img-fluid rounded" src="${vo.imgSource }" alt="..." width="900px" height="200px"/>
                         <hr />
                         <!-- Post Content-->
                         <p class="lead"></p>
@@ -327,7 +327,7 @@
                             'reviewContent' : reviewSingleContent,
                             'reviewNickName' : reviewNickName,
         				}),
-        				success : function(result) {
+        				success : function(result,status) {
         					if (result == 'success') {
         						alert('상품평 수정 성공');
         						getAllReviews();
@@ -351,7 +351,7 @@
         				data : JSON.stringify({
         					'reviewPno' : reviewPno
         				}),
-        				success : function(result) {
+        				success : function(result, status) {
         					if (result == 'success') {
         						alert('상품평 삭제 성공');
         						getAllReviews();

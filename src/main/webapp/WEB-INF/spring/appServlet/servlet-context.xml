@@ -28,6 +28,21 @@
 	
 	<context:component-scan base-package="web.spring.skintalk" />
 	
+	<beans:bean id="member" class="web.spring.skintalk.interceptor.MemberInterceptor"></beans:bean>
+	<beans:bean id="mainProduct" class="web.spring.skintalk.interceptor.MainProductInterceptor"></beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/member/member-detail"/>
+			<beans:ref bean="member"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/main/product"/>
+			<mapping path="/main/rank"/>
+			<beans:ref bean="mainProduct"/>
+		</interceptor>
+	</interceptors>
+	
+	
 	<!-- 뒤로가기 캐시 삭제 설정 코드 -->
 	<interceptors>
 		<beans:bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
@@ -37,6 +52,5 @@
 			<beans:property name="useCacheControlNoStore" value="true"></beans:property>
 		</beans:bean>
 	</interceptors>
-	
 	
 </beans:beans>

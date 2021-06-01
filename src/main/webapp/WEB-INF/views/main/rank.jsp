@@ -112,7 +112,7 @@
           
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="../product/product_detail?productNo=${productList.productNo }"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <a href="../product/product_detail?productNo=${productList.productNo }"><img class="card-img-top" src="${productList.imgSource }" height="200px" width="700px"></a>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="../product/product_detail?productNo=${productList.productNo }">${productList.productName }</a>
@@ -148,13 +148,13 @@
       <c:if test="${pageMaker.hasPrev }">
         <li class="page-item">
             <c:if test="${not empty keyword }">
-              <a class="page-link" href="product?page=${pageMaker.startPageNo - 1 }&keyword=${keyword }&type=${param.type}" aria-label="Previous">
+              <a class="page-link" href="rank?page=${pageMaker.startPageNo - 1 }&keyword=${keyword }&type=${param.type}" aria-label="Previous">
                   <span aria-hidden="true">«</span>
                   <span class="sr-only">Previous</span>
               </a>
             </c:if>
             <c:if test="${empty keyword }">
-              <a class="page-link" href="product?page=${pageMaker.startPageNo - 1 }&type=${param.type}" aria-label="Previous">
+              <a class="page-link" href="rank?page=${pageMaker.startPageNo - 1 }&type=${param.type}" aria-label="Previous">
                   <span aria-hidden="true">«</span>
                   <span class="sr-only">Previous</span>
               </a>
@@ -164,26 +164,26 @@
       
       <c:if test="${not empty param.keyword }">
         <c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
-          <li class="page-item"><a class="page-link" href="product?page=${num }&keyword=${param.keyword }&type=${param.type}">${num }</a></li>
+          <li class="page-item"><a class="page-link" href="rank?page=${num }&keyword=${param.keyword }&type=${param.type}">${num }</a></li>
         </c:forEach>
       </c:if>
       <c:if test="${empty param.keyword }">
         <c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
-          <li class="page-item"><a class="page-link" href="product?page=${num }&type=${param.type}">${num }</a></li>
+          <li class="page-item"><a class="page-link" href="rank?page=${num }&type=${param.type}">${num }</a></li>
         </c:forEach>
       </c:if>
       
       <c:if test="${pageMaker.hasNext }">
         <li class="page-item">
             <c:if test="${not empty keyword }">
-              <a class="page-link" href="product?page=${pageMaker.endPageNo + 1 }&keyword=${keyword }&type=${param.type}" aria-label="Next">
+              <a class="page-link" href="rank?page=${pageMaker.endPageNo + 1 }&keyword=${keyword }&type=${param.type}" aria-label="Next">
                   <span aria-hidden="true">»</span>
                   <span class="sr-only">Next</span>
               </a>
             </c:if>
             
             <c:if test="${empty keyword }">
-              <a class="page-link" href="product?page=${pageMaker.endPageNo + 1 }&type=${param.type}" aria-label="Previous">
+              <a class="page-link" href="rank?page=${pageMaker.endPageNo + 1 }&type=${param.type}" aria-label="Previous">
                   <span aria-hidden="true">»</span>
                   <span class="sr-only">Previous</span>
               </a>

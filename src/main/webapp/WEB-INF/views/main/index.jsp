@@ -135,7 +135,7 @@
                     <c:forEach var="productList" items="${productList }">
                         <div class="col-lg-4 col-sm-6 mb-4">
                             <div class="card h-100">
-                                <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..." /></a>
+                                <a href="../product/product_detail?productNo=${productList.productNo }"><img class="card-img-top" src="${productList.imgSource }" alt="..." height="200px" width="700px"/></a>
                                 <div class="card-body">
                                     <h4 class="card-title"><a href="../product/product_detail?productNo=${productList.productNo }">${productList.productName }</a></h4>
                                     <p class="card-text">${productList.point }</p>
@@ -148,16 +148,6 @@
         </section>
         
         <hr class="my-0" />
-       
-        <!-- Call to Action-->
-        <aside class="py-5 bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p></div>
-                    <div class="col-md-4"><a class="btn btn-lg btn-secondary btn-block" href="#!">Call to Action</a></div>
-                </div>
-            </div>
-        </aside>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Skintalk 2021</p></div>
