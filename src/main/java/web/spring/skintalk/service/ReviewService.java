@@ -10,4 +10,6 @@ public interface ReviewService {
 	public abstract int update(ReviewVO vo);
 	public abstract int delete(int reviewNo, int reviewPno) throws Exception;
 	public abstract int updateGrade(int reviewPno);
+	public abstract int countReviewPno(int reviewPno);
+	public abstract int gradeReset(int productNo);
 }

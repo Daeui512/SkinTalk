@@ -22,7 +22,7 @@ public class MemberCheckRESTController {
 	@Autowired
 	private MemberService memberService;
 	
-	@GetMapping("/userid_check")
+	@PostMapping("/userid_check")
 	public ResponseEntity<Integer> userIdChkPost(@RequestBody MemberVO vo) {
 		logger.info("userIdChkPost() : " + vo.getUserId());
 		int result = memberService.userIdChk(vo.getUserId());
@@ -37,7 +37,7 @@ public class MemberCheckRESTController {
 		return entity;
 	}
 	
-	@GetMapping("/email_check")
+	@PostMapping("/email_check")
 	public ResponseEntity<Integer> emailChkPost(@RequestBody MemberVO vo) {
 		logger.info("emailChkPost() : " + vo.getEmail());
 		int result = memberService.emailChk(vo.getEmail());
@@ -52,7 +52,7 @@ public class MemberCheckRESTController {
 		return entity;
 	}
 	
-	@GetMapping("/phone_check")
+	@PostMapping("/phone_check")
 	public ResponseEntity<Integer> phoneChkPost(@RequestBody MemberVO vo) {
 		logger.info("phoneChkPost() : " + vo.getPhone());
 		int result = memberService.phoneChk(vo.getPhone());
@@ -66,4 +66,20 @@ public class MemberCheckRESTController {
 		
 		return entity;
 	}
+	
+	@PostMapping("/nickname_check")
+	public ResponseEntity<Integer> nickNameChkPost(@RequestBody MemberVO vo) {
+		logger.info("nickNameChkPost() : " + vo.getNickName());
+		int result = memberService.nickNameChk(vo.getNickName());
+		ResponseEntity<Integer> entity = null;
+		
+		if (result == 1) {
+			logger.info("닉네임 중복");
+			entity = new ResponseEntity<Integer>(result, HttpStatus.OK);
+		}else {
+			entity = new ResponseEntity<Integer>(0, HttpStatus.OK);
+		}
+		return entity;
+	}
+	
 }

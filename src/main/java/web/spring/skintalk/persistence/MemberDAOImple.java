@@ -85,4 +85,10 @@ public class MemberDAOImple implements MemberDAO {
 		return sqlSession.update(namespace + ".find_password", vo);
 	}
 
+	@Override
+	public int nickNameChk(String nickName) {
+		logger.info("nickNameChk() 호출");
+		return sqlSession.selectOne(namespace + ".nickName_check", nickName);
+	}
+
 }

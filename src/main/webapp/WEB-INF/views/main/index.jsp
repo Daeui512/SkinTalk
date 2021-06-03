@@ -184,8 +184,8 @@
         		});// end of ajax
         	});// end of search(form-cotrol.keyup)
         });// end of document.ready
-        
         </script>
+        
         
         
     </body>

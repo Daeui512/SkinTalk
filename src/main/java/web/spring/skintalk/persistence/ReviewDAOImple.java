@@ -48,4 +48,18 @@ public class ReviewDAOImple implements ReviewDAO{
 		return sqlSession.update(NAMESPACE + ".update_product_grade_by_avg_of_review_grade", reviewPno);
 	}
 
+	// reviewPno의 댓글 수 확인
+	@Override
+	public int countReviewPno(int reviewPno) {
+		logger.info("countReviewPno() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_count_review_pno", reviewPno);
+	}
+
+	// grade 초기화
+	@Override
+	public int gradeReset(int productNo) {
+		logger.info("gradeReset() 호출");
+		return sqlSession.update(NAMESPACE + ".update_grade_reset", productNo);
+	}
+
 } // end of class

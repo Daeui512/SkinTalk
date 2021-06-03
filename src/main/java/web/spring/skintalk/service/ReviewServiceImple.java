@@ -38,13 +38,27 @@ public class ReviewServiceImple implements ReviewService {
 	@Override
 	public int delete(int reviewNo, int reviewPno) throws Exception {
 		logger.info("delete() 호출");
-		return reviewDao.delete(reviewNo);
+		reviewDao.delete(reviewNo);
+		logger.info("상품평 삭제 성공");
+		return 1;
 	}
 
 	@Override
 	public int updateGrade(int reviewPno) {
 		logger.info("updateGrade() 호출 productNo : " + reviewPno);
 		return reviewDao.updateGrade(reviewPno);
+	}
+
+	@Override
+	public int countReviewPno(int reviewPno) {
+		logger.info("countReviewPno() 호출 reviewPno : " + reviewPno);
+		return reviewDao.countReviewPno(reviewPno);
+	}
+
+	@Override
+	public int gradeReset(int productNo) {
+		logger.info("gradeReset() 호출 reviewPno : " + productNo);
+		return reviewDao.gradeReset(productNo);
 	}
 
 }

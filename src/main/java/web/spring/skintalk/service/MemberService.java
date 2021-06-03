@@ -14,5 +14,5 @@ public interface MemberService {
 	public abstract String findId(String email, String phone);
 	public abstract int findPassword(MemberVO vo);
 	public abstract void sendEmail(MemberVO vo, String div);
-	
+	public abstract int nickNameChk(String nickName);
 }

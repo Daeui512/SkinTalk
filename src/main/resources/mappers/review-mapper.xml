@@ -33,15 +33,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<!-- 평점 PRODUCT GRADE에 넣기 -->
-<!-- 
-update PRODUCT 
-set GRADE = (select round(avg(REVIEW_GRADE), 1) 
-             from REVIEW 
-             where REVIEW_PNO = 1)
-where PRODUCT_NO = (select avg(REVIEW_PNO)
-                    from REVIEW
-                    where REVIEW_PNO = 1);
--->
 	<update id="update_product_grade_by_avg_of_review_grade">
 		update ${product}
 		set ${grade} = (select round(avg(${reviewGrade}), 1)
@@ -50,6 +41,18 @@ where PRODUCT_NO = (select avg(REVIEW_PNO)
 		where ${productNo} = (select avg(${reviewPno})
 							  from ${review}
 							  where ${reviewPno} = #{reviewPno})
+	</update>
+	
+	<select id="select_count_review_pno" resultType="Integer">
+		select count(${reviewPno})
+		from ${review}
+		where ${reviewPno} = #{reviewPno}
+	</select>
+	
+	<update id="update_grade_reset">
+		update ${product}
+		set ${grade} = 0
+		where ${productNo} = #{productNo}
 	</update>
 
 </mapper>

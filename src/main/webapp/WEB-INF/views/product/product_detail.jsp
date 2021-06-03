@@ -116,7 +116,7 @@
                                     	</c:if>
                                     	<c:if test="${not empty sessionScope.userId }">
                                     		<div>
-                                              <input type="text" id="review_nickName" value="${mVo.nickName }">
+                                              <input type="text" id="review_nickName" value="${mVo.nickName }" readonly style="border: white;">
                                             </div>
 											평점 <input type="radio" name="reviewGrade" id="reviewGrade5" value="5" checked="checked"> 5
       										<input type="radio" name="reviewGrade" id="reviewGrade4" value="4" > 4
@@ -135,6 +135,7 @@
                                 		</c:if>
                             </div>
                         </div>
+                        
                         <!-- Single Comment-->
                         <div class="media mb-4">
 <!--                             <img class="d-flex mr-3 rounded-circle" src="https://via.placeholder.com/50x50" alt="..." /> -->
@@ -152,25 +153,18 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <ul class="list-unstyled mb-0">
-                                            <li><a href="#!">Web Design</a></li>
-                                            <li><a href="#!">HTML</a></li>
-                                            <li><a href="#!">Freebies</a></li>
+                                            <li><a href="../main/product?type=1">스킨케어</a></li>
+                                            <li><a href="../main/product?type=2">메이크업</a></li>
                                         </ul>
                                     </div>
                                     <div class="col-lg-6">
                                         <ul class="list-unstyled mb-0">
-                                            <li><a href="#!">JavaScript</a></li>
-                                            <li><a href="#!">CSS</a></li>
-                                            <li><a href="#!">Tutorials</a></li>
+                                            <li><a href="../main/product?type=3">바디케어</a></li>
+                                            <li><a href="../main/rank">랭킹</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Side Widget-->
-                        <div class="card">
-                            <h5 class="card-header">Side Widget</h5>
-                            <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!</div>
                         </div>
                     </div>
                 </div>
@@ -185,6 +179,10 @@
   	$(document).ready(function(){
   		var reviewPno = $('#reviewPno').val();  // 상품 번호 값
   		getAllReviews();
+  		
+  		var reviewGrade = $('#review_grade').val();
+        $('.grade_output').html('<p>' + reviewGrade + '</p>');
+        console.log('gradeoutput : ' + reviewGrade);
 
   		// 상품평 입력 기능
           $('#btn_add').click(function(){
@@ -215,12 +213,16 @@
                 },
                 data : JSONObj,
                 success : function(result, status){
-                   if(result == 1) {
-                      alert('상품평 입력 성공');
-                      getAllReviews();
-                      $('#reviewContent').val('');
-                      $('#reviewGrade').val('');
-                   }
+                	console.log(result + ' , ' + status);
+                	if(result >= 0) {
+                        $('#reviewContent').val('');
+                        $('#reviewGrade').val('');
+                        var productGrade = result.toFixed(1);
+                        console.log('productGrade : ' + productGrade);
+                        $('.grade_output').html('<p>' + productGrade + '</p>');
+                        alert('상품평 입력 성공');
+                        getAllReviews();
+                     }
                 } //end success
              }); // end ajax()
           }); // end btn_add.click()
@@ -299,8 +301,6 @@
 							 
                        }); // end each()
                        $('#reviews').html(list);
-                       var reviewGrade = $('#review_grade').val();
-                       $('.grade_output').html('<p>' + reviewGrade + '</p>');
                        
                     } // end callback()
                 ); // end getJSON()
@@ -328,6 +328,7 @@
                       'reviewNickName' : reviewNickName,
   				}),
   				success : function(result,status) {
+  					console.log(result + ' , ' + status);
   					if (result == 'success') {
   						alert('상품평 수정 성공');
   						getAllReviews();
@@ -352,9 +353,17 @@
   					'reviewPno' : reviewPno
   				}),
   				success : function(result, status) {
-  					if (result == 'success') {
-  						alert('상품평 삭제 성공');
-  						getAllReviews();
+  					console.log(result + ' , ' + status);
+  					if (result >= 0) {
+						var productGrade = result.toFixed(1);
+// 						if (${rVo.reviewPno == null}) {
+// 							productGrade = 0.0;
+// 						}
+                        console.log('productGrade : ' + productGrade);
+                        $('.grade_output').html('<p>' + productGrade + '</p>');
+						
+                        alert('상품평 삭제 성공');
+						getAllReviews();
   					}
   				} // end of callback()
   			}); // end of ajax()

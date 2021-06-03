@@ -129,6 +129,11 @@ public class MemberServiceImple implements MemberService {
 			System.out.println("메일발송 실패 : " + e);
 		}
 	} // end of sendEmail()
-
+	
+	@Override
+	public int nickNameChk(String nickName) {
+		logger.info("nickNameChk() 호출 : nickName = " + nickName);
+		return dao.nickNameChk(nickName);
+	}
 
 } // end of class

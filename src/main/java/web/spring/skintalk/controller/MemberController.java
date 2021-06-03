@@ -146,6 +146,7 @@ public class MemberController {
 		}
 	}
 	
+	
 	@GetMapping("/find_id_form")
 	public void findUserIdFormGet(){
 		logger.info("findIdFormGet() 호출");
