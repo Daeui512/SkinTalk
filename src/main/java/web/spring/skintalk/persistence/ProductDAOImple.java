@@ -116,6 +116,16 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("selectByRank() 호출");
 		return sqlSession.selectList(NAMESPACE + ".select_by_rank", criteria);
 	}
+
+	@Override
+	public List<ProductVO> selectRecommand(String feature, PageCriteria criteria) {
+		logger.info("selectRecommand() 호출");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("feature", "%" + feature + "%");
+		map.put("start", criteria.getStart());
+		map.put("end", criteria.getEnd());
+		return sqlSession.selectList(NAMESPACE + ".select_recommand", map);
+	}
 	
 
 }

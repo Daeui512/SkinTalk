@@ -22,10 +22,8 @@ public class MainProductInterceptor extends HandlerInterceptorAdapter{
 			if (type.matches(regExp)) {
 				if(page != null) {
 					if (page.matches(regExp)) {
-						logger.info("숫자만 입력됨");
 						return true;
 					}else {
-						logger.info("숫자이외의 것도 입력됨");
 						response.sendRedirect("/skintalk/main/index");
 						return false;
 					}
@@ -33,7 +31,6 @@ public class MainProductInterceptor extends HandlerInterceptorAdapter{
 					return true;
 				}
 			}else {
-				logger.info("숫자이외의 것도 입력됨");
 				response.sendRedirect("/skintalk/main/index");
 				return false;
 			}

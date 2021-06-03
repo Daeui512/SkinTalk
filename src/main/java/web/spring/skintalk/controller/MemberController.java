@@ -94,12 +94,11 @@ public class MemberController {
 	
 	@GetMapping("/member-detail")
 	public void memberDetailGet(MemberVO vo, String userId, HttpSession session, Model model) throws IOException {
-		
 		userId = (String)session.getAttribute("userId");
 		logger.info("memberDetail() 호출 userId : " + userId);
 		vo = memberService.read(userId);
-		model.addAttribute("vo", vo);
 		
+		model.addAttribute("vo", vo);
 		
 	}
 	
@@ -113,8 +112,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/update")
-	public String updatePost(MemberVO vo, HttpServletResponse response, 
-			RedirectAttributes reAttr) throws IOException {
+	public String updatePost(MemberVO vo, HttpServletResponse response, RedirectAttributes reAttr) throws IOException {
 		logger.info("updatePost() 호출");
 		int result = memberService.update(vo);
 		logger.info(result + "행 변경 update()");
@@ -146,33 +144,6 @@ public class MemberController {
 			reAttr.addFlashAttribute("delete_result", "fail");
 			return "redirect:/main/index";
 		}
-	}
-	
-	@PostMapping("/userid_check")
-	@ResponseBody
-	public int userIdChkPost(String userId) {
-		logger.info("userIdChkPost() : " + userId);
-		int result = memberService.userIdChk(userId);
-		
-		return result;
-	}
-	
-	@PostMapping("/email_check")
-	@ResponseBody
-	public int emailChkPost(String email) {
-		logger.info("emailChkPost() : " + email);
-		int result = memberService.emailChk(email);
-		
-		return result;
-	}
-	
-	@PostMapping("/phone_check")
-	@ResponseBody
-	public int phoneChkPost(String phone) {
-		logger.info("phoneChkPost() : " + phone);
-		int result = memberService.phoneChk(phone);
-		
-		return result;
 	}
 	
 	@GetMapping("/find_id_form")

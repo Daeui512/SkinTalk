@@ -20,5 +20,6 @@ public interface ProductDAO {
 	public abstract List<ProductVO> selectByTypical(PageCriteria criteria, int productType);	// 카테고리별(타입별) 상품 출력/ 페이징
 	public abstract int viewCount(int productNo);
 	public abstract List<ProductVO> selectByRank(PageCriteria criteria);
+	public abstract List<ProductVO> selectRecommand(String feature, PageCriteria criteria);
 
 }

@@ -18,7 +18,7 @@ import web.spring.skintalk.domain.ProductLikeVO;
 import web.spring.skintalk.service.ProductLikeService;
 
 @RestController
-@RequestMapping("/main/product/list/like")
+@RequestMapping("/like")
 public class ProductLikeRESTController {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(ProductLikeRESTController.class);

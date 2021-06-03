@@ -1,6 +1,5 @@
 package web.spring.skintalk.controller;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -39,45 +38,38 @@ public class MainController {
 		logger.info("index()호출 ");
 		String userId = (String) session.getAttribute("userId");
 		logger.info("userId " + userId);
+		List<ProductVO> list = null;
+		PageCriteria criteria = new PageCriteria(1, 12);
 		
 		if (userId != null) {
 			MemberVO member = memberService.read(userId);
 			logger.info("member_info = " + member.toString());
 			
-			PageCriteria criteria = new PageCriteria(1, 12);
-
 			String skin_type = member.getSkinType();
-			String[] skin_troubles = member.getSkinTrouble().split(",");
-			List<ProductVO> list = productService.read(criteria);
+			String[] features = {"제거","모든","촉촉함","유수분"};
 			
 			if (skin_type.equals("지성")) {
 				logger.info("지성_피부타입");
+				list = productService.readRecommand(features[0], criteria);
+
 			}else if(skin_type.equals("중성")) {
 				logger.info("중성_피부타입");
+				list = productService.readRecommand(features[1], criteria);
+				
 			}else if(skin_type.equals("건성")) {
 				logger.info("건성_피부타입");
+				list = productService.readRecommand(features[2], criteria);
+				
 			}else if(skin_type.equals("복합성")){
 				logger.info("복합성_피부타입");
-			}else {
-				logger.info("잘못된 피부타입");
-			}
-			
-			for (int i = 0; i < skin_troubles.length; i++) {
-				logger.info("skin_troubles = " + skin_troubles[i]);
-			}
-
-			for (ProductVO vo : list) {
-				logger.info("vo = " + vo.getPoint());
-				String[] points = vo.getPoint().split(",");
-				for (String point : points) {
-					logger.info("point = " + point);
-				}
+				list = productService.readRecommand(features[3], criteria);
+				
 			}
 			model.addAttribute("productList", list);
 
 		}else {
-			PageCriteria criteria = new PageCriteria(1, 12);
-			List<ProductVO> list = productService.read(criteria);
+			
+			list = productService.read(criteria);
 			model.addAttribute("productList", list);
 			
 		}

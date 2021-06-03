@@ -102,5 +102,11 @@ public class ProductServiceImple implements ProductService{
 		return dao.selectByRank(criteria);
 	}
 
+	@Override
+	public List<ProductVO> readRecommand(String feature, PageCriteria criteria) {
+		logger.info("readRecommand() 호출");
+		return dao.selectRecommand(feature, criteria);
+	}
+
 
 }

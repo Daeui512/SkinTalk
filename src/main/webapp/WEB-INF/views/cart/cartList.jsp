@@ -39,25 +39,15 @@
             </div>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <c:if test="${not empty sessionScope.userId }">
-                    <li class="nav-item"><a class="nav-link" href="../member/member-detail">마이페이지</a></li>
-                    </c:if>
-                    <!-- 비회원용 장바구니로 이동 -->
-                    <c:if test="${empty sessionScope.userId }">
-                      <li class="nav-item"><a class="nav-link" href="nonMemberCartList">장바구니</a></li> 
-                    </c:if>
-                    <!-- 회원용 장바구니로 이동 -->
-                    <c:if test="${not empty sessionScope.userId }">
-                      <li class="nav-item"><a class="nav-link" href="cartList">장바구니</a></li>
-                    </c:if>
-                    
-                    <li class="nav-item"><a class="nav-link" href="../board/list">고객센터</a></li>
                     <c:if test="${empty sessionScope.userId }">
                       <li class="nav-item"><a class="nav-link" href="../member/login">로그인</a></li>
                     </c:if>
                     <c:if test="${not empty sessionScope.userId }">
+                      <li class="nav-item"><a class="nav-link" href="../member/member-detail">마이페이지</a></li>
                       <li class="nav-item"><a class="nav-link" href="../member/logout">로그아웃</a></li>
                     </c:if>
+                    <li class="nav-item"><a class="nav-link" href="../cart/cartList">장바구니</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../board/list">고객센터</a></li>
                 </ul>
             </div>
         </div>
@@ -141,11 +131,15 @@
       var cartNo = $(this).prevAll('#cart_cartNo').val();
       var cart_this = this;
       $.ajax({
-          url : '../cart/cartUpdateIncrease',
-          type : 'GET',
-          data : {
+          url : '../carts/cartUpdateIncrease',
+          type : 'PUT',
+          data : JSON.stringify({
             'amount' : amount,
             'cartNo' : cartNo
+          }),
+          headers : {
+              'Content-Type' : 'application/json',
+              'X-HTTP-Method-Override' : 'PUT'
           },
           success : function(result){
   			console.log(result);
@@ -163,11 +157,15 @@
       var cartNo = $(this).prevAll('#cart_cartNo').val();
       var cart_this = this;
       $.ajax({
-          url : '../cart/cartUpdateDecrease',
-          type : 'GET',
-          data : {
+          url : '../carts/cartUpdateDecrease',
+          type : 'PUT',
+          data : JSON.stringify({
             'amount' : amount,
             'cartNo' : cartNo
+          }),
+          headers : {
+              'Content-Type' : 'application/json',
+              'X-HTTP-Method-Override' : 'PUT'
           },
           success : function(result){
   			console.log(result);
@@ -185,12 +183,16 @@
     	var amount = $(this).val();
     	var cart_this = this;
     	$.ajax({
-    		url : '../cart/cartUpdate',
-    		type : 'POST',
-    		data : {
+    		url : '../carts/cartUpdate',
+    		type : 'PUT',
+    		data : JSON.stringify({
     			'cartNo' : cartNo,
     			'amount' : amount
-    		},
+    		}),
+    		headers : {
+                'Content-Type' : 'application/json',
+                'X-HTTP-Method-Override' : 'PUT'
+             },
     		success : function(result){
     			console.log(result);
     			if(result > 0){
@@ -204,11 +206,15 @@
     $('.cart_item').on('click', '.delete_btn #btnDelete', function(){
       var cartNo = $(this).prevAll('#cart_cartNo').val();
       $.ajax({
-        url : '../cart/cartDeleteOne',
-        type : 'GET',
-        data : {
+        url : '../carts/cartDeleteOne',
+        type : 'DELETE',
+        data : JSON.stringify({
           'cartNo' : cartNo
-        },
+        }),
+        headers : {
+            'Content-Type' : 'application/json',
+            'X-HTTP-Method-Override' : 'DELETE'
+         },
         success : function(result){
           if(result == 'success'){
             alert('상품이 삭제되었습니다.');
@@ -222,10 +228,14 @@
       var userId = $('#cart_userId').val();
       console.log(userId);
       $.ajax({
-        url : '../cart/cartDeleteAll',
-        type : 'GET',
-        data : {
+        url : '../carts/cartDeleteAll',
+        type : 'DELETE',
+        data : JSON.stringify({
           'userId' : userId
+        }),
+        headers : {
+            'Content-Type' : 'application/json',
+            'X-HTTP-Method-Override' : 'DELETE'
         },
         success : function(result){
           if(result == 'success'){

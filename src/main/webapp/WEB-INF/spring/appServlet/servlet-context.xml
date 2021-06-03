@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
@@ -12,7 +13,10 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-
+	
+	<!-- Annotation 기반의 AOP 기능 사용 -->
+	<aop:aspectj-autoproxy />
+	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	
@@ -30,9 +34,13 @@
 	
 	<beans:bean id="member" class="web.spring.skintalk.interceptor.MemberInterceptor"></beans:bean>
 	<beans:bean id="mainProduct" class="web.spring.skintalk.interceptor.MainProductInterceptor"></beans:bean>
+	<beans:bean id="productDetail" class="web.spring.skintalk.interceptor.ProductDetailInterceptor"></beans:bean>
+	<beans:bean id="board" class="web.spring.skintalk.interceptor.BoardInterceptor"></beans:bean>
 	<interceptors>
 		<interceptor>
 			<mapping path="/member/member-detail"/>
+			<mapping path="/member/delete"/>
+			<mapping path="/member/update"/>
 			<beans:ref bean="member"/>
 		</interceptor>
 		<interceptor>
@@ -40,8 +48,17 @@
 			<mapping path="/main/rank"/>
 			<beans:ref bean="mainProduct"/>
 		</interceptor>
+		<interceptor>
+			<mapping path="/product/product_detail"/>
+			<beans:ref bean="productDetail"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/board/detail"/>
+			<mapping path="/board/update"/>
+			<mapping path="/board/delete"/>
+			<beans:ref bean="board"/>
+		</interceptor>
 	</interceptors>
-	
 	
 	<!-- 뒤로가기 캐시 삭제 설정 코드 -->
 	<interceptors>

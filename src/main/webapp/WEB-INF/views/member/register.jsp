@@ -107,10 +107,14 @@
     			console.log(userId);
     			
     			$.ajax({
-    				type : 'post',
-    				url : '../member/userid_check',
-    				data : {
+    				type : 'get',
+    				url : '../checks/userid_check',
+    				data : JSON.stringify({
     					'userId' : userId
+    				}),
+    				headers : {
+    					'Content-Type' : 'application/json',
+    					'X-HTTP-Method-Override' : 'GET'
     				},
     				success : (result)=>{
     					var list = '';
@@ -131,11 +135,15 @@
 						var email = $('#email').val();
 
 						$.ajax({
-							type : 'post',
-							url : "../member/email_check",
-							data : {
+							type : 'get',
+							url : "../checks/email_check",
+							data : JSON.stringify({
 								'email' : email
-							},
+							}),
+							headers : {
+	        					'Content-Type' : 'application/json',
+	        					'X-HTTP-Method-Override' : 'GET'
+	        				},
 							success : function(result) {
 								var list = "";
 								if (result == '1') {
@@ -156,11 +164,15 @@
 						var phone = $('#phone').val();
 
 						$.ajax({
-							type : 'post',
-							url : "../member/phone_check",
-							data : {
+							type : 'get',
+							url : "../checks/phone_check",
+							data : JSON.stringify({
 								'phone' : phone
-							},
+							}),
+							headers : {
+	        					'Content-Type' : 'application/json',
+	        					'X-HTTP-Method-Override' : 'GET'
+	        				},
 							success : function(result) {
 								var list = "";
 								if (result == '1') {
