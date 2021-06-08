@@ -84,6 +84,25 @@
 		<property name="rReviewRno" value="r_review_rno"/>
 		<property name="rReviewContent" value="r_review_content"/>
 		<property name="rReviewCdate" value="r_review_cdate"/>
+		
+		<!-- 결제 -->
+		<property name="payment" value="payment"/>
+		<property name="paymentNo" value="payment_no"/>
+		<property name="userId" value="userid"/>
+		<property name="productNo" value="product_no"/>
+		<property name="price" value="price"/>
+		<property name="productName" value="product_name"/>
+		<property name="amount" value="amount"/>
+		<property name="pdate" value="pdate"/>
+		<property name="email" value="email"/>
+		<property name="phone" value="phone"/>
+		
+		<!-- 비회원 정보 -->
+		<property name="nonMember" value="non_member"/>
+		<property name="userId" value="userid"/>
+		<property name="phone" value="phone"/>
+		<property name="email" value="email"/>
+		
 	</properties>
 	
 	<!-- Underscore 명명법을 Camel 명명법으로 매핑 -->

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import web.spring.skintalk.domain.MemberVO;
 import web.spring.skintalk.service.MemberService;
+import web.spring.skintalk.service.NonMemberService;
 
 @RestController
 @RequestMapping(value="/checks")

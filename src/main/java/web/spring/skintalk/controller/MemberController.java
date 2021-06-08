@@ -1,7 +1,9 @@
 package web.spring.skintalk.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,7 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import web.spring.skintalk.domain.MemberVO;
+import web.spring.skintalk.domain.NonMemberVO;
+import web.spring.skintalk.domain.PaymentVO;
 import web.spring.skintalk.service.MemberService;
+import web.spring.skintalk.service.NonMemberService;
+import web.spring.skintalk.service.PaymentService;
 
 @Controller
 @RequestMapping(value = "/member")
@@ -27,6 +33,12 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private NonMemberService nonMemberService;
+	
+	@Autowired
+	private PaymentService paymentService;
 	
 	@GetMapping(value = "/register")
 	public void registerGet() {
@@ -214,6 +226,40 @@ public class MemberController {
 			}
 			
 	}
+
+	@GetMapping("/nonmember-payment")
+	public void nonMemberGET(Model model, HttpSession session, HttpServletRequest request) {
+		Cookie nonMembercookie = null;
+		Cookie[] nonMembercookies = request.getCookies();
+		String nonUserId = null;
+			
+		 for (int i = 0; i < nonMembercookies.length; i++) {
+	          nonMembercookie = nonMembercookies[i];
+	          if(nonMembercookie.getName().equals("JSESSIONID")) {
+	        	  nonUserId = nonMembercookie.getValue();
+	        	  model.addAttribute("nonUserId", nonUserId);
+	        	  logger.info(nonUserId);
+	          }
+		 }
+	}
+	
+	@PostMapping("/nonmember-payment")
+	public String nonMemberPOST(NonMemberVO vo,RedirectAttributes reAttr) {
+			logger.info("22222222222222222222222222222222"+vo);
+			int result = nonMemberService.create(vo);
+			logger.info("nenmember-payment : result : "+result);
+			return "redirect:/cart/cartList";
+    	
+	}
+	
+	@GetMapping("/inquiry")
+	public void paymentResultGET(HttpSession session, Model model) {
+		logger.info("paymentResultGET 호출");
+		String userId = (String) session.getAttribute("userId");
+		List<PaymentVO> list = paymentService.read(userId); 
+		model.addAttribute("list", list);
+	}
+	
 	
 }
 

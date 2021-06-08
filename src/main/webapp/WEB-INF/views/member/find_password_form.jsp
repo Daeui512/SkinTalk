@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
@@ -30,7 +30,7 @@
         }
         </style>
         
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -49,14 +49,14 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
                  <c:if test="${empty sessionScope.userId }">
-                    <li class="nav-item"><a class="nav-link" href="../member/login">·Î±×ÀÎ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../member/login">ë¡œê·¸ì¸</a></li>
                   </c:if>
                   <c:if test="${not empty sessionScope.userId }">
-                    <li class="nav-item"><a class="nav-link" href="../member/member-detail">¸¶ÀÌÆäÀÌÁö</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../member/logout">·Î±×¾Æ¿ô</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../member/member-detail">ë§ˆì´í˜ì´ì§€</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../member/logout">ë¡œê·¸ì•„ì›ƒ</a></li>
                   </c:if>
-                  <li class="nav-item"><a class="nav-link" href="../cart/cartList">Àå¹Ù±¸´Ï</a></li>
-                  <li class="nav-item"><a class="nav-link" href="../board/list">°í°´¼¾ÅÍ</a></li>
+                  <li class="nav-item"><a class="nav-link" href="../cart/cartList">ì¥ë°”êµ¬ë‹ˆ</a></li>
+                  <li class="nav-item"><a class="nav-link" href="../board/list">ê³ ê°ì„¼í„°</a></li>
               </ul>
           </div>
       </div>
@@ -67,17 +67,17 @@
     <div class="panel panel-success">
       <div class="panel-body">
           <div style="padding-bottom: 20px">
-            <input type="text" class="form-control" name="userId" placeholder="ID" autofocus required>
+            <input type="text" class="form-control" id="userId" name="userId" placeholder="ID" autofocus required>
           </div>
           <div style="padding-bottom: 20px">
-            <input type="text" class="form-control" name="email" placeholder="E-MAIL" required>
+            <input type="text" class="form-control" id="email" name="email" placeholder="E-MAIL" required>
           </div>
           <div style="padding-bottom: 20px">
-            <button type="button" class="form-control btn btn-primary" id="passwordFindBtn">ºñ¹Ğ¹øÈ£ Ã£±â</button>
+            <button type="button" class="form-control btn btn-primary" id="passwordFindBtn">ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°</button>
           </div>
        <div style="padding-bottom: 20px">
          <a href="../member/login">
-          <button type="button" class="form-control btn btn-primary">·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿</button>
+          <button type="button" class="form-control btn btn-primary">ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ì´ë™</button>
          </a>
        </div>
       </div>
@@ -86,10 +86,10 @@
   
    <script type="text/javascript">
       $(function(){
-         $("#passwordFindBtn").click(function(){ // #passwordFindBtn¹öÆ°À» ´©¸£¸é
-            var userId = $('#userId').val(); // ÀÔ·ÂÇÑ userId °ª ÀúÀå
-            var email = $('#email').val(); // ÀÔ·ÂÇÑ email °ª ÀúÀå
-			
+         $("#passwordFindBtn").click(function(){ // #passwordFindBtnë²„íŠ¼ì„ ëˆ„ë¥´ë©´
+            var userId = $('#userId').val(); // ì…ë ¥í•œ userId ê°’ ì €ì¥
+            var email = $('#email').val(); // ì…ë ¥í•œ email ê°’ ì €ì¥
+
             if (userId != null && email != null) {
                 $.ajax({
                    url : "../member/find_password_form",
@@ -99,37 +99,26 @@
                       'email' : email
                    },
                    success : function (findUserPassword_result) {
-                      confirmFindPasswordResult(); // confirmFindPasswordResult() È£Ãâ
+                      confirmFindPasswordResult(); // confirmFindPasswordResult() í˜¸ì¶œ
                       function confirmFindPasswordResult() {
                          
-                         if (findUserPassword_result == 'success') { // success ¹Ş¾Æ¿Ã ½Ã alert
-                            alert('ÀÓ½Ãºñ¹Ğ¹øÈ£ ÀÌ¸ŞÀÏ ¹ß¼Û¿Ï·á');
+                         if (findUserPassword_result == 'success') { // success ë°›ì•„ì˜¬ ì‹œ alert
+                            alert('ì„ì‹œë¹„ë°€ë²ˆí˜¸ ì´ë©”ì¼ ë°œì†¡ì™„ë£Œ');
                             var target = encodeURI('./login');
                             location = target;
-                         } else if (findUserPassword_result == 'wrong_userid') { // wrong_userid ¹Ş¾Æ¿Ã ½Ã alert
-                            alert('µî·ÏµÇÁö ¾ÊÀº ¾ÆÀÌµğ ÀÔ´Ï´Ù');
+                         } else if (findUserPassword_result == 'wrong_userid') { // wrong_userid ë°›ì•„ì˜¬ ì‹œ alert
+                            alert('ë“±ë¡ë˜ì§€ ì•Šì€ ì•„ì´ë”” ì…ë‹ˆë‹¤');
                          } else if (findUserPassword_result == 'wrong_email') {
-                            alert('µî·ÏµÇÁö ¾ÊÀº ÀÌ¸ŞÀÏ ÀÔ´Ï´Ù');
+                            alert('ë“±ë¡ë˜ì§€ ì•Šì€ ì´ë©”ì¼ ì…ë‹ˆë‹¤');
                          } 
                       } // end of confirmFindPasswordResult()
                    }
                 }) // end of #passwordFindBtn ajax()
 			}else{			// end of if
-				alert('¾ÆÀÌµğ¿Í ÀÌ¸ŞÀÏÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä');
+				alert('ì•„ì´ë””ì™€ ì´ë©”ì¼ì„ ì…ë ¥í•´ì£¼ì„¸ìš”');
 			}
          }); // end of #passwordFindBtn.click()
       }) // end of function()
    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

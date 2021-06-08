@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +23,8 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="../resources/design/styles.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../resources/script/jquery.cookie.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <title>SkinTalk 장바구니</title>
 </head>
 <body>
@@ -122,6 +125,13 @@
     
     <button type="button" id="btnDeleteAll">장바구니 비우기</button><br>
     <a href="../main/product"><button type="button" id="btnList">상품목록</button></a>
+    
+    <c:if test="${not empty sessionScope.userId }">
+    <button onclick="requestPay()">결제</button>    
+    </c:if>
+    <c:if test="${empty sessionScope.userId }">
+    <button onclick="requestNonMemberPay()">비회원결제</button>    
+    </c:if>
   
   <script type="text/javascript">
   $(document).ready(()=>{
@@ -146,6 +156,7 @@
   			if(result > 0){
   				$(cart_this).prevAll('#amount').val(result+'');
   				alert('장바구니 수량이 변경 되었습니다.');
+  				location.reload();
   			}
   		}// end of success
         });// end of ajax
@@ -172,6 +183,7 @@
   			if(result > 0){
   				$(cart_this).nextAll('#amount').val(result + '');
   				alert('장바구니 수량이 변경 되었습니다.');
+  				location.reload();
   			}
   		}// end of success
         });// end of ajax
@@ -196,8 +208,9 @@
     		success : function(result){
     			console.log(result);
     			if(result > 0){
-      				alert('장바구니 수량이 변경 되었습니다.');
       				$(cart_this).val(result+'');
+      				alert('장바구니 수량이 변경 되었습니다.');
+      				location.reload();
     			}
     		}// end of success
     	});// end of ajax
@@ -246,6 +259,176 @@
       });// end of ajax
     });// end of click()
   });// end of document()
+  
+  
+  function getToday(){
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = ("0" + (1 + date.getMonth())).slice(-2);
+      var day = ("0" + date.getDate()).slice(-2);
+
+      return year + month + day;
+  }
+  
+  // IMP.request_pay(param, callback) 호출
+  function requestPay(){
+	 var userId = '${userId}';
+	 var sumMoney = $('#sumMoney').val();
+	 var email = '${vo.email}';
+	 var phone = '${vo.phone}';
+	 merchant_uid = getToday() + '_' + new Date().getTime();
+	 var cartLength = $('#cartLength').val();		  
+	 console.log(userId);
+	 console.log(sumMoney);
+	 console.log(email);
+	 console.log(phone);
+	 
+	  IMP.request_pay({
+	        pg : 'html5_inicis', // 결제사
+	        pay_method : 'card', // 카드결제
+	        merchant_uid : getToday() + '_' + new Date().getTime(), //예약번호
+	        name : '주문명: skintalk 구매물품' ,
+	        amount : sumMoney, //가격
+	        buyer_email : '${vo.email}' ,
+	        buyer_name : '${vo.userName}',
+	        buyer_tel : '${vo.phone}',
+	     }, function(rsp) {
+	        if ( rsp.success ) {
+	        	for(var i = 0; i < cartLength; i++){
+	        	    (function(i) {
+	        	    	var productNo = $('#cart_productNo'+i).val();
+	        	    	var productName = $('#productName'+i).val();
+	        	    	var amount = $('#amount'+i).val();
+	        	    	var price = $('#price'+i).val();
+	        	           $.ajax({
+	        	               type: "post",
+	        	               url: "../payment/result/"+i+ "/" +  cartLength, // 보내고자하는 서버
+	        	               headers: { "Content-Type": "application/json","X-HTTP-Method-Override" : "POST"},
+	        	               data: JSON.stringify({
+	        	                  'paymentNo' : merchant_uid, //예약자번호//
+	        	                  'userId' : userId,//
+	        	                  'productNo' : productNo,
+	        	                  'price' : price,//
+	        	                  'productName' : productName,
+	        	                  'amount' : amount,
+	        	                  'email' : email,//
+	        	                  'phone' : phone,
+	        	               }),
+	        	               async: false,
+	        	               success : function (result, status){
+	        	                  console.log(result +','+ status);
+	        	               }//end success
+	        	            }); // end ajax
+	        	    })(i);//end function(i)
+	        	}//end for
+    	            var msg = '결제가 완료되었습니다.\n';
+    	            msg += '${vo.userName}님 해당 카드관련 정보는\n';
+    	            msg += '고유ID : ' + rsp.imp_uid;
+    	            msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+    	            msg += '\n결제 금액 : ' + rsp.paid_amount;
+    	            msg += '입니다';
+    	            alert(msg);
+	        		location.href='../member/inquiry'; 
+    	            
+    	            
+    	            ///////////////////////////  문자전송 추가   /////////////////////////////////
+	        
+	        
+	        
+	        } else {
+	           var msg = '결제에 실패 하였습니다.';
+	           msg += '에러내용 : ' + rsp.error_msg;
+	           msg += ' ${vo.userName}님';
+	           alert(msg);
+	        }
+	     });//end function(rsp)
+  }//end requestPay
+  
+    function requestNonMemberPay(){
+ 		 var userId = '${nonMemberUserId}';
+		 console.log(userId);
+	 
+		 $.ajax({
+         type : 'post',
+         url : '../payment/nonMember/' + userId,
+         headers : {
+            'Content-Type' : 'application/json',
+            'X-HTTP-Method-Override' : 'POST'
+         }, 
+         data : JSON.stringify({
+            'userId' : userId
+         }),
+         success : function (result, status) {
+        	 if(result == 1){
+       		 var sumMoney = $('#sumMoney').val();
+       		 var email = '${nonmembervo.email}';
+       		 var phone = '${nonmembervo.phone}';
+       		 merchant_uid = getToday() + '_' + new Date().getTime();
+       		 var cartLength = $('#cartLength').val();		  
+     			
+     		 IMP.request_pay({
+     		        pg : 'html5_inicis', // 결제사
+     		        pay_method : 'card', // 카드결제
+     		        merchant_uid : getToday() + '_' + new Date().getTime(), //예약번호
+     		        name : '비회원주문명: skintalk 구매물품' ,
+     		        amount : sumMoney, //가격
+     		        buyer_email : '${nonmembervo.email}' ,
+     		        buyer_name : '비회원',
+     		        buyer_tel : '${nonmembervo.phone}',
+     		     }, function(rsp) {
+     		        if ( rsp.success ) {
+     		        	for(var i = 0; i < cartLength; i++){
+     		        	    (function(i) {
+     		        	    	var productNo = $('#cart_productNo'+i).val();
+     		        	    	var productName = $('#productName'+i).val();
+     		        	    	var amount = $('#amount'+i).val();
+     		        	    	var price = $('#price'+i).val();
+     		        	    	console.log(productNo);
+     		        	    	console.log(productName);
+     		        	    	console.log(amount);
+     		        	           $.ajax({
+     		        	               type: "post",
+     		        	               url: "../payment/result/"+i+"/"+cartLength, // 보내고자하는 서버
+     		        	               headers: { "Content-Type": "application/json","X-HTTP-Method-Override" : "POST"},
+     		        	               data: JSON.stringify({
+     		        	                  'paymentNo' : merchant_uid, //예약자번호//
+     		        	                  'userId' : userId,//
+     		        	                  'productNo' : productNo,
+     		        	                  'price' : price,//
+     		        	                  'productName' : productName,
+     		        	                  'amount' : amount,
+     		        	                  'email' : email,//
+     		        	                  'phone' : phone,
+     		        	               }),
+     		        	               async: false,
+     		        	               success : function (result, status){
+     		        	                  console.log(result +','+ status);
+     		        	               }//end success
+     		        	            }); // end ajax
+     		        	    })(i);//end function(i)
+     		        	}//end for
+         		            var msg = '결제가 완료되었습니다.\n';
+         		            msg += '비회원님 해당 카드관련 정보는\n';
+         		            msg += '고유ID : ' + rsp.imp_uid;
+         		            msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+         		            msg += '\n결제 금액 : ' + rsp.paid_amount;
+         		            msg += ' 원입니다';
+         		            alert(msg);
+         		          
+         		            //////////////////  비회원일때 문자전송   /////////////////// 
+     		       
+     		        } else {
+						alert('결제에 실패 하였습니다.');
+     		        }
+     		     });//end function(rsp)
+        	  }else{
+        		  alert('비회원 결제를 위한 정보등록');
+        		  location.href="../member/nonmember-payment";
+        	  }
+          }//end success
+       }); // end ajax()
+       }//end requestNonMemberPay
+  
   </script>
  
 </body>

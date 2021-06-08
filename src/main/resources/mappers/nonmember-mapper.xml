@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.spring.skintalk.NonMemberMapper"> <!-- query 작성하는 곳이라고 생각 -->
+
+	<insert id="nonMemberInsert" >
+		insert into ${nonMember} (${userId}, ${phone}, ${email})
+		values (#{userId}, #{phone}, #{email})
+	</insert>
+	
+	
+	
+	<select id="nonMemberSelectCount" resultType="Integer">
+	 	select count(*) from ${nonMember} where ${userId} = #{userId}
+	</select>
+	
+	
+	
+	<select id="nonMemberSelectAll" resultType="NonMemberVO">
+      select * from ${nonMember}
+      where ${userId} = #{userId}
+   </select>
+
+
+
+
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

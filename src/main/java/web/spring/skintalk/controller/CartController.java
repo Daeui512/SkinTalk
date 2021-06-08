@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import web.spring.skintalk.domain.CartVO;
+import web.spring.skintalk.domain.MemberVO;
+import web.spring.skintalk.domain.NonMemberVO;
 import web.spring.skintalk.service.CartService;
+import web.spring.skintalk.service.MemberService;
+import web.spring.skintalk.service.NonMemberService;
 
 @Controller
 @RequestMapping(value = "/cart")
@@ -28,6 +32,14 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private NonMemberService nonMemberService;
+
+
+	
 	@GetMapping("/cartList")
 	public void cartList(Model model, HttpSession session, HttpServletRequest request) {
 		logger.info("cartList() 호출 : 회원용 장바구니 호출");
@@ -37,16 +49,19 @@ public class CartController {
 		List<CartVO> list = null;
 		int sumMoney = 0; 
 		int cartCount = 0; 
-		
+		MemberVO vo = null;
+		NonMemberVO nonmembervo = null;
+				
 		if(userId != null) {
 			list = cartService.listCart(userId);
 			sumMoney = cartService.sumMoney(userId);
 			cartCount = cartService.countCart(userId);
+			//////////////////////////////////////
+			vo = memberService.read(userId);
         }else {
         	Cookie[] cookies = null;
         	
         	cookies = request.getCookies();
-        	
         	if (cookies != null) {
 				logger.info("JSESSIONID 찾기");
 				for (Cookie cookie : cookies) {
@@ -58,14 +73,20 @@ public class CartController {
         	list = cartService.nonMemberListCart(nonMemberUserId);
         	sumMoney = cartService.sumMoney(nonMemberUserId);
         	cartCount = cartService.countCart(nonMemberUserId);
+   //////////////////////////////////////
+        	nonmembervo = nonMemberService.readAll(nonMemberUserId); 
         }
 		
-		for (CartVO vo : list) {
-			logger.info("CartVO = " + vo.toString());
+		for (CartVO vo1 : list) {
+			logger.info("CartVO = " + vo1.toString());
 		}
 		logger.info("sumMoney = " + sumMoney);
 		logger.info("장바구니 개수 : " + cartCount);
 
+		model.addAttribute("vo", vo);
+		model.addAttribute("nonMemberUserId", nonMemberUserId);
+		model.addAttribute("nonmembervo", nonmembervo);
+		
 		model.addAttribute("cartList", list);
 		model.addAttribute("sumMoney", sumMoney);
 		model.addAttribute("cartCount", cartCount);
@@ -109,11 +130,6 @@ public class CartController {
         }
         return "redirect:/cart/cartList";
     }
-	
-	@PostMapping("/cartList")
-	public String cartListPost() {		// 장바구니를 확인하고 사용자가 결제를 하기위해서 form 정보를 받아옴
-		return null;
-	}
 	
 	
 }
