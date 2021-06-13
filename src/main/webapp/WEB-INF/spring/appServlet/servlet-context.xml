@@ -36,17 +36,23 @@
 	<beans:bean id="mainProduct" class="web.spring.skintalk.interceptor.MainProductInterceptor"></beans:bean>
 	<beans:bean id="productDetail" class="web.spring.skintalk.interceptor.ProductDetailInterceptor"></beans:bean>
 	<beans:bean id="board" class="web.spring.skintalk.interceptor.BoardInterceptor"></beans:bean>
+	<beans:bean id="rank" class="web.spring.skintalk.interceptor.RankPageInterceptor"></beans:bean>
+	
 	<interceptors>
 		<interceptor>
 			<mapping path="/member/member-detail"/>
 			<mapping path="/member/delete"/>
 			<mapping path="/member/update"/>
+			<mapping path="/member/inquiry"/>
 			<beans:ref bean="member"/>
 		</interceptor>
 		<interceptor>
 			<mapping path="/main/product"/>
-			<mapping path="/main/rank"/>
 			<beans:ref bean="mainProduct"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/main/rank"/>
+			<beans:ref bean="rank"/>
 		</interceptor>
 		<interceptor>
 			<mapping path="/product/product_detail"/>

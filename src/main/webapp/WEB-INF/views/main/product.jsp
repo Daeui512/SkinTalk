@@ -74,7 +74,7 @@
           <a href="product?type=1" class="list-group-item">스킨케어</a>
           <a href="product?type=2" class="list-group-item">메이크업</a>
           <a href="product?type=3" class="list-group-item">바디케어</a>
-          <a href="../main/rank" class="list-group-item">랭킹</a>
+          <a href="../main/rank?page=1" class="list-group-item">랭킹</a>
         </div>
       </div>
       <!-- /.col-lg-3 -->

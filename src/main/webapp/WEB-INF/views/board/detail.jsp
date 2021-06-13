@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -5,6 +7,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+h2 {
+  text-align: center;
+  padding: 50px 0;
+  font-weight: lighter;
+  font-size: 2em;
+  letter-spacing: 10px;
+  color: #FF7493;
+}
+
+button {
+  background-color: #FF9CBB;
+  border-radius: 50%;
+}
+textarea {
+  background-color: #FFF0F0;
+  width: 300px;
+  border: 1px solid #CD3861;
+  padding: 20px;
+  margin: 120px;
+}
+div {
+    text-align: center;
+}
+
+
+</style>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- Bootstrap core JS-->
@@ -25,6 +54,8 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <title>${vo.boardTitle }</title>
 </head>
+
+
 <body>
   <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -74,11 +105,11 @@
   <div>
     <p>작성자 : ${vo.userId }</p>
     <fmt:formatDate value="${vo.boardCdate }"
-      pattern="yyyy-mm-dd HH:mm:ss" var="cdate" />
-    <p>작성일 : ${boardCdate }</p>
+      pattern="yyyy년mm월dd일 HH시mm분" var="cdate" />
+    <p>작성일 : ${vo.boardCdate }</p>
   </div>
   <div>
-    <textarea rows="20" cols="120" readonly="readonly">${vo.boardContent }</textarea>
+    <textarea id="text1" rows="20" cols="120" readonly="readonly">${vo.boardContent }</textarea>
   </div>
   
   <div style="text-align: center">
@@ -226,5 +257,7 @@
               }); // end btn_delete()
             }); // end document()
       </script>
+      
+
 </body>
 </html>

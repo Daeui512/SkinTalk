@@ -90,11 +90,11 @@ public class MemberServiceImple implements MemberService {
 		// Mail Server 설정
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.gmail.com";
-		String hostSMTPid = ""; // 보내는 사람 구글 이메일 작성 ex) "test@gmail.com";
-		String hostSMTPpwd = ""; // 보내는 사람 구글 비밀번호 작성 ex ) "1234";
+		String hostSMTPid = "juliet61008@gmail.com"; // 보내는 사람 구글 이메일 작성 ex) "test@gmail.com";
+		String hostSMTPpwd = "rain1004"; // 보내는 사람 구글 비밀번호 작성 ex ) "1234";
 
 		// 보내는 사람 EMail, 제목, 내용
-		String fromEmail = ""; // 보내는 사람 구글 이메일 작성 ex) "test@test.com";
+		String fromEmail = "juliet61008@gmail.com"; // 보내는 사람 구글 이메일 작성 ex) "test@test.com";
 		String fromName = "SkinTalk";
 		String subject = "";
 		String msg = "";
@@ -114,12 +114,10 @@ public class MemberServiceImple implements MemberService {
 			HtmlEmail email = new HtmlEmail();
 			email.setDebug(true);
 			email.setCharset(charSet);
-			email.setSSL(true);
 			email.setHostName(hostSMTP);
 			email.setSmtpPort(465);
 
 			email.setAuthentication(hostSMTPid, hostSMTPpwd);
-			email.setTLS(true);
 			email.addTo(mail, charSet);
 			email.setFrom(fromEmail, fromName, charSet);
 			email.setSubject(subject);

@@ -48,7 +48,6 @@ public class PaymentRESTController {
        params.put("type", "SMS");
        params.put("text", vo.getUserId()+"님 "+vo.getProductName()+"외 "+ (cartLength-1) +"건 주문이 완료되었습니다.");
        params.put("app_version", "test app 1.2"); // application name and version
-      
    
 		 try {
 		 	result = paymentService.create(vo);

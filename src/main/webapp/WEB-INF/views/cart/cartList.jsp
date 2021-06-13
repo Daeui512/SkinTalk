@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap core JS-->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -25,6 +26,26 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="../resources/script/jquery.cookie.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="../resources/design/styles.css" rel="stylesheet" />
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+.btn-primary{
+  background-color: #343A40;
+  border-color: #ffffff;
+  width: 200px;
+  
+}
+</style>
+
 <title>SkinTalk 장바구니</title>
 </head>
 <body>
@@ -57,7 +78,7 @@
     </nav>
 
   
-    <h2>장바구니</h2>
+    <h2 style="text-align: center; padding-top: 16px">장바구니</h2>
     <!-- 로그인해서 세션이 존재할 때 실행되는 코드 -->
        <c:choose>
       <c:when test="${cartCount == 0}">
@@ -65,8 +86,8 @@
       </c:when>
 
       <c:otherwise>
-        <form action="../cart/cartList" method="post">
-          <table border="1" width="100%">
+        <div class="container">
+          <table class="table table-dark table-striped" border="1" width="100%">
             <tr>
               <th>상품명</th>
               <th>단가</th>
@@ -111,27 +132,27 @@
               </tr>
             </c:forEach>
             <tr>
-              <td colspan="5" align="right">장바구니 금액 합계 : <fmt:formatNumber value="${sumMoney}" pattern="#,###,###" /><br>
-                배송료 : <input type="text" style="border: none;" ><br> 
-                총합계 : <fmt:formatNumber value="" pattern="#,###,###" />
-              </td>
+              <td colspan="5" align="right">장바구니 금액 합계 : <fmt:formatNumber value="${sumMoney}" pattern="#,###,###" /></td>
             </tr>
                  
           </table>
-          <input type="submit" value="결제하기">
-        </form>
+          </div>
       </c:otherwise>
     </c:choose>
     
-    <button type="button" id="btnDeleteAll">장바구니 비우기</button><br>
-    <a href="../main/product"><button type="button" id="btnList">상품목록</button></a>
+    <div style="text-align: center">
+      <button type="button" id="btnDeleteAll" class="form-control btn btn-primary">장바구니 비우기</button>
+      <a href="../main/product"><button type="button" id="btnList" class="form-control btn btn-primary">상품목록</button></a>
+      
+      <c:if test="${not empty sessionScope.userId }">
+      <button onclick="requestPay()" class="form-control btn btn-primary">결제</button>    
+      </c:if>
+      <c:if test="${empty sessionScope.userId }">
+      <button onclick="requestNonMemberPay()" class="form-control btn btn-primary">비회원결제</button>    
+      </c:if>
+    </div>
     
-    <c:if test="${not empty sessionScope.userId }">
-    <button onclick="requestPay()">결제</button>    
-    </c:if>
-    <c:if test="${empty sessionScope.userId }">
-    <button onclick="requestNonMemberPay()">비회원결제</button>    
-    </c:if>
+    
   
   <script type="text/javascript">
   $(document).ready(()=>{

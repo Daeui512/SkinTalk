@@ -125,10 +125,40 @@
               </div>
               <div class="card-footer">
                 
+                <c:if test="${productList.grade eq 0 }">
+              	상품평없음
+              </c:if>
+              <c:if test="${0 lt productList.grade and productList.grade lt 1}">
+                <small class="text-muted">
+                &#9734; &#9734; &#9734; &#9734; &#9734;
+                </small>
+              </c:if>
+              <c:if test="${1 le productList.grade and productList.grade lt 2}">
+                <small class="text-muted">
+                &#9733; &#9734; &#9734; &#9734; &#9734;
+                </small>
+              </c:if>
+              <c:if test="${2 le productList.grade and productList.grade lt 3}">
+                <small class="text-muted">
+                &#9733; &#9733; &#9734; &#9734; &#9734;
+                </small>
+              </c:if>
+              <c:if test="${3 le productList.grade and productList.grade lt 4}">
+                <small class="text-muted">
+                &#9733; &#9733; &#9733; &#9734; &#9734;
+                </small>
+              </c:if>
+              <c:if test="${4 le productList.grade and productList.grade lt 5}">
                 <small class="text-muted">
                 &#9733; &#9733; &#9733; &#9733; &#9734;
                 </small>
-                
+              </c:if>
+              <c:if test="${productList.grade eq 5}">
+                <small class="text-muted">
+                &#9733; &#9733; &#9733; &#9733; &#9733;
+                </small>
+              </c:if>
+
               </div>
             </div>
           </div>

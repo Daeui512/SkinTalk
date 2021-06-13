@@ -4,6 +4,176 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #aca49c;
+  font-size: 0.875em;
+}
+
+input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder {
+  color: #bbb5af;
+}
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: #aca49c;
+  font-size: 0.875em;
+}
+
+input:focus::-moz-placeholder, textarea:focus::-moz-placeholder {
+  color: #bbb5af;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #aca49c;
+  font-size: 0.875em;
+}
+
+input:focus::placeholder, textarea::focus:placeholder {
+  color: #bbb5af;
+}
+
+input::-ms-placeholder, textarea::-ms-placeholder {
+  color: #aca49c;
+  font-size: 0.875em;
+}
+
+input:focus::-ms-placeholder, textarea:focus::-ms-placeholder {
+  color: #bbb5af;
+}
+
+/* on hover placeholder */
+
+input:hover::-webkit-input-placeholder, textarea:hover::-webkit-input-placeholder {
+  color: #e2dedb;
+  font-size: 0.875em;
+}
+
+input:hover:focus::-webkit-input-placeholder, textarea:hover:focus::-webkit-input-placeholder {
+  color: #cbc6c1;
+}
+
+input:hover::-moz-placeholder, textarea:hover::-moz-placeholder {
+  color: #e2dedb;
+  font-size: 0.875em;
+}
+
+input:hover:focus::-moz-placeholder, textarea:hover:focus::-moz-placeholder {
+  color: #cbc6c1;
+}
+
+input:hover::placeholder, textarea:hover::placeholder {
+  color: #e2dedb;
+  font-size: 0.875em;
+}
+
+input:hover:focus::placeholder, textarea:hover:focus::placeholder {
+  color: #cbc6c1;
+}
+
+input:hover::placeholder, textarea:hover::placeholder {
+  color: #e2dedb;
+  font-size: 0.875em;
+}
+
+input:hover:focus::-ms-placeholder, textarea:hover::focus:-ms-placeholder {
+  color: #cbc6c1;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: #e2dedb;
+  color: #b3aca7;
+}
+
+header {
+  position: relative;
+  margin: 100px 0 25px 0;
+  font-size: 2.3em;
+  text-align: center;
+  letter-spacing: 7px;
+}
+
+#form {
+  position: relative;
+  width: 500px;
+  margin: 50px auto 100px auto;
+}
+
+input {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.875em;
+  width: 470px;
+  height: 50px;
+  padding: 0px 15px 0px 15px;
+  
+  background: transparent;
+  outline: none;
+  color: #726659;
+  
+  border: solid 1px #b3aca7;
+  border-bottom: none;
+  
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+}
+
+input:hover {
+  background: #b3aca7;
+  color: #e2dedb;
+}
+
+textarea {
+  width: 470px;
+  max-width: 470px;
+  height: 110px;
+  max-height: 110px;
+  padding: 15px;
+  
+  background: transparent;
+  outline: none;
+  
+  color: #726659;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.875em;
+  
+  border: solid 1px #b3aca7;
+  
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+}
+
+textarea:hover {
+  background: #b3aca7;
+  color: #e2dedb;
+}
+
+#submit {
+  width: 470px;
+  
+  padding: 0;
+  margin: -5px 0px 0px 0px;
+  
+  font-family: 'Lato', sans-serif;
+  font-size: 0.875em;
+  color: #b3aca7;
+  
+  outline:none;
+  cursor: pointer;
+  
+  border: solid 1px #b3aca7;
+  border-top: none;
+}
+
+#submit:hover {
+  color: #e2dedb;
+}
+
+</style>
 <meta charset="UTF-8">
 <!-- Bootstrap core JS-->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -52,27 +222,14 @@
                 </div>
             </div>
         </nav>
-  <h2>글 작성 페이지</h2>
-  <form action="register" method="post">
-    <div>
-      <p>제목 :
-        <input type="text" name="boardTitle" placeholder="제목" required="required">
-      </p>
-    </div>
-    
-    <div>
-      <p>작성자 :
-        <input type="text" name="userId" placeholder="작성자" required="required">
-      </p>
-    </div>
-    
-    <div>
-      <textarea rows="20" cols="120" name="board_content" placeholder="내용 입력" 
-      required="required"></textarea>
-    </div>
-    <div>
-      <input type="submit" value="등록"> 
-    </div>
-  </form>
+        
+     <header>FAQ</header>
+     <form id="form" class="topBefore" action="../board/register" method="post">
+		  <input id="userId" type="text" name="userId" placeholder="NAME">
+		  <input id="boardTitle" type="text" name="boardTitle" placeholder="TITLE">
+		  <textarea id="boardContent" type="text" name="boardContent" placeholder="MESSAGE"></textarea>
+          <input id="submit" type="submit" value="GO!">
+     </form>
+     
 </body>
 </html>
