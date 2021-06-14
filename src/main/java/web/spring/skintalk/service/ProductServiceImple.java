@@ -108,5 +108,9 @@ public class ProductServiceImple implements ProductService{
 		return dao.selectRecommand(feature, criteria);
 	}
 
-
+	@Override
+	public List<ProductVO> readByUserIdAndProductLike(String userId) {
+		logger.info("readByuserIdAndProductLike : userId = " + userId);
+		return dao.selectByUserIdAndProductLike(userId);
+	}
 }

@@ -90,16 +90,6 @@ h5 {
             </div>
           </div>
             
-          <!-- 비밀번호 -->
-          <div class="form-group input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" style="width:100px;"> <i class="fa fa-lock"></i>
-              비밀번호
-              </span>
-            <h5>${vo.password}</h5>
-            </div>
-          </div>
-          
           <!-- 이름 -->
           <div class="form-group input-group">
             <div class="input-group-prepend">

@@ -80,5 +80,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		where rn between #{start} and #{end}
 	</select>
 	
+	<select id="select_by_userId_and_productLike" resultType="ProductVO">
+		select * from ${product} where ${productNo} in
+			(select ${productNo} from ${productLike} where ${userId} = #{userId})
+	</select>
+	
 	
 </mapper>

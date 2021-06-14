@@ -21,4 +21,6 @@ public interface ProductService {
 	public abstract int viewCount(int productNo);
 	public abstract List<ProductVO> readByRank(PageCriteria criteria);
 	public abstract List<ProductVO> readRecommand(String feature, PageCriteria criteria);
+	public abstract List<ProductVO> readByUserIdAndProductLike(String userId);
+
 }

@@ -127,5 +127,10 @@ public class ProductDAOImple implements ProductDAO{
 		return sqlSession.selectList(NAMESPACE + ".select_recommand", map);
 	}
 	
+	@Override
+	public List<ProductVO> selectByUserIdAndProductLike(String userId) {
+		logger.info("selectByUserIdAndProductLike() 호출" + userId);
+		return sqlSession.selectList(NAMESPACE + ".select_by_userId_and_productLike", userId);
+	}
 
 }

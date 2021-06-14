@@ -77,6 +77,7 @@
         </div>
     </nav>
 
+    <input type="hidden" id="cartLength" value= "${fn:length(cartList)}" />
     <input type="hidden" class="cart_counts" value="${cartCount }"/>
     <h2 style="text-align: center; padding-top: 16px">장바구니</h2>
       <c:choose>

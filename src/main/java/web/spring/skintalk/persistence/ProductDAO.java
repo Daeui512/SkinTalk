@@ -21,5 +21,7 @@ public interface ProductDAO {
 	public abstract int viewCount(int productNo);
 	public abstract List<ProductVO> selectByRank(PageCriteria criteria);
 	public abstract List<ProductVO> selectRecommand(String feature, PageCriteria criteria);
+	public abstract List<ProductVO> selectByUserIdAndProductLike(String userId);
+
 
 }

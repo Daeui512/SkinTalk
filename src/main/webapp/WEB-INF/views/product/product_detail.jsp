@@ -460,14 +460,14 @@
       var userId = $("#userId").val();
       var productNo = $('#productNo').val();
       
-      $("body").on("click", "#like_button", function(event){
-          var like_obj = {
-              'productNo' : productNo,
-              'userId' : userId
-          };
+      var like_obj = {
+          'productNo' : productNo,
+          'userId' : userId
+      };
       
       var JSON_like = JSON.stringify(like_obj);
       
+      $("body").on("click", "#like_button", function(event){
           $.ajax({
              type : 'POST',
              url : '../like/insert',
@@ -485,6 +485,28 @@
              } // end success()
     		});// end ajax
      	}); // end body.click()
+     	
+     		 $.ajax({
+                 type : 'POST',
+                 url : '../like/select',
+                 headers : {
+                    'Content-Type' : 'application/json',
+                    'X-HTTP-Method-Override' : 'POST'
+                 },
+                 data : JSON_like,
+                 success : function (count, status) {
+                       if (count == 1) {
+                        $("#imgsrc").attr("src", "../resources/img/h1.png");
+                       } else {
+                        $("#imgsrc").attr("src", "../resources/img/h2.png");
+                       }
+                 } // end success()
+        		});// end ajax
+     	
+     	
+     	
+     	
+     	
   }); //end document
   
   

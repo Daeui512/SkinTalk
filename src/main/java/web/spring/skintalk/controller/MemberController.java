@@ -22,9 +22,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.spring.skintalk.domain.MemberVO;
 import web.spring.skintalk.domain.NonMemberVO;
 import web.spring.skintalk.domain.PaymentVO;
+import web.spring.skintalk.domain.ProductVO;
 import web.spring.skintalk.service.MemberService;
 import web.spring.skintalk.service.NonMemberService;
 import web.spring.skintalk.service.PaymentService;
+import web.spring.skintalk.service.ProductService;
 
 @Controller
 @RequestMapping(value = "/member")
@@ -39,6 +41,9 @@ public class MemberController {
 	
 	@Autowired
 	private PaymentService paymentService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@GetMapping(value = "/register")
 	public void registerGet() {
@@ -110,6 +115,12 @@ public class MemberController {
 		logger.info("memberDetail() 호출 userId : " + userId);
 		vo = memberService.read(userId);
 		
+		List<ProductVO> list = productService.readByUserIdAndProductLike(userId);
+		for (ProductVO productVO : list) {
+			logger.info(productVO.toString());
+		}
+		
+		model.addAttribute("list", list);
 		model.addAttribute("vo", vo);
 		
 	}

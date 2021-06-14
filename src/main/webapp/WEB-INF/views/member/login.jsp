@@ -68,7 +68,7 @@
               </div>
 		    <!-- 로그인 실패시 -->
 		    <c:if test="${param.loginFail == 'loginFail' }">
-		      <p>아이디 비밀번호가 일치하지 않습니다</p>
+		      <p style="color:red">아이디 비밀번호가 일치하지 않습니다</p>
 		    </c:if>
               <div style="padding-bottom: 20px">
                 <button type="submit" class="form-control btn btn-primary">로그인</button>
