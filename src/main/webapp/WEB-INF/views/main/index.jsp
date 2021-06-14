@@ -8,7 +8,7 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="../resources/script/scripts.js"></script>
+        <script src="/skintalk/resources/script/scripts.js"></script>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -19,16 +19,16 @@
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../resources/design/styles.css" rel="stylesheet" />
+        <link href="/skintalk/resources/design/styles.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="../resources/script/jquery.cookie.js"></script>
+        <script src="/skintalk/resources/script/jquery.cookie.js"></script>
         
     </head>
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="index">SkinTalk</a>
+                <a class="navbar-brand" href="/skintalk/main/index">SkinTalk</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <!-- Search-->
                 
@@ -47,14 +47,14 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <c:if test="${empty sessionScope.userId }">
-                          <li class="nav-item"><a class="nav-link" href="../member/login">로그인</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/skintalk/member/login">로그인</a></li>
                         </c:if>
                         <c:if test="${not empty sessionScope.userId }">
-                          <li class="nav-item"><a class="nav-link" href="../member/member-detail">마이페이지</a></li>
-                          <li class="nav-item"><a class="nav-link" href="../member/logout">로그아웃</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/skintalk/member/member-detail">마이페이지</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/skintalk/member/logout">로그아웃</a></li>
                         </c:if>
-                        <li class="nav-item"><a class="nav-link" href="../cart/cartList">장바구니</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../board/list">고객센터</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/skintalk/cart/cartList">장바구니</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/skintalk/board/list">고객센터</a></li>
                     </ul>
                 </div>
             </div>
@@ -104,21 +104,21 @@
                         <div class="card h-100">
                             <h4 class="card-header">스킨케어</h4>
                             <div class="card-body"><p class="card-text">스킨케어 카테고리</p></div>
-                            <div class="card-footer"><a class="btn btn-primary" href="product?type=1">더 보기</a></div>
+                            <div class="card-footer"><a class="btn btn-primary" href="/skintalk/main/product?type=1">더 보기</a></div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-4 mb-lg-0">
                         <div class="card h-100">
                             <h4 class="card-header">메이크업</h4>
                             <div class="card-body"><p class="card-text">메이크업 카테고리</p></div>
-                            <div class="card-footer"><a class="btn btn-primary" href="product?type=2">더 보기</a></div>
+                            <div class="card-footer"><a class="btn btn-primary" href="/skintalk/main/product?type=2">더 보기</a></div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="card h-100">
                             <h4 class="card-header">바디케어</h4>
                             <div class="card-body"><p class="card-text">바디케어 카테고리</p></div>
-                            <div class="card-footer"><a class="btn btn-primary" href="product?type=3">더 보기</a></div>
+                            <div class="card-footer"><a class="btn btn-primary" href="/skintalk/main/product?type=3">더 보기</a></div>
                         </div>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
                             <div class="card h-100">
                                 <a href="../product/product_detail?productNo=${productList.productNo }"><img class="card-img-top" src="${productList.imgSource }" alt="..." height="200px" width="700px"/></a>
                                 <div class="card-body">
-                                    <h4 class="card-title"><a href="../product/product_detail?productNo=${productList.productNo }">${productList.productName }</a></h4>
+                                    <h4 class="card-title"><a href="../skintalk/product/product_detail?productNo=${productList.productNo }">${productList.productName }</a></h4>
                                     <p class="card-text">${productList.point }</p>
                                 </div>
                             </div>
@@ -159,7 +159,7 @@
         		var keyword = $('.form-control').val();
         		$.ajax({
         			type : 'get',
-        			url : '../main/search-autocomplete',
+        			url : '../skintalk/main/search-autocomplete',
         			data : {
         				'keyword' : keyword
         			},
