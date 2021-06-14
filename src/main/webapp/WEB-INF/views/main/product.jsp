@@ -120,6 +120,7 @@
                 <h5>
                   <fmt:formatNumber value="${productList.price}" pattern="#,###,###원" />
                 </h5>
+                <p><img id="imgsrc" src="../resources/img/h1.png" width="20"/> ${productList.good}</p>
                 
                 <p class="card-text">${productList.point }</p>
               </div>

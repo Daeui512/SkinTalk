@@ -77,13 +77,25 @@
         </div>
     </nav>
 
-  
+    <input type="hidden" class="cart_counts" value="${cartCount }"/>
     <h2 style="text-align: center; padding-top: 16px">장바구니</h2>
-    <!-- 로그인해서 세션이 존재할 때 실행되는 코드 -->
-       <c:choose>
-      <c:when test="${cartCount == 0}">
-          장바구니가 비었습니다.
-      </c:when>
+      <c:choose>
+        <c:when test="${cartCount == 0}">
+          <div class="container">
+            <table class="table table-dark table-striped" border="1" width="100%">
+              <tr>
+                <th>상품명</th>
+                <th>단가</th>
+                <th>수량</th>
+                <th>금액</th>
+                <th>&nbsp;</th>
+              </tr>
+              <tr align="center" class="cart_item">
+                <td>장바구니가 비었습니다. 물건을 담아주세요.</td>
+              </tr>
+            </table>
+          </div>
+        </c:when>
 
       <c:otherwise>
         <div class="container">
@@ -151,8 +163,6 @@
       <button onclick="requestNonMemberPay()" class="form-control btn btn-primary">비회원결제</button>    
       </c:if>
     </div>
-    
-    
   
   <script type="text/javascript">
   $(document).ready(()=>{
@@ -443,8 +453,15 @@
      		        }
      		     });//end function(rsp)
         	  }else{
-        		  alert('비회원 결제를 위한 정보등록');
-        		  location.href="../member/nonmember-payment";
+        		  var count = $('.cart_counts').val();
+        		  console.log(count);
+        		  if(count == 0){
+        			  alert('장바구니가 비었습니다.');
+        			  location.href="../main/index";
+        		  } else {
+        		  	  alert('비회원 결제를 위한 정보등록');
+	        		  location.href="../member/nonmember-payment";
+        		  }
         	  }
           }//end success
        }); // end ajax()

@@ -18,7 +18,17 @@
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
 <!-- Core theme CSS (includes Bootstrap)-->
+
+
 <link href="../resources/design/styles.css" rel="stylesheet" />
+
+<style type="text/css">
+.btn-primary{
+  background-color: #343A40;
+  border-color: #ffffff;
+}
+
+</style>
 <meta charset="UTF-8">
 <title>회원 정보 수정</title>
 </head>
@@ -51,98 +61,155 @@
             </div>
         </nav>
 
-	<form action="update" method="post">
-		<!-- 아이디 -->
-		<div>
-		아이디<br>
-			<p>
-			<input type="text" name="userId" value="${vo.userId}" readonly>
-			</p>
-		</div>
-		<!-- 비밀번호 -->
-		<div>
-		비밀번호<br>
-			<p>
-			<input type="password" name="password" placeholder="비밀번호" value="${vo.password}">
-			</p>
-		</div>
-		<!-- 이름 -->
-		이름<br>
-		<div>
-			<p>
-			<input type="text" name="userName" placeholder="이름" value="${vo.userName}">
-			</p>
-		</div>
-		<!-- 닉네임 -->
-		닉네임<br>
-		<div>
-			<p>
-			<input type="text" name="nickName" placeholder="닉네임" value="${vo.nickName}">
-			</p>
-		</div>
-		<!-- 성별 -->
-		성별<br>
-		<div>
-			<p>
-			<input type="radio" name="gender" value="남" required="required" checked>남
-			<input type="radio" name="gender" value="여" required="required">여
-			</p>
-		</div>
-		<!-- 나이 -->
-		나이<br>
-		<div>
-			<p>
-			<input type="text" name="age" placeholder="나이" value="${vo.age}">
-			</p>
-		</div>
-		<!-- 피부 타입 -->
-		피부타입<br>
-		<div>
-			<p>
-			<input type="radio" name="skinType" value="지성" checked>지성
-			<input type="radio" name="skinType" value="중성">중성
-			<input type="radio" name="skinType" value="건성">건성
-			<input type="radio" name="skinType" value="복합성">복합성
-			</p>
-		</div>
-		<!-- 피부 고민 -->
-		피부고민<br>
-		<div>
-			<p>
-			<input type="checkbox" name="skinTrouble" value="해당없음" checked>해당없음
-			<input type="checkbox" name="skinTrouble" value="아토피">아토피
-			<input type="checkbox" name="skinTrouble" value="여드름">여드름
-			<input type="checkbox" name="skinTrouble" value="민감성">민감성
-			</p>
-		</div>
-		<!-- 이메일 -->
-		이메일<br>
-		<div>
-			<p>
-			<input type="mail" name="email" placeholder="이메일" value="${vo.email}">
-			</p>
-		</div>
-		<!-- 핸드폰 번호 -->
-		핸드폰번호<br>
-		<div>
-			<p>
-			<input type="text" name="phone" placeholder="핸드폰번호" value="${vo.phone}">
-			</p>
-		</div>
-		<!-- 주소 -->
-		주소<br>
-		<div>
-			<p>
-			<input type="text" name="address" placeholder="주소" value="${vo.address}">
-			</p>
-		</div>
+
+
+
+
+
+
+  <div class="container">
+    <br>
+    <p class="text-center">
+      SkinTalk
+    </p>
+    <hr>
+    
+    <div >
+      <article class="card-body mx-auto" style="max-width: 400px;">
+        <h4 class="card-title mt-3 text-center">회원정보 수정</h4>
+        <form action="update" method="post">
+        
+          <!-- 아이디 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i>
+              </span>
+            </div>
+            <input class="form-control" type="text" name="userId" value="${vo.userId}" readonly>
+          </div>
+            
+          <!-- 비밀번호 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i>
+              </span>
+            </div>
+            <input class="form-control" type="password" name="password" placeholder="비밀번호" value="${vo.password}">
+          </div>
+        
+          <!-- 이름 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i>
+              </span>
+            </div>
+            <input class="form-control" type="text" name="userName" value="${vo.userName}" readonly>
+          </div>
+          
+          <!-- 닉네임 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i>
+              </span>
+            </div>
+            <input class="form-control" type="text" name="nickName" placeholder="닉네임" value="${vo.nickName}">
+          </div>
+          
+          <!-- 성별 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i>
+              </span>
+            </div>
+            <input class="form-control" type="text" name="gender" value="${vo.gender}" readonly>
+          </div>
+          
+          <!-- 나이 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i>
+              </span>
+            </div>
+            <input class="form-control" type="text" name="age" placeholder="나이" value="${vo.age}" readonly>
+          </div>
+          
+          <!-- 피부타입 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i>
+              </span>
+            </div>
+            <select class="form-control" id="skinType" name="skinType">
+              <option selected>피부타입을 선택하세요</option>
+              <option value="지성">지성</option>
+              <option value="중성">중성</option>
+              <option value="건성">건성</option>
+              <option value="복합성">복합성</option>
+            </select>
+          </div>
+          
+          <!-- 피부문제 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i>
+              </span>
+            </div>
+              <input type="checkbox" id="skinTrouble1" name="skinTrouble" value="해당없음" checked> 해당없음
+                <input type="checkbox" id="skinTrouble2" name="skinTrouble" value="아토피" > 아토피
+                  <input type="checkbox" id="skinTrouble3" name="skinTrouble" value="여드름" > 여드름
+                  <input type="checkbox" id="skinTrouble4" name="skinTrouble" value="민감성" > 민감성
+          </div>
+          
+          <!-- 이메일 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-envelope"></i>
+              </span>
+            </div>
+            <input class="form-control" type="email" name="email" placeholder="이메일" value="${vo.email}">
+          </div>
+          
+          <!-- 전화번호 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-phone"></i>
+              </span>
+            </div>
+			<input class="form-control" type="text" name="phone" placeholder="핸드폰번호" value="${vo.phone}">
+          </div>
+          
+          <!-- 주소 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-address"></i>
+              </span>
+            </div>
+			<input class="form-control" type="text" name="address" placeholder="주소" value="${vo.address}">
+          </div>
+          
+          <!-- 등록 -->
+		  <div class="form-group">
+            <input class="btn btn-primary btn-block" type="submit" value="등록">
+          </div>
+          
+          
+          
+          
+        </form>
+      </article>
+    </div>
+    <!-- card.// -->
+
+  </div>
+  <!--container end.//-->
+  
+<script type="text/javascript">
 		
-		<div>
-			<input type="submit" value="등록">
-		</div>
-	</form>
+</script> 
+
 	
 </body>
+
 </html>
 
 

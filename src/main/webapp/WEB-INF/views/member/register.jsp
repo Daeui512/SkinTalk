@@ -361,7 +361,6 @@
         // #이메일 중복확인 Ajax
       $('#email').blur(()=>{
             var email = $('#email').val();
-
             $.ajax({
             	type : 'post',
 				url : "../checks/email_check",
@@ -413,11 +412,9 @@
               } // end of success
             }) // end #email Ajax()
           }) // end #email.blur()
-
       // #핸드폰 중복확인 Ajax
       $('#phone').blur(()=>{
             var phone = $('#phone').val();
-
             $.ajax({
             	type : 'post',
 				url : "../checks/phone_check",
@@ -429,7 +426,7 @@
 					'X-HTTP-Method-Override' : 'POST'
 				},
               success : function(result) {
-                var isPhone = /^\d{3}-\d{3,4}-\d{4}$/;
+                var isPhone = /^\d{3}\d{3,4}\d{4}$/;
                 var list = "";
                 
                 if (phone == "") { // 전화번호를 입력하지 않는 경우
@@ -588,7 +585,6 @@
             }
             console.log('skinTypeFlag : ' + skinTypeFlag);
           }); // end of skinType.blur
-
           $('#skinTrouble1').click(function() {
             
             if ($("#skinTrouble2").prop("checked")
@@ -664,7 +660,6 @@
           
           // 회원가입 클릭
           $("#btnSubmit").click(function(){
-
             if(userIdFlag == false
             || passwordFlag == false
             || userNameFlag == false

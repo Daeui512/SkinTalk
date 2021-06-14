@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="../resources/script/scripts.js"></script>
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
@@ -65,6 +66,10 @@
               <div style="padding-bottom: 20px">
                 <input type="password" class="form-control" name="password" placeholder="Password" required>
               </div>
+		    <!-- 로그인 실패시 -->
+		    <c:if test="${param.loginFail == 'loginFail' }">
+		      <p>아이디 비밀번호가 일치하지 않습니다</p>
+		    </c:if>
               <div style="padding-bottom: 20px">
                 <button type="submit" class="form-control btn btn-primary">로그인</button>
               </div>
@@ -84,10 +89,6 @@
         </div>
       </div>
 
-    <!-- 로그인 실패시 -->
-    <c:if test="${param.loginFail == 'loginFail' }">
-      <p>아이디 비밀번호가 일치하지 않습니다</p>
-    </c:if>
   
     <!-- MemberController -> registerPost() 에서 보낸 데이터 저장 -->
     <input id=registerAlert type="hidden" value="${register_result }">  
@@ -103,7 +104,6 @@
 					alert('회원가입 실패하였습니다.');
 				}
 			} // end of confirmRegisterResult()
-
 		}); // end of document
   	</script>
   

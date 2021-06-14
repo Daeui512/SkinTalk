@@ -20,6 +20,22 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../resources/design/styles.css" rel="stylesheet" />
         
+<style type="text/css">
+.btn-primary{
+  background-color: #343A40;
+  border-color: #ffffff;
+}
+h5 {
+  width:255px;
+  height:38px;
+  border: none; 
+  padding:3px 2px 0 30px;
+/*   float:left; */
+/*   text-align: center;  */
+  padding-top: 10px; 
+}
+</style>
+        
         <meta charset="UTF-8">
         <title>아이디 찾기</title>
 </head>
@@ -52,11 +68,40 @@
       </div>
   </nav>
   
-  <div class="navbar-brand">아이디 찾기 검색결과
-    <div class="nav-item">아이디 : ${userId}</div>
+  
+  <div class="container">
+    <br>
+    <p class="text-center">
+      SkinTalk
+    </p>
+    <hr>
+    
+    <div>
+      <article class="card-body mx-auto" style="max-width: 400px;">
+        <h4 class="card-title mt-3 text-center">아이디찾기 결과</h4>
+          <!-- 아이디 -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="width:100px;"> <i class="fa fa-user"></i>
+              아이디
+              </span>
+			<h5>${userId}</h5>
+            </div>
+          </div>
+          
+          <div style="padding-bottom: 20px">
+            <a href="../member/login"><input type="button" value="로그인으로" class="form-control btn btn-primary"></a>
+            <a href="../member/find_id_form"><input type="button" value="아이디찾기" class="form-control btn btn-primary"></a>
+           </div>
+          
+      </article>
+    </div>
   </div>
-  <a href="../member/login"><button type="button" id="loginBtn">로그인으로</button></a>
-  <a href="../member/find_id_form"><button type="button" >아이디찾기</button></a>
+    
+
+  
+  
+
   
 </body>
 </html>
