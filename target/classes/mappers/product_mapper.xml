@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : 주로 dao 클래스의 sqlSession과 연결하기 위한 키로 사용 -->
+<mapper namespace="web.spring.skintalk.ProductMapper">
+
+	<insert id="insert"></insert>
+	<delete id="delete"></delete>
+	
+	<update id="viewCountUpdate">
+		update ${product} set ${viewCount} = ${viewCount} + 1 
+		where ${productNo} = #{productNo}
+	</update>
+	
+	<select id="select_all" resultType="ProductVO">
+		select * from ${product}
+	</select>
+	
+	<select id="select_pageCriteria" resultType="ProductVO">
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${imgSource} from (
+			select rownum as rn, a.* from (
+				select * from ${product} order by ${productNo})a
+			)b 
+		where rn between #{start} and #{end}
+	</select>
+	
+	<select id="select_TotalNums" resultType="Integer">
+		select count(*) total_cnt from ${product}
+	</select>
+	
+	<select id="select_TotalNums_by_keyword" resultType="Integer">
+		select count(*) total_cnt from ${product} 
+		where ${productName} like #{keyword}
+	</select>
+	
+	<select id="select_TotalNums_by_typical" resultType="Integer">
+		select count(*) total_cnt from ${product}
+		where ${productType} = #{productType}
+	</select>
+	
+	<select id="select_by_productNo" resultType="ProductVO">
+	 	select * from ${product} 
+	 	where ${productNo}= #{productNo} 
+	</select>
+	
+	<select id="select_by_keyword" resultType="String">
+		select ${productName} from ${product} 
+		where ${productName} like #{keyword}
+	</select>
+	
+	<select id="select_all_by_keyword" resultType="ProductVO">
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${imgSource} from (
+			select rownum as rn, a.* from (
+				select * from ${product} where ${productName} like #{keyword})a
+			)b
+		where rn between #{start} and #{end}
+	</select>
+	
+	<select id="select_by_typical" resultType="ProductVO">
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${imgSource} from (
+			select rownum as rn, a.* from (
+				select * from ${product} where ${productType} = #{productType} order by ${productNo})a
+			)b 
+		where rn between #{start} and #{end}
+	</select>
+	
+	<select id="select_by_rank" resultType="ProductVO">
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${productType}, b.${viewCount}, b.${imgSource}, (${grade}+${good}+${viewCount}) as rank from (
+			select rownum as rn, a.* from (
+				select * from ${product} order by ${grade} + ${good} + ${viewCount} desc)a
+			)b
+		where rn between #{start} and #{end}
+	</select>
+	
+	<select id="select_recommand" resultType="ProductVO">
+		select b.${productNo}, b.${productName}, b.${price}, b.${point}, b.${grade}, b.${good}, b.${productType}, b.${viewCount}, b.${imgSource}, (${grade}+${good}+${viewCount}) as rank from (
+			select rownum as rn, a.* from (
+				select * from ${product} where ${point} like #{feature} order by ${grade} + ${good} + ${viewCount} desc)a
+			)b
+		where rn between #{start} and #{end}
+	</select>
+	
+	<select id="select_by_userId_and_productLike" resultType="ProductVO">
+		select * from ${product} where ${productNo} in
+			(select ${productNo} from ${productLike} where ${userId} = #{userId})
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.spring.skintalk.MemberMapper"> <!-- query 작성하는 곳이라고 생각 -->
+<!-- namespace : 주로 dao 클래스의 sqlSession과 연결하기 위한 키로 사용 (대문 역할)-->
+	<!-- DB 쿼리 작성 -->
+	<!-- id : 주로 dao 클래스의 sqlSession의 함수와 연결하기 위해 사용 (방 역할)-->
+	
+	<!-- 
+	${컬럼이름} : mybatis-config.xml의 property의 name과 매칭. DB 테이블의 열
+	#{컬럼이름} : dao 클래스의 sqlSession에서 전송받은 데이터(입력받은 데이터)
+	 -->
+	 
+	 <!-- 
+	 mapper 태그
+	 <insert>, <select>, <update>, <delete>
+	 sqlSession의 함수(insert, selectOne, selsectList, update, delete)에
+	  맞게 수행되는 태그
+	  -->
+	 
+	 <insert id="insert">
+	 	insert into ${member} (${userId}, ${password}, ${userName}, ${nickName},
+	 	 ${gender}, ${age}, ${skinType}, ${skinTrouble}, ${email}, ${phone}, ${address})
+	 	values (#{userId}, #{password}, #{userName}, #{nickName}, #{gender}, #{age}, 
+	 	#{skinType}, #{skinTrouble}, #{email}, #{phone}, #{address})
+	 </insert>
+	 
+	 <select id="selectAll" resultType="MemberVO">
+	 	select * from ${member} where ${userId} = #{userId}
+	 </select>
+	 
+	 
+	<select id="select_by_userid" resultType="Integer">
+		select count(*)
+		from ${member}
+		where ${userId} = #{userId}
+	</select>
+	
+	<update id="update">
+		update ${member} set
+			${password} = #{password},
+			${nickName} = #{nickName},
+			${skinType} = #{skinType},
+			${skinTrouble} = #{skinTrouble},
+			${email} = #{email},
+			${phone} = #{phone},
+			${address} = #{address}
+		where ${userId} = #{userId}
+	</update>
+	 
+	<delete id="delete">
+		delete from ${member} 
+		where ${userId} = #{userId}
+	</delete>
+	
+	<!-- 로그인 쿼리 -->
+   <select id="select_by_userid_and_password" resultType="MemberVO">
+      select * from ${member}
+      where ${userId} = #{userId} and ${password} = #{password}
+   </select>
+   
+   <!-- 닉네임 중복확인 쿼리 -->
+   <select id="nickName_check" resultType="Integer">
+   	  select count(*)
+   	  from ${member}
+   	  where ${nickName} = #{nickName}
+   </select>
+   
+   <!-- 아이디 중복확인 쿼리 -->
+   <select id="userid_check" resultType="Integer">
+      select count(*)
+      from ${member}
+      where ${userId} = #{userId}
+   </select>
+   
+   <!-- 이메일 중복확인 쿼리 -->
+   <select id="email_check" resultType="Integer">
+      select count(*)
+      from ${member}
+      where ${email} = #{email}
+   </select>
+    
+   <!-- 핸드폰 중복확인 쿼리 -->
+   <select id="phone_check" resultType="Integer">
+      select count(*)
+      from ${member}
+      where ${phone} = #{phone}
+   </select>
+   
+   <!-- 아이디찾기 쿼리 -->
+   <select id="select_userid_by_email_and_phone" resultType="String">
+      select ${userId} 
+      from ${member}
+      where ${email} = #{email} and ${phone} = #{phone}
+   </select>
+   
+   <!-- 비밀번호찾기 쿼리 -->
+	<update id="find_password">
+		update ${member}
+		set ${password} = #{password}
+		where ${userId} = #{userId} and ${email} = #{email}
+	</update>	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

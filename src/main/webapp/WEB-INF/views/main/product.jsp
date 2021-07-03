@@ -177,7 +177,7 @@
       <c:if test="${pageMaker.hasPrev }">
         <li class="page-item">
             <c:if test="${not empty keyword }">
-              <a class="page-link" href="product?page=${pageMaker.startPageNo - 1 }&keyword=${keyword }&type=${param.type}" aria-label="Previous">
+              <a class="page-link" href="product?page=${pageMaker.startPageNo - 1 }&keyword=${keyword }" aria-label="Previous">
                   <span aria-hidden="true">«</span>
                   <span class="sr-only">Previous</span>
               </a>
@@ -193,7 +193,7 @@
       
       <c:if test="${not empty param.keyword }">
         <c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
-          <li class="page-item"><a class="page-link" href="product?page=${num }&keyword=${param.keyword }&type=${param.type}">${num }</a></li>
+          <li class="page-item"><a class="page-link" href="product?page=${num }&keyword=${param.keyword }">${num }</a></li>
         </c:forEach>
       </c:if>
       <c:if test="${empty param.keyword }">
@@ -205,7 +205,7 @@
       <c:if test="${pageMaker.hasNext }">
         <li class="page-item">
             <c:if test="${not empty keyword }">
-              <a class="page-link" href="product?page=${pageMaker.endPageNo + 1 }&keyword=${keyword }&type=${param.type}" aria-label="Next">
+              <a class="page-link" href="product?page=${pageMaker.endPageNo + 1 }&keyword=${keyword }" aria-label="Next">
                   <span aria-hidden="true">»</span>
                   <span class="sr-only">Next</span>
               </a>

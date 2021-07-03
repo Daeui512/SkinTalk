@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.spring.skintalk.CartMapper">
+	
+	<!-- 장바구니에 추가하기 버튼 누를때 동작하는 쿼리 o-->
+	<insert id="insert">
+		insert into ${cart}(${userId},${productNo},${amount})
+		values (#{userId},#{productNo},#{amount})
+	</insert>
+	
+	<!-- 장바구니페이지에서 보여줄 정보를 가져오는 쿼리 o-->
+	<select id="CartList" resultType="CartVO">
+		select ${cartNo}, c.${userId}, ${userName}, ${productName}, p.${productNo}, ${price}, ${amount}, (${price}*${amount}) as money
+		from ${member} m, ${product} p, ${cart} c
+		where m.${userId} = c.${userId} and c.${productNo}=p.${productNo} and c.${userId}=#{userId} order by ${cartNo}
+	</select>
+	<!-- 비회원 장바구니 정보 보여줌 -->
+	<select id="nonMemberCartList" resultType="CartVO">
+		select ${cartNo}, c.${userId}, ${productName}, p.${productNo}, ${price}, ${amount}, (${price}*${amount}) as money
+		from ${product} p, ${cart} c
+		where c.${productNo}=p.${productNo} and c.${userId}=#{userId} order by ${cartNo}
+	</select>
+	
+	<!-- 장바구니 상품개수 변경 o-->
+	<update id="cartUpdate">
+		update ${cart} 
+		set ${amount} = #{amount} + #{count}
+		where ${userId} = #{userId} and ${cartNo} = #{cartNo}
+	</update>
+	
+	<update id="cartUpdateAll">
+		update ${cart}
+		set ${amount} = #{amount}
+		where ${userId} = #{userId} and ${cartNo} = #{cartNo}
+	</update>
+	
+	<!-- 장바구니 비우기 -->
+	<delete id="cartDeleteAll">
+		delete from ${cart} 
+		where ${userId} = #{userId}
+	</delete>
+	
+	<!-- 장바구니 특정 상품 삭제 o-->
+	<delete id="cartDeleteOne">
+		delete from ${cart} 
+		where ${cartNo} = #{cartNo}
+	</delete>
+	
+	<!-- 장바구니에 선택된 상품의 개수 -->
+	<select id="countCart" resultType="Integer">
+		select count(*) from ${cart} where ${userId} = #{userId}
+	</select>
+	
+	<select id="countCartOne" resultType="Integer">
+		select ${amount} from ${cart} where ${cartNo} = #{cartNo}
+	</select>
+	
+	
+	<!-- 장바구니에 들어가있는 상품들의 총 금액 o-->
+	<select id="sumMoney" resultType="Integer">
+		select nvl(sum(${price}*${amount}),0) from ${cart} c, ${product} p 
+		where c.${productNo} = p.${productNo} and ${userId}=#{userId}
+	</select>
+	
+	<!-- 장바구니에 동일한 상품 확인 -->
+   	<select id="countInProduct" resultType="Integer">
+      select count(*)
+      from ${cart}
+      where ${userId} = #{userId}
+      and ${productNo} = #{productNo}
+   	</select>
+	
+	<!-- 장바구니에 동일한 상품이 존재하면 수정 -->
+    <update id="updateExistInCart">
+      update ${cart}
+      set ${amount} = #{amount}
+      where ${userId} = #{userId}
+      and ${productNo} = #{productNo}
+    </update>
+	
+
+	
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.spring.skintalk.ReplyMapper"> 
+   <insert id="insert">
+      insert into ${reply}
+      (${replyBno}, ${replyContent}, ${replyAdminId})
+      values (#{replyBno}, #{replyContent}, #{replyAdminId})
+   </insert>
+   
+   <select id="select_all_by_reply_bno" resultType="ReplyVO">
+      select * from ${reply}
+      where ${replyBno} = #{replyBno}
+      order by ${replyBno}
+   </select>
+   
+   <update id="update">
+      update ${reply}
+      set ${replyContent} = #{replyContent}
+      where ${replyNo} = #{replyNo}
+      
+   </update>
+   
+   <delete id="delete">
+      delete from ${reply}
+      where ${replyNo} = #{replyNo}
+   </delete>
+
+</mapper>

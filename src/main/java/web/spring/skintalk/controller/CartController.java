@@ -73,7 +73,6 @@ public class CartController {
         	list = cartService.nonMemberListCart(nonMemberUserId);
         	sumMoney = cartService.sumMoney(nonMemberUserId);
         	cartCount = cartService.countCart(nonMemberUserId);
-   //////////////////////////////////////
         	nonmembervo = nonMemberService.readAll(nonMemberUserId); 
         }
 		

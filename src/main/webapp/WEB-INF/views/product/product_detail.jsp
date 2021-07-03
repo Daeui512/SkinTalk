@@ -239,12 +239,20 @@
                     $(jsonData).each(function(){
                         // this : 컬렉션에서 각 데이터를 꺼내서 저장
                         var reviewCdate = new Date(this.reviewCdate);
-                    	  var disabled = 'disabled';
-						  var readonly = 'readonly';
-				  if (reviewNickName == this.reviewNickName) {
-				  	disabled = '';
-				  	readonly = '';
-					  }
+                  	    
+                    	var disabled = 'disabled';
+					    var readonly = 'readonly';
+				    	var disable = 'disabled';
+				    	
+					    if (reviewNickName == this.reviewNickName) {
+				  			disabled = '';
+				  			readonly = '';
+					  	}
+					    
+					    if(reviewNickName != null){
+					    	disable = '';
+					    }
+					    
 							
                         list += '<div class="review_item' + this.reviewNo + '">'
                              + '<pre>'
@@ -262,7 +270,7 @@
                              + '&nbsp;&nbsp;'
                              + '<button class="btn_update" type="button" ' + disabled + '>수정</button>'
                              + '<button class="btn_delete" type="button" ' + disabled + '>삭제</button>'
-                             + '<button class="reply_insert" type="button" ' + disabled + '>답글</button>'
+                             + '<button class="reply_insert" type="button" ' + disable + '>답글</button>'
                              + '<div class="reply_answer"></div>'
                              + '<div class="reply_read"</div>'
                              + "</pre>"
@@ -399,6 +407,7 @@
   				}),
   				success : function(result, status){
   					console.log(result + ',' + status)
+  					alert("대댓글 작성 성공");
   					$(this).prevAll('#rReviewContent').html('');
   					getAllReviews();
   				}

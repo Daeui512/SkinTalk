@@ -59,7 +59,7 @@
             <div class="panel-title">환영합니다!</div>
           </div>
           <div class="panel-body">
-            <form id="login-form" action = "login" method = "post">
+            <form id="../member/login-form" action = "login" method = "post">
               <div style="padding-bottom: 20px">
                 <input type="text" class="form-control" name="userId" placeholder="Username" autofocus required>
               </div>
@@ -75,7 +75,7 @@
               </div>
             </form>
            <div style="padding-bottom: 20px">
-             <a href="/skintalk/member/register">
+             <a href="register">
               <button type="button" class="form-control btn btn-primary">회원가입</button>
              </a>
            </div>

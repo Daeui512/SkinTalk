@@ -18,12 +18,20 @@ public class MainProductInterceptor extends HandlerInterceptorAdapter{
 		logger.info(type + ", " + page);
 		String regExp = "^[0-9]+$";
 		
-		if((type != null && type.matches(regExp)) || (page!= null && page.matches(regExp))) {
+		if (type == null) {
+			if(page == null) {
+				return true;
+			}else if(page.matches(regExp)){
+				return true;
+			}else {
+				response.sendRedirect("/skintalk/main/index");
+				return false;
+			}
+		}else if(type.matches(regExp)) {
 			return true;
 		}else {
 			response.sendRedirect("/skintalk/main/index");
 			return false;
 		}
-		
 	}	
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.spring.skintalk.rReviewMapper">
+
+	<insert id="insert">
+		insert into ${rReview}(${rReviewRno}, ${rReviewContent}, ${userId})
+		values (#{rReviewRno}, #{rReviewContent},#{userId})
+	</insert>
+	
+	<!-- 상품평 보기 -->
+	<select id="select_all_by_r_review_rno" resultType="RreviewVO">
+		select * from ${rReview}
+		where ${rReviewRno} = #{rReviewRno}
+		order by ${rReviewRno}
+	</select>
+	
+	<!-- 상품평 수정 -->
+	<update id="update">
+		update ${rReview}
+		set ${rReviewContent} = #{rReviewContent}
+		where ${rReviewNo} = #{rReviewNo} and ${userId} = #{userId}
+	</update>
+	
+	<!-- 상품평 삭제 -->
+	<delete id="delete">
+		delete from ${rReview}
+		where ${rReviewNo} = #{rReviewNo}
+	</delete>
+
+
+</mapper>

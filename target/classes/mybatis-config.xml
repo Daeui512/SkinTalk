@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- DB 테이블과 컬럼들을 mapper 매핑을 위한 변수 선언 -->
+	<properties>
+		<!-- 
+		* property
+		 - name : mapper.xml 에서 사용될 이름
+		 - value : DB 테이블 및 컬럼 이름
+		 -->
+		 
+		 <!-- 회원가입/로그인 -->
+		<property name="member" value="member"/>
+		<property name="userId" value="userid"/>
+		<property name="password" value="password"/>
+		<property name="userName" value="username"/>
+		<property name="nickName" value="nickname"/>
+		<property name="gender" value="gender"/>
+		<property name="age" value="age"/>
+		<property name="skinType" value="skin_type"/>
+		<property name="skinTrouble" value="skin_trouble"/>
+		<property name="email" value="email"/>
+		<property name="phone" value="phone"/>
+		<property name="address" value="address"/>
+		<property name="mDate" value="mdate"/> 
+		 
+		 <!-- FAQ 게시판 -->
+		<property name="board" value="board"/>
+		<property name="boardNo" value="board_no"/>
+		<property name="boardTitle" value="board_title"/>
+		<property name="boardContent" value="board_content"/>
+		<property name="userId" value="userid"/>
+		<property name="boardCdate" value="board_cdate"/>
+		<property name="replyCount" value="reply_count"/>
+		
+		<!-- FAQ 게시판 댓글 -->
+		<property name="reply" value="reply"/>
+		<property name="replyNo" value="reply_no"/>
+		<property name="replyBno" value="reply_bno"/>
+		<property name="replyContent" value="reply_content"/>
+		<property name="replyAdminId" value="reply_adminid"/>
+		<property name="replyCdate" value="reply_cdate"/>
+		
+		<!-- 상품정보(메인페이지 -->
+		<property name="product" value="product"/>
+		<property name="productNo" value="product_no"/>
+		<property name="productName" value="product_name"/>
+		<property name="price" value="price"/>
+		<property name="point" value="point"/>
+		<property name="grade" value="grade"/>
+		<property name="good" value="good"/>
+		<property name="productType" value="product_type"/>
+		<property name="viewCount" value="view_count"/>
+		<property name="imgSource" value="img_source"/>
+		
+		<!-- 장바구니 -->
+		<property name="cart" value="cart"/>
+		<property name="cartNo" value="cart_no"/>
+		<property name="amount" value="amount"/>
+		<property name="money" value="money"/>
+		
+		<!-- 상품평 -->
+		<property name="review" value="review"/>
+		<property name="reviewNo" value="review_no"/>
+		<property name="reviewPno" value="review_pno"/>
+		<property name="reviewContent" value="review_content"/>
+		<property name="reviewNickName" value="review_nickname"/>
+		<property name="reviewGrade" value="review_grade"/>
+		<property name="reviewAge" value="review_age"/>
+		<property name="reviewGender" value="review_gender"/>
+		<property name="reviewSkinType" value="review_skin_type"/>
+		<property name="reviewCdate" value="review_cdate"/>
+		
+		<!-- 좋아요 -->
+		<property name="productLike" value="product_like"/>
+		<property name="likeNo" value="like_no"/>
+		<property name="userId" value="userid"/>
+		<property name="productNo" value="product_no"/>
+		
+		<!-- 대댓글 -->
+		<property name="rReview" value="r_review"/>
+		<property name="rReviewNo" value="r_review_no"/>
+		<property name="rReviewRno" value="r_review_rno"/>
+		<property name="rReviewContent" value="r_review_content"/>
+		<property name="rReviewCdate" value="r_review_cdate"/>
+		
+		<!-- 결제 -->
+		<property name="payment" value="payment"/>
+		<property name="paymentNo" value="payment_no"/>
+		<property name="userId" value="userid"/>
+		<property name="productNo" value="product_no"/>
+		<property name="price" value="price"/>
+		<property name="productName" value="product_name"/>
+		<property name="amount" value="amount"/>
+		<property name="pdate" value="pdate"/>
+		<property name="email" value="email"/>
+		<property name="phone" value="phone"/>
+		
+		<!-- 비회원 정보 -->
+		<property name="nonMember" value="non_member"/>
+		<property name="userId" value="userid"/>
+		<property name="phone" value="phone"/>
+		<property name="email" value="email"/>
+		
+	</properties>
+	
+	<!-- Underscore 명명법을 Camel 명명법으로 매핑 -->
+	<settings>
+			<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	<!-- typeAaliases : mapper.xml의 select 리턴타입에 들어갈 클래스 경로를 설정 -->
+	 <typeAliases>
+	 	<package name="web.spring.skintalk.domain" />
+	 </typeAliases>
+	 
+</configuration>
