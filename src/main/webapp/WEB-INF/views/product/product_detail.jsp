@@ -272,7 +272,7 @@
                              + '<button class="btn_delete" type="button" ' + disabled + '>삭제</button>'
                              + '<button class="reply_insert" type="button" ' + disable + '>답글</button>'
                              + '<div class="reply_answer"></div>'
-                             + '<div class="reply_read"</div>'
+                             + '<div class="reply_read"></div>'
                              + "</pre>"
                              + "</div>";
                              
@@ -320,7 +320,7 @@
   			// 선택된 상품평 reviewNo, reviewSingleContent, reviewContent 값을 저장
   			var reviewNo = $(this).prevAll('#reviewNo').val();
   	        var reviewSingleContent = $('#reviewSingleContent' + reviewNo).val(); // 상품평 내용
-              var reviewNickName = $('#reviewNickName').val(); // 사용자 아이디
+            var reviewNickName = $('#reviewNickName').val(); // 사용자 아이디
 
               // ajax 요청
   			$.ajax({

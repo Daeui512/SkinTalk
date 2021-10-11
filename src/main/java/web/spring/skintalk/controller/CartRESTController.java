@@ -25,23 +25,40 @@ import web.spring.skintalk.service.CartService;
 public class CartRESTController {
 	private static final Logger logger = LoggerFactory.getLogger(CartRESTController.class);
 	
+	private static ResponseEntity<String> ajaxEntity(int result){
+		ResponseEntity<String> entity = null;
+		
+		if(result >= 1) {
+			entity = new ResponseEntity<String>("success",HttpStatus.OK);
+		}else {
+			entity = new ResponseEntity<String>("fail",HttpStatus.OK);
+		}
+		
+		return entity;
+	}
+	
+	private static ResponseEntity<Integer> ajaxUpdateEntity(int result, CartVO vo){
+		ResponseEntity<Integer> entity = null;
+		
+		if (result == 1) {
+			int count_by_cartNo = cartService.countCartOne(vo.getCartNo());
+			entity = new ResponseEntity<Integer>(count_by_cartNo, HttpStatus.OK);
+		}else {
+			entity = new ResponseEntity<Integer>(result, HttpStatus.OK);
+		}
+		return entity;
+	}
+	
 	@Autowired
-	private CartService cartService;
+	private static CartService cartService;
 	
 	@DeleteMapping("/cartDeleteOne")
 	public ResponseEntity<String> cartDeleteOne(@RequestBody CartVO vo) throws IOException {		// 장바구니의 품목 하나 삭제
 		logger.info("cartDeleteOne() 호출 : cartNo = " + vo.getCartNo());
-		
 		int result = cartService.deleteOne(vo.getCartNo());
-		ResponseEntity<String> entity = null;
 		
-		if (result == 1) {
-			logger.info("장바구니 품목 삭제 성공");
-			entity = new ResponseEntity<String>("success",HttpStatus.OK);
-		}else {
-			logger.info("장바구니 품목 삭제 실패");
-			entity = new ResponseEntity<String>("fail",HttpStatus.OK);
-		}
+		ResponseEntity<String> entity = ajaxEntity(result);
+		
 		return entity;
 	}
 	
@@ -49,17 +66,10 @@ public class CartRESTController {
 	public ResponseEntity<String> cartDeleteAll(@RequestBody CartVO vo) throws IOException {
 		logger.info("cartDeleteAll() 호출 : userId = " + vo.getUserId());
 		int result = cartService.deleteAll(vo.getUserId());
-		ResponseEntity<String> entity = null;
 		
-		if(result >= 1) {
-			logger.info("장바구니 비우기 성공");
-			entity = new ResponseEntity<String>("success",HttpStatus.OK);
-		}else {
-			logger.info("장바구니 비우기 실패");
-			entity = new ResponseEntity<String>("fail", HttpStatus.OK);
-		}
+		ResponseEntity<String> entity = ajaxEntity(result);
+		
 		return entity;
-		
 	}
 	
 	@PutMapping("/cartUpdateIncrease")
@@ -69,34 +79,15 @@ public class CartRESTController {
 		ResponseEntity<Integer> entity = null;
 		
 		if (userId == null) {
-			Cookie[] cookies = null;
-        	String nonMemberUserId = "";
-        	
-        	cookies = request.getCookies();
-        	
-        	if (cookies != null) {
-				logger.info("JSESSIONID 찾기");
-				for (Cookie cookie : cookies) {
-					if (cookie.getName().equals("JSESSIONID")) {
-						nonMemberUserId = cookie.getValue();
-					}
-				}
-			}
+			String nonMemberUserId = CartController.cookieId(request);
         	userId = nonMemberUserId;
 		}
 		
 		CartVO vo1 = new CartVO(vo.getCartNo(), userId, null, 0, null, 0, vo.getAmount(), 0);
 		int result = cartService.updateIncreaseCart(vo1);
 		
-		if (result == 1) {
-			logger.info("상품 개수 UP 성공");
-			int count_by_cartNo = cartService.countCartOne(vo.getCartNo());
-			logger.info("count = " + count_by_cartNo);
-			entity = new ResponseEntity<Integer>(count_by_cartNo, HttpStatus.OK);
-		} else {
-			logger.info("상품 개수 수정 실패");
-			entity = new ResponseEntity<Integer>(result,HttpStatus.OK);
-		}
+		entity = ajaxUpdateEntity(result, vo);
+		
 		return entity;
 	}
 	
@@ -107,33 +98,15 @@ public class CartRESTController {
 		ResponseEntity<Integer> entity = null;
 		
 		if (userId == null) {
-			Cookie[] cookies = null;
-        	String nonMemberUserId = "";
-        	cookies = request.getCookies();
-        	
-        	if (cookies != null) {
-				logger.info("JSESSIONID 찾기");
-				for (Cookie cookie : cookies) {
-					if (cookie.getName().equals("JSESSIONID")) {
-						nonMemberUserId = cookie.getValue();
-					}
-				}
-			}
+			String nonMemberUserId = CartController.cookieId(request);
         	userId = nonMemberUserId;
 		}
 		
 		CartVO vo1 = new CartVO(vo.getCartNo(), userId, null, 0, null, 0, vo.getAmount(), 0);
 		int result = cartService.updateDecreaseCart(vo1);
 		
-		if (result == 1) {
-			logger.info("상품 개수 DOWN 성공");
-			int count_by_cartNo = cartService.countCartOne(vo.getCartNo());
-			logger.info("count = " + count_by_cartNo);
-			entity = new ResponseEntity<Integer>(count_by_cartNo, HttpStatus.OK);
-		} else {
-			logger.info("상품 개수 수정 실패");
-			entity = new ResponseEntity<Integer>(result, HttpStatus.OK);
-		}
+		entity = ajaxUpdateEntity(result, vo);
+		
 		return entity;
 	}
 	
@@ -144,31 +117,15 @@ public class CartRESTController {
 		ResponseEntity<Integer> entity = null;
 		
 		if (userId == null) {
-			Cookie[] cookies = null;
-			String nonMemberUserId = "";
-			cookies = request.getCookies();
-			
-			if (cookies != null) {
-				for (Cookie cookie : cookies) {
-					if(cookie.getName().equals("JSESSIONID")) {
-						nonMemberUserId = cookie.getValue();
-					}
-				}
-			}
+			String nonMemberUserId = CartController.cookieId(request);
 			userId = nonMemberUserId;
 		}
+		
 		CartVO vo1 = new CartVO(vo.getCartNo(), userId, null, 0, null, 0, vo.getAmount(), 0);
 		int result = cartService.updateAllCart(vo1);
 		
-		if (result == 1) {
-			logger.info("장바구니 품목 개수 변경 성공");
-			int count_by_cartNo = cartService.countCartOne(vo.getCartNo());
-			logger.info("count = " + count_by_cartNo);
-			entity = new ResponseEntity<Integer>(count_by_cartNo, HttpStatus.OK);
-		}else {
-			logger.info("장바구니 품목 개수 변경 실패");
-			entity = new ResponseEntity<Integer>(result, HttpStatus.OK);
-		}
+		entity = ajaxUpdateEntity(result, vo);
+		
 		return entity;
 	}
 	

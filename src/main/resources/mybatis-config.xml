@@ -4,13 +4,14 @@
 <configuration>
 <!-- DB 테이블과 컬럼들을 mapper 매핑을 위한 변수 선언 -->
 	<properties>
-		<!-- 
-		* property
+	
+		 <!-- 
+		  * property
 		 - name : mapper.xml 에서 사용될 이름
 		 - value : DB 테이블 및 컬럼 이름
 		 -->
-		 
-		 <!-- 회원가입/로그인 -->
+
+		<!-- 회원가입/로그인 -->
 		<property name="member" value="member"/>
 		<property name="userId" value="userid"/>
 		<property name="password" value="password"/>
@@ -24,8 +25,8 @@
 		<property name="phone" value="phone"/>
 		<property name="address" value="address"/>
 		<property name="mDate" value="mdate"/> 
-		 
-		 <!-- FAQ 게시판 -->
+		
+		<!-- FAQ 게시판 -->
 		<property name="board" value="board"/>
 		<property name="boardNo" value="board_no"/>
 		<property name="boardTitle" value="board_title"/>

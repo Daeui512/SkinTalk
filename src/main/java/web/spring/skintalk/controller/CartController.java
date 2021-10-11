@@ -29,8 +29,38 @@ public class CartController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 	
+	static String cookieId(HttpServletRequest request) {
+		
+		String id = "";
+		
+		Cookie[] cookies = null;
+    	
+    	cookies = request.getCookies();
+    	if (cookies != null) {
+			logger.info("JSESSIONID 찾기");
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("JSESSIONID")) {
+					id = cookie.getValue();
+				}
+			}
+		}
+		
+		return id;
+	}
+	
+	private static void cartConfig(String id) {
+		List<CartVO> list = null;
+		int sumMoney = 0;
+		int cartCount = 0;
+		
+		list = cartService.nonMemberListCart(id);
+    	sumMoney = cartService.sumMoney(id);
+    	cartCount = cartService.countCart(id);
+		
+	}
+	
 	@Autowired
-	private CartService cartService;
+	private static CartService cartService;
 	
 	@Autowired
 	private MemberService memberService;
@@ -38,8 +68,6 @@ public class CartController {
 	@Autowired
 	private NonMemberService nonMemberService;
 
-
-	
 	@GetMapping("/cartList")
 	public void cartList(Model model, HttpSession session, HttpServletRequest request) {
 		logger.info("cartList() 호출 : 회원용 장바구니 호출");
@@ -53,27 +81,16 @@ public class CartController {
 		NonMemberVO nonmembervo = null;
 				
 		if(userId != null) {
-			list = cartService.listCart(userId);
-			sumMoney = cartService.sumMoney(userId);
-			cartCount = cartService.countCart(userId);
-			//////////////////////////////////////
+			cartConfig(userId);
 			vo = memberService.read(userId);
+						
         }else {
-        	Cookie[] cookies = null;
+        	nonMemberUserId = cookieId(request);
+        	logger.info("비회원용 코드 = " + nonMemberUserId);
         	
-        	cookies = request.getCookies();
-        	if (cookies != null) {
-				logger.info("JSESSIONID 찾기");
-				for (Cookie cookie : cookies) {
-					if (cookie.getName().equals("JSESSIONID")) {
-						nonMemberUserId = cookie.getValue();
-					}
-				}
-			}
-        	list = cartService.nonMemberListCart(nonMemberUserId);
-        	sumMoney = cartService.sumMoney(nonMemberUserId);
-        	cartCount = cartService.countCart(nonMemberUserId);
-        	nonmembervo = nonMemberService.readAll(nonMemberUserId); 
+        	cartConfig(nonMemberUserId);
+        	model.addAttribute("nonMemberUserId", nonMemberUserId);
+        	model.addAttribute("nonmembervo", nonmembervo);
         }
 		
 		for (CartVO vo1 : list) {
@@ -82,9 +99,6 @@ public class CartController {
 		logger.info("sumMoney = " + sumMoney);
 		logger.info("장바구니 개수 : " + cartCount);
 
-		model.addAttribute("vo", vo);
-		model.addAttribute("nonMemberUserId", nonMemberUserId);
-		model.addAttribute("nonmembervo", nonmembervo);
 		
 		model.addAttribute("cartList", list);
 		model.addAttribute("sumMoney", sumMoney);
@@ -101,19 +115,8 @@ public class CartController {
         	vo.setUserId(userId);
         	logger.info("vo = " + vo.toString());
         }else {
-        	Cookie[] cookies = null;
-        	String nonMemberUserId = "";
+        	String nonMemberUserId = cookieId(request);
         	
-        	cookies = request.getCookies();
-        	
-        	if (cookies != null) {
-				logger.info("JSESSIONID 찾기");
-				for (Cookie cookie : cookies) {
-					if (cookie.getName().equals("JSESSIONID")) {
-						nonMemberUserId = cookie.getValue();
-					}
-				}
-			}
         	vo.setUserId(nonMemberUserId);
         	logger.info("vo = " + vo.toString());
         }
@@ -129,6 +132,8 @@ public class CartController {
         }
         return "redirect:/cart/cartList";
     }
+	
+	
 	
 	
 }
